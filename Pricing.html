@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing | Supreme Mobile Notary Service · Memphis, TN</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #112235;
+    --navy-deep: #070f18;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: rgba(201,168,76,0.12);
+    --gold-border: rgba(201,168,76,0.25);
+    --cream: #f5f0e8;
+    --white: #ffffff;
+    --slate: #4a5568;
+    --muted: rgba(255,255,255,0.5);
+    --muted-less: rgba(255,255,255,0.65);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: rgba(13,27,42,0.96); backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.18);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--gold); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-cta { background: var(--gold) !important; color: var(--navy) !important; padding: 0.5rem 1.2rem; border-radius: 2px; }
+  .nav-cta:hover { background: var(--gold-light) !important; }
+
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    padding: 9rem 2.5rem 5rem;
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #0d1b2a 0%, #112235 60%, #0a1520 100%);
+  }
+  .page-hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
+  }
+  .page-hero-deco {
+    position: absolute; top: 0; right: 0; bottom: 0; width: 45%;
+    background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.025) 50%);
+    pointer-events: none;
+  }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb span { color: rgba(255,255,255,0.2); }
+
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 700;
+    line-height: 1.06; max-width: 580px; margin-bottom: 1.4rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--gold); }
+  .page-hero p {
+    font-size: 1.05rem; font-weight: 300; color: var(--muted-less);
+    max-width: 500px; line-height: 1.8; margin-bottom: 0;
+    animation: fadeUp 0.6s 0.35s ease both;
+  }
+
+  /* ─── TN STATE NOTE ─── */
+  .state-note {
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    border-radius: 2px; padding: 1.2rem 1.8rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin: 3rem 2.5rem 0; max-width: 820px;
+    animation: fadeUp 0.6s 0.45s ease both;
+  }
+  .state-note .note-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .state-note p { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
+  .state-note strong { color: var(--gold); font-weight: 500; }
+
+  /* ─── PRICING SECTION WRAPPER ─── */
+  .pricing-wrap { padding: 5rem 2.5rem; }
+  .sec-lbl { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; }
+  .sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.12; margin-bottom: 0.6rem; }
+  .sec-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 500px; margin-bottom: 2.5rem; }
+
+  /* ─── GENERAL NOTARIZATIONS TABLE ─── */
+  .price-table {
+    width: 100%; max-width: 780px; border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  .price-table thead tr {
+    border-bottom: 1px solid var(--gold-border);
+  }
+  .price-table thead th {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; padding: 0 0 0.9rem;
+    text-align: left;
+  }
+  .price-table thead th:last-child { text-align: right; }
+  .price-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.15s;
+  }
+  .price-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+  .price-table tbody td { padding: 1rem 0; font-size: 0.92rem; color: var(--muted-less); vertical-align: top; }
+  .price-table tbody td:first-child { color: var(--white); font-weight: 500; }
+  .price-table tbody td:last-child { text-align: right; }
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--gold);
+    white-space: nowrap;
+  }
+  .price-note { font-size: 0.78rem; color: var(--muted); display: block; margin-top: 0.15rem; }
+  .per-sig { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  .table-footnote { font-size: 0.78rem; color: var(--muted); margin-top: 0.8rem; font-style: italic; }
+
+  /* ─── LOAN SIGNING CARDS ─── */
+  .loan-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1.2rem; max-width: 900px; }
+  .loan-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 2px; padding: 2rem 1.8rem;
+    background: rgba(255,255,255,0.02);
+    position: relative; transition: all 0.25s;
+  }
+  .loan-card:hover { border-color: var(--gold-border); background: var(--gold-dim); transform: translateY(-3px); }
+  .loan-card.featured {
+    border-color: var(--gold-border); background: var(--gold-dim);
+  }
+  .featured-badge {
+    position: absolute; top: -1px; right: 1.5rem;
+    background: var(--gold); color: var(--navy);
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 0 0 3px 3px;
+  }
+  .loan-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .loan-card .card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.4rem; min-height: 2.5rem; }
+  .loan-price { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .loan-price sup { font-size: 1.1rem; vertical-align: top; margin-top: 0.4rem; display: inline-block; }
+  .loan-price .from { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.2rem; }
+  .loan-includes { list-style: none; margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .loan-includes li { font-size: 0.82rem; color: var(--muted-less); display: flex; align-items: center; gap: 0.5rem; }
+  .loan-includes li::before { content: '✓'; color: var(--gold); font-size: 0.75rem; flex-shrink: 0; }
+
+  /* ─── POA / WILLS ─── */
+  .poa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1px; max-width: 900px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
+  .poa-cell {
+    background: var(--navy); padding: 1.8rem 1.5rem;
+    transition: background 0.2s;
+  }
+  .poa-cell:hover { background: var(--navy-mid); }
+  .poa-cell .poa-icon { font-size: 1.4rem; margin-bottom: 0.7rem; }
+  .poa-cell h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--white); }
+  .poa-cell p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+  .poa-price { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+  .poa-price .poa-from { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.1rem; }
+
+  /* ─── TRAVEL & SURCHARGES ─── */
+  .fees-section { background: var(--cream); padding: 5rem 2.5rem; }
+  .fees-section .sec-lbl { color: #8a6d2a; }
+  .fees-section .sec-title { color: var(--navy); }
+  .fees-section .sec-sub { color: var(--slate); }
+  .fees-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.5rem; max-width: 900px; }
+  .fee-card {
+    background: var(--white); border: 1px solid rgba(13,27,42,0.08);
+    padding: 1.8rem; border-radius: 2px; position: relative; overflow: hidden;
+    transition: all 0.25s;
+  }
+  .fee-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.25s; transform-origin: left; }
+  .fee-card:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(13,27,42,0.1); }
+  .fee-card:hover::after { transform: scaleX(1); }
+  .fee-card .fee-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+  .fee-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+  .fee-card .fee-amount { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); margin-bottom: 0.5rem; }
+  .fee-card .fee-placeholder { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: #b8860b; background: #fef9ee; border: 1px dashed #d4a017; padding: 0.2rem 0.6rem; border-radius: 2px; display: inline-block; margin-bottom: 0.5rem; }
+  .fee-card p { font-size: 0.83rem; color: var(--slate); line-height: 1.65; }
+
+  /* ─── FAQ ─── */
+  .faq-section { background: var(--navy); padding: 5rem 2.5rem; }
+  .faq-section::before { content: ''; display: block; height: 1px; background: linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent); margin-bottom: 5rem; margin-top: -5rem; }
+  .faq-list { max-width: 760px; display: flex; flex-direction: column; gap: 0; }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .faq-question {
+    width: 100%; background: none; border: none; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
+    text-align: left; padding: 1.4rem 0; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    transition: color 0.2s;
+  }
+  .faq-question:hover { color: var(--gold); }
+  .faq-question .faq-icon { color: var(--gold); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.25s; }
+  .faq-question.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer { font-size: 0.88rem; color: var(--muted); line-height: 1.8; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s ease; padding: 0; }
+  .faq-answer.open { max-height: 200px; padding-bottom: 1.4rem; }
+
+  /* ─── BOTTOM CTA ─── */
+  .bottom-cta { background: var(--gold); padding: 5rem 2.5rem; text-align: center; }
+  .bottom-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,5vw,3.5rem); font-weight: 700; color: var(--navy); margin-bottom: 0.8rem; line-height: 1.1; }
+  .bottom-cta p { font-size: 1rem; color: rgba(13,27,42,0.65); margin-bottom: 2.5rem; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-dark { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--navy); color: var(--white); padding: 1rem 2rem; border-radius: 2px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+  .btn-dark:hover { background: #1a2f45; transform: translateY(-2px); }
+  .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--navy); border: 2px solid var(--navy); padding: 1rem 2rem; border-radius: 2px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { background: rgba(13,27,42,0.08); }
+
+  /* ─── FOOTER ─── */
+  footer { background: var(--navy-deep); padding: 2.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; border-top: 1px solid rgba(201,168,76,0.12); }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--gold); }
+  .footer-brand small { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.3); font-weight: 300; margin-top: 0.15rem; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { color: rgba(255,255,255,0.35); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media(max-width:640px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .page-hero { padding: 7rem 1.5rem 3.5rem; }
+    .state-note { margin: 2rem 1.5rem 0; }
+    .pricing-wrap, .fees-section, .faq-section, .bottom-cta { padding: 3.5rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="supreme-mobile-notary.html" class="nav-logo">Supreme Mobile Notary</a>
+  <ul class="nav-links">
+    <li><a href="supreme-services.html">Services</a></li>
+    <li><a href="#" class="active">Pricing</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-deco"></div>
+  <div class="breadcrumb">
+    <a href="supreme-mobile-notary.html">Home</a>
+    <span>/</span>
+    Pricing
+  </div>
+  <h1>Clear, Honest<br><em>Pricing.</em></h1>
+  <p>No hidden fees. No surprises. Know exactly what you'll pay before we arrive — and call us anytime with questions.</p>
+</section>
+
+<!-- TN STATE NOTE -->
+<div class="state-note">
+  <span class="note-icon">📌</span>
+  <p><strong>Tennessee State Fee Cap:</strong> Tennessee law limits notary fees to <strong>$5.00 per notarial act</strong> (signature). Our service and travel fees are separate from this state-regulated amount and cover our time, travel, and availability to come directly to you.</p>
+</div>
+
+<!-- ─── GENERAL NOTARIZATIONS ─── -->
+<section class="pricing-wrap">
+  <div class="sec-lbl">Standard Services</div>
+  <h2 class="sec-title">General Notarizations</h2>
+  <p class="sec-sub">For individual documents, affidavits, acknowledgments, jurats, and most standard notarizations.</p>
+
+  <table class="price-table">
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Details</th>
+        <th>Fee</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Notarial Act <span class="per-sig">(per signature)</span></td>
+        <td><span class="price-note">State-regulated · acknowledgments, jurats, oaths</span></td>
+        <td><span class="price-amount">$5</span></td>
+      </tr>
+      <tr>
+        <td>Mobile Service Fee</td>
+        <td><span class="price-note">Base fee for coming to your location</span></td>
+        <td><span class="price-amount">$25</span></td>
+      </tr>
+      <tr>
+        <td>After-Hours Surcharge</td>
+        <td><span class="price-note">Appointments before 8am or after 7pm</span></td>
+        <td><span class="price-amount">+$15</span></td>
+      </tr>
+      <tr>
+        <td>Travel Fee</td>
+        <td><span class="price-note">Based on distance — confirmed at booking</span></td>
+        <td><span class="price-amount">TBD</span></td>
+      </tr>
+      <tr>
+        <td>Additional Signers</td>
+        <td><span class="price-note">Same appointment, each additional signer</span></td>
+        <td><span class="price-amount">$5<span style="font-size:0.9rem">/ea</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="table-footnote">* All fees confirmed before your appointment. No surprise charges on arrival.</p>
+</section>
+
+<!-- ─── LOAN SIGNINGS ─── -->
+<section class="pricing-wrap" style="padding-top: 0;">
+  <div class="sec-lbl">Real Estate</div>
+  <h2 class="sec-title">Loan Signings</h2>
+  <p class="sec-sub">Flat-rate packages for real estate closings and mortgage signings — includes all notarial acts within the package.</p>
+
+  <div class="loan-cards">
+    <div class="loan-card">
+      <h3>Purchase / Sale</h3>
+      <p class="card-desc">Standard real estate purchase or sale closing package.</p>
+      <div class="loan-price"><span class="from">Starting at</span><sup>$</sup>150</div>
+      <ul class="loan-includes">
+        <li>All notarial acts included</li>
+        <li>Document review &amp; prep</li>
+        <li>Mobile — we come to you</li>
+        <li>E-docs or paper accepted</li>
+      </ul>
+    </div>
+    <div class="loan-card featured">
+      <div class="featured-badge">Most Common</div>
+      <h3>Refinance</h3>
+      <p class="card-desc">Full refinance closing package — all pages, all signatures.</p>
+      <div class="loan-price"><span class="from">Starting at</span><sup>$</sup>125</div>
+      <ul class="loan-includes">
+        <li>All notarial acts included</li>
+        <li>Document review &amp; prep</li>
+        <li>Mobile — we come to you</li>
+        <li>E-docs or paper accepted</li>
+      </ul>
+    </div>
+    <div class="loan-card">
+      <h3>HELOC / Equity</h3>
+      <p class="card-desc">Home equity line of credit and equity loan signings.</p>
+      <div class="loan-price"><span class="from">Starting at</span><sup>$</sup>100</div>
+      <ul class="loan-includes">
+        <li>All notarial acts included</li>
+        <li>Document review &amp; prep</li>
+        <li>Mobile — we come to you</li>
+        <li>E-docs or paper accepted</li>
+      </ul>
+    </div>
+  </div>
+  <p class="table-footnote" style="margin-top:1.2rem">* Final loan signing fees may vary based on document count and lender requirements. Confirmed at booking.</p>
+</section>
+
+<!-- ─── POA / WILLS ─── -->
+<section class="pricing-wrap" style="padding-top: 0;">
+  <div class="sec-lbl">Estate &amp; Legal</div>
+  <h2 class="sec-title">Powers of Attorney &amp; Wills</h2>
+  <p class="sec-sub">Flat service fees covering all notarial acts for estate planning and legal authorization documents.</p>
+
+  <div class="poa-grid">
+    <div class="poa-cell">
+      <div class="poa-icon">📋</div>
+      <h3>Power of Attorney</h3>
+      <p>General, durable, limited, or healthcare POA — single document.</p>
+      <div class="poa-price"><span class="poa-from">Starting at</span>$40</div>
+    </div>
+    <div class="poa-cell">
+      <div class="poa-icon">📜</div>
+      <h3>Last Will &amp; Testament</h3>
+      <p>Will signing with required witnesses and notarial certification.</p>
+      <div class="poa-price"><span class="poa-from">Starting at</span>$50</div>
+    </div>
+    <div class="poa-cell">
+      <div class="poa-icon">🏛️</div>
+      <h3>Living Trust</h3>
+      <p>Revocable or irrevocable trust document package notarization.</p>
+      <div class="poa-price"><span class="poa-from">Starting at</span>$60</div>
+    </div>
+    <div class="poa-cell">
+      <div class="poa-icon">🏥</div>
+      <h3>Advance Directive</h3>
+      <p>Healthcare directives, living wills, and DNR documentation.</p>
+      <div class="poa-price"><span class="poa-from">Starting at</span>$40</div>
+    </div>
+  </div>
+  <p class="table-footnote" style="margin-top:1.2rem">* Mobile service fee and travel fee apply to all estate &amp; legal appointments.</p>
+</section>
+
+<!-- ─── TRAVEL & SURCHARGES ─── -->
+<section class="fees-section">
+  <div class="sec-lbl">Additional Fees</div>
+  <h2 class="sec-title" style="color:var(--navy)">Travel &amp; Surcharges</h2>
+  <p class="sec-sub" style="color:var(--slate)">These fees are always disclosed upfront — confirmed before your appointment is booked.</p>
+
+  <div class="fees-grid">
+    <div class="fee-card">
+      <div class="fee-icon">🚗</div>
+      <h3>Travel Fee</h3>
+      <div class="fee-placeholder">To Be Set</div>
+      <p>We're still finalizing our travel fee structure. Call or text for a quick quote based on your location. We always confirm costs before booking — no surprises.</p>
+    </div>
+    <div class="fee-card">
+      <div class="fee-icon">🌙</div>
+      <h3>After-Hours Surcharge</h3>
+      <div class="fee-amount">+$15</div>
+      <p>Applies to appointments scheduled before 8:00 AM or after 7:00 PM. We're still available — just call or text to confirm availability.</p>
+    </div>
+    <div class="fee-card">
+      <div class="fee-icon">⚡</div>
+      <h3>Same-Day / Rush</h3>
+      <div class="fee-amount">+$20</div>
+      <p>Need us today? We do our best to accommodate urgent requests. Rush fee applies when booking within 2 hours of needed appointment time.</p>
+    </div>
+    <div class="fee-card">
+      <div class="fee-icon">🏥</div>
+      <h3>Hospital / Facility</h3>
+      <div class="fee-amount">Included</div>
+      <p>No extra charge for visiting hospitals, hospice, or care facilities. Bedside visits are part of what we do — compassion doesn't cost extra.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="faq-section">
+  <div class="sec-lbl">Questions</div>
+  <h2 class="sec-title" style="margin-bottom:2.5rem">Pricing FAQ</h2>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do I pay before or after the appointment?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">Payment is due at the time of service. We accept cash, Zelle, Venmo, CashApp, and most major credit cards. Payment method can be confirmed when you book.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What if I need multiple documents notarized?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">Each notarial act (signature) is $5 per Tennessee law. If you have several documents during the same appointment, the mobile service fee only applies once — making it very cost-effective to bundle everything together.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Are weekends more expensive?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">Weekend appointments during normal hours (8am–7pm) are the same price as weekdays. Only appointments outside those hours incur the after-hours surcharge of $15.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What if my appointment runs long?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">For standard notarizations, there's no time limit — we stay until everything is properly signed and certified. For loan signings, the flat rate covers the full package regardless of how long it takes.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Is there a cancellation fee?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">We understand plans change. We ask for as much notice as possible if you need to reschedule. Cancellations with less than 1 hour notice on same-day bookings may incur a small trip fee. We'll always work with you.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <h2>Questions About<br>Pricing?</h2>
+  <p>Just call or text — we'll give you an exact quote in minutes, no obligation.</p>
+  <div class="cta-btns">
+    <a href="tel:+19015550000" class="btn-dark">📞 Call (901) 555-0000</a>
+    <a href="sms:+19015550000" class="btn-outline">💬 Text for a Quote</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Supreme Mobile Notary Service<small>Memphis, Tennessee · Licensed &amp; Certified</small></div>
+  <ul class="footer-links">
+    <li><a href="supreme-services.html">Services</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Supreme Mobile Notary Service</div>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    // close all
+    document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('open'));
+    // open clicked if it was closed
+    if (!isOpen) {
+      answer.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
+</script>
+
+</body>
+</html>
