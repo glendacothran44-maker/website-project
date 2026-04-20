@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +23,7 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
 
   /* ─── NAV ─── */
   nav {
@@ -34,264 +33,248 @@
     background: rgba(13,27,42,0.96); backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(201,168,76,0.18);
   }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--gold); text-decoration: none; }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .nav-logo img { height: 42px; width: 42px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(201,168,76,0.3); }
+  .nav-logo span { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; letter-spacing: 0.04em; color: var(--gold); }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--gold); }
   .nav-cta { background: var(--gold) !important; color: var(--navy) !important; padding: 0.5rem 1.2rem; border-radius: 2px; }
   .nav-cta:hover { background: var(--gold-light) !important; }
 
-  /* ─── HERO ─── */
-  .about-hero {
-    min-height: 92vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
+  /* ─── HAMBURGER ─── */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; background: none; border: none; cursor: pointer;
+    padding: 0.4rem; z-index: 200;
   }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; transition: all 0.3s ease; transform-origin: center; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  .hero-left {
-    background: linear-gradient(160deg, #0a1520 0%, #112235 100%);
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 10rem 3.5rem 5rem 2.5rem;
-    position: relative; z-index: 2;
+  /* ─── MOBILE NAV ─── */
+  .mobile-nav {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(7,15,24,0.98); backdrop-filter: blur(12px);
+    z-index: 150; flex-direction: column; align-items: center;
+    justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
   }
-  .hero-left::after {
-    content: '';
-    position: absolute; top: 0; right: -40px; bottom: 0; width: 80px;
-    background: linear-gradient(160deg, #0a1520 0%, #112235 100%);
-    clip-path: polygon(0 0, 0% 100%, 100% 100%);
-    z-index: 1;
-  }
+  .mobile-nav.open { display: flex; opacity: 1; pointer-events: all; }
+  .mobile-nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.04em; padding: 1rem 2rem; transition: color 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); width: 100%; text-align: center; }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-nav a.mobile-cta { color: var(--navy); background: var(--gold); margin-top: 1.5rem; border-radius: 2px; width: auto; font-size: 1rem; font-family: 'DM Sans', sans-serif; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 1rem 2.5rem; border-bottom: none; }
+  .mobile-nav a.mobile-cta:hover { background: var(--gold-light); }
+  .mobile-phone { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: rgba(255,255,255,0.3); margin-top: 2rem; letter-spacing: 0.05em; }
 
-  .hero-right {
-    background: var(--navy-mid);
+  /* ─── PAGE HEADER — cream editorial style ─── */
+  .page-header {
+    background: var(--cream);
+    padding: 8rem 2.5rem 4rem;
+    border-bottom: 1px solid rgba(13,27,42,0.1);
     position: relative; overflow: hidden;
-    display: flex; align-items: flex-end; justify-content: center;
   }
-
-  /* Photo placeholder — replace src with real photo */
-  .photo-placeholder {
-    width: 100%; height: 100%;
-    background: linear-gradient(180deg, #112235 0%, #0d2040 60%, #0a1520 100%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 1rem;
+  .page-header::before {
+    content: 'ABOUT';
+    position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif; font-size: 18rem; font-weight: 700;
+    color: rgba(13,27,42,0.04); line-height: 1; letter-spacing: -0.02em;
+    pointer-events: none; white-space: nowrap;
   }
-  .photo-placeholder .ph-circle {
-    width: 140px; height: 140px; border-radius: 50%;
-    border: 2px dashed rgba(201,168,76,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 3.5rem;
-  }
-  .photo-placeholder .ph-label {
-    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: rgba(201,168,76,0.4); text-align: center; max-width: 200px; line-height: 1.6;
-  }
-
-  /* Gold overlay stripe on photo */
-  .hero-right::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-
   .breadcrumb {
     display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
-    margin-bottom: 1.8rem; animation: fadeUp 0.6s 0.1s ease both;
+    font-size: 0.72rem; color: rgba(13,27,42,0.4); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 2rem; animation: fadeUp 0.5s 0.1s ease both;
   }
   .breadcrumb a { color: var(--gold); text-decoration: none; }
-  .breadcrumb span { color: rgba(255,255,255,0.2); }
+  .breadcrumb a:hover { color: #a88535; }
+  .breadcrumb span { color: rgba(13,27,42,0.2); }
 
-  .hero-eyebrow {
-    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 0.8rem;
-    animation: fadeUp 0.6s 0.2s ease both;
+  .header-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
+    max-width: 1060px; position: relative; z-index: 1;
   }
-
-  .hero-left h1 {
+  .header-left { animation: fadeUp 0.5s 0.15s ease both; }
+  .header-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem; font-weight: 500;
+  }
+  .header-left h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.8rem, 4.5vw, 4.2rem); font-weight: 700;
-    line-height: 1.07; margin-bottom: 0.5rem;
-    animation: fadeUp 0.6s 0.3s ease both;
+    font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 700;
+    line-height: 1.0; color: var(--navy);
+    margin-bottom: 0.3rem;
   }
-  .hero-left h1 em { font-style: italic; color: var(--gold); }
-
-  .hero-title-line {
+  .header-left h1 em { font-style: italic; color: var(--gold); }
+  .header-name-rule {
+    width: 60px; height: 2px; background: var(--gold); margin: 1.4rem 0;
+  }
+  .header-title {
+    font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(13,27,42,0.45); font-weight: 500;
+  }
+  .header-right {
+    padding-bottom: 0.5rem;
+    animation: fadeUp 0.5s 0.25s ease both;
+  }
+  .header-right p {
+    font-size: 1rem; font-weight: 300; color: rgba(13,27,42,0.65);
+    line-height: 1.85; margin-bottom: 1.6rem;
+  }
+  .header-right p strong { color: var(--navy); font-weight: 500; }
+  .header-cta-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .btn-navy {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--navy); color: var(--white);
+    padding: 0.85rem 1.8rem; border-radius: 2px;
+    font-weight: 500; font-size: 0.88rem; text-decoration: none;
+    letter-spacing: 0.03em; transition: all 0.2s;
+  }
+  .btn-navy:hover { background: #1a2f45; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,27,42,0.2); }
+  .header-phone {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem; font-weight: 400; font-style: italic;
-    color: rgba(255,255,255,0.45); letter-spacing: 0.05em;
-    margin-bottom: 2rem;
-    animation: fadeUp 0.6s 0.4s ease both;
+    font-size: 1.3rem; font-weight: 600; color: var(--navy);
+    text-decoration: none; transition: color 0.2s;
   }
+  .header-phone:hover { color: var(--gold); }
+  .header-phone small { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(13,27,42,0.4); font-weight: 400; margin-bottom: 0.1rem; }
 
-  .hero-bio {
-    font-size: 1rem; font-weight: 300; color: var(--muted-less);
-    line-height: 1.85; max-width: 480px; margin-bottom: 2.5rem;
-    animation: fadeUp 0.6s 0.5s ease both;
-  }
-  .hero-bio strong { color: var(--white); font-weight: 500; }
-
-  /* Quick stat pills */
-  .stat-pills {
-    display: flex; flex-wrap: wrap; gap: 0.8rem;
-    animation: fadeUp 0.6s 0.6s ease both;
-  }
-  .stat-pill {
-    display: flex; flex-direction: column;
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    padding: 0.7rem 1.2rem; border-radius: 2px;
-  }
-  .stat-pill .num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem; font-weight: 700; color: var(--gold); line-height: 1;
-  }
-  .stat-pill .lbl {
-    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.5); margin-top: 0.2rem;
-  }
-
-  /* ─── CREDENTIALS BAND ─── */
-  .creds-band {
-    background: var(--gold);
-    padding: 2rem 2.5rem;
-    display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
-  }
-  .creds-band .band-label {
-    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.18em;
-    color: rgba(13,27,42,0.55); font-weight: 500; flex-shrink: 0;
-  }
-  .creds-list {
-    display: flex; gap: 1.5rem; flex-wrap: wrap; list-style: none;
-  }
-  .creds-list li {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.88rem; font-weight: 500; color: var(--navy);
-  }
-  .creds-list li .check {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--navy); color: var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.65rem; flex-shrink: 0;
-  }
-
-  /* ─── STORY SECTION ─── */
-  .story-section {
-    padding: 6rem 2.5rem;
-    display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem;
-    max-width: 1100px; margin: 0 auto;
-    align-items: start;
-  }
-  .story-left { position: sticky; top: 7rem; }
-  .story-left .sec-lbl { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
-  .story-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.12; margin-bottom: 1.2rem; }
-  .story-left .pull-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; font-style: italic; font-weight: 400;
-    color: var(--gold); line-height: 1.6;
-    border-left: 2px solid var(--gold-border);
-    padding-left: 1.2rem; margin-top: 1.5rem;
-  }
-
-  .story-right p {
-    font-size: 0.97rem; color: var(--muted-less); line-height: 1.9;
-    margin-bottom: 1.5rem;
-  }
-  .story-right p strong { color: var(--white); font-weight: 500; }
-  .story-right p:last-child { margin-bottom: 0; }
-
-  /* ─── ACCOMPLISHMENTS ─── */
-  .accomplishments {
-    background: var(--cream);
-    padding: 6rem 2.5rem;
-  }
-  .accomplishments .sec-lbl { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #8a6d2a; margin-bottom: 0.8rem; }
-  .accomplishments h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--navy); margin-bottom: 3rem; line-height: 1.12; max-width: 500px; }
-
-  .accomp-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem; max-width: 1100px;
-  }
-  .accomp-card {
-    background: var(--white); border: 1px solid rgba(13,27,42,0.08);
-    padding: 2.2rem; border-radius: 2px; position: relative; overflow: hidden;
-    transition: all 0.3s;
-  }
-  .accomp-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; width: 3px; height: 100%;
-    background: var(--gold); transform: scaleY(0); transition: transform 0.3s;
-    transform-origin: top;
-  }
-  .accomp-card:hover { transform: translateY(-4px); box-shadow: 0 16px 45px rgba(13,27,42,0.12); }
-  .accomp-card:hover::before { transform: scaleY(1); }
-
-  .accomp-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
-  .accomp-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
-  .accomp-card .accomp-tag {
-    display: inline-block; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; color: #8a6d2a;
-    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);
-    padding: 0.2rem 0.6rem; border-radius: 2px; margin-bottom: 0.9rem;
-  }
-  .accomp-card p { font-size: 0.88rem; color: var(--slate); line-height: 1.75; }
-
-  /* ─── COMMUNITY SECTION ─── */
-  .community-section {
+  /* ─── CREDENTIALS STRIP ─── */
+  .creds-strip {
     background: var(--navy);
-    padding: 6rem 2.5rem;
+    padding: 1.6rem 2.5rem;
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .creds-strip .strip-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.3); font-weight: 500; flex-shrink: 0;
+    padding-right: 2rem; border-right: 1px solid rgba(255,255,255,0.08);
+    margin-right: 2rem;
+  }
+  .creds-items { display: flex; gap: 0; flex-wrap: wrap; list-style: none; flex: 1; }
+  .creds-items li {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.78rem; color: rgba(255,255,255,0.6); font-weight: 400;
+    padding: 0.3rem 1.5rem 0.3rem 0;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    margin-right: 1.5rem;
+  }
+  .creds-items li:last-child { border-right: none; margin-right: 0; }
+  .creds-items li .dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+  /* ─── BIO + STATS ─── */
+  .bio-section {
+    background: var(--white);
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
+    border-bottom: 1px solid rgba(13,27,42,0.08);
+  }
+  .bio-text {
+    padding: 5rem 4rem 5rem 2.5rem;
+    border-right: 1px solid rgba(13,27,42,0.08);
+  }
+  .bio-text .sec-label {
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 1.2rem;
+  }
+  .bio-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 700;
+    color: var(--navy); line-height: 1.15; margin-bottom: 1.5rem;
+  }
+  .bio-text p {
+    font-size: 0.9rem; color: #5a6a7a; line-height: 1.85; margin-bottom: 1.2rem;
+  }
+  .bio-text p:last-child { margin-bottom: 0; }
+  .bio-text p strong { color: var(--navy); font-weight: 500; }
+  .pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-style: italic; color: var(--navy);
+    line-height: 1.6; border-left: 3px solid var(--gold);
+    padding: 0.8rem 0 0.8rem 1.2rem; margin: 1.8rem 0;
+    background: rgba(201,168,76,0.04);
+  }
+
+  .bio-aside { padding: 5rem 2.5rem 5rem 4rem; display: flex; flex-direction: column; justify-content: space-between; }
+  .stats-stack { display: flex; flex-direction: column; gap: 0; }
+  .stat-row-item {
+    padding: 1.6rem 0; border-bottom: 1px solid rgba(13,27,42,0.07);
+    display: flex; align-items: baseline; gap: 1rem;
+  }
+  .stat-row-item:last-child { border-bottom: none; }
+  .stat-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0;
+    min-width: 80px;
+  }
+  .stat-info h4 { font-size: 0.85rem; font-weight: 500; color: var(--navy); margin-bottom: 0.2rem; }
+  .stat-info p { font-size: 0.76rem; color: rgba(13,27,42,0.45); line-height: 1.5; }
+
+  /* ─── VALUES + COMMUNITY — dark band ─── */
+  .dark-band {
+    background: var(--navy);
+    padding: 5rem 2.5rem;
     position: relative; overflow: hidden;
   }
-  .community-section::before {
+  .dark-band::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
   }
+  .dark-band-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; max-width: 1060px;
+  }
+  .dark-col .col-label {
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 1.2rem;
+  }
+  .dark-col h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 700;
+    line-height: 1.15; margin-bottom: 1.5rem; color: var(--white);
+  }
+  .dark-col h3 em { font-style: italic; color: var(--gold); }
 
-  .community-inner {
-    display: grid; grid-template-columns: 1.4fr 1fr; gap: 5rem;
-    max-width: 1000px; align-items: center;
-  }
-  .community-text .sec-lbl { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
-  .community-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.12; margin-bottom: 1.2rem; }
-  .community-text h2 em { font-style: italic; color: var(--gold); }
-  .community-text p { font-size: 0.95rem; color: var(--muted-less); line-height: 1.85; margin-bottom: 1.2rem; }
-  .community-text p strong { color: var(--white); font-weight: 500; }
-
-  .community-visual {
-    display: flex; flex-direction: column; gap: 1.2rem;
-  }
-  .comm-item {
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    border-radius: 2px; padding: 1.4rem 1.5rem;
+  /* Values list */
+  .values-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .values-list li {
     display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
   }
-  .comm-item .ci-icon { font-size: 1.4rem; flex-shrink: 0; }
-  .comm-item h4 { font-size: 0.9rem; font-weight: 500; color: var(--white); margin-bottom: 0.25rem; }
-  .comm-item p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+  .values-list li:last-child { border-bottom: none; }
+  .v-num-sm {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 700; color: rgba(201,168,76,0.35);
+    flex-shrink: 0; min-width: 28px; padding-top: 0.1rem;
+  }
+  .v-body h4 { font-size: 0.88rem; font-weight: 500; color: var(--white); margin-bottom: 0.25rem; }
+  .v-body p { font-size: 0.78rem; color: var(--muted); line-height: 1.65; }
 
-  /* ─── VALUES ─── */
-  .values-section {
-    background: var(--navy-deep);
-    padding: 5rem 2.5rem;
-    border-top: 1px solid rgba(255,255,255,0.04);
+  /* Community items */
+  .comm-stack { display: flex; flex-direction: column; gap: 1rem; }
+  .comm-card {
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    border-radius: 2px; padding: 1.3rem 1.4rem;
+    display: flex; align-items: flex-start; gap: 0.9rem;
+    transition: background 0.2s;
   }
-  .values-section .sec-lbl { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
-  .values-section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; margin-bottom: 3rem; max-width: 500px; line-height: 1.12; }
-  .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1000px; }
-  .value-item { border-top: 1px solid rgba(201,168,76,0.2); padding-top: 1.2rem; }
-  .value-item .v-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; color: rgba(201,168,76,0.1); line-height: 1; margin-bottom: 0.5rem; }
-  .value-item h3 { font-size: 0.95rem; font-weight: 500; color: var(--white); margin-bottom: 0.4rem; }
-  .value-item p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+  .comm-card:hover { background: rgba(201,168,76,0.2); }
+  .comm-card .ci { font-size: 1.2rem; flex-shrink: 0; }
+  .comm-card h4 { font-size: 0.85rem; font-weight: 500; color: var(--white); margin-bottom: 0.2rem; }
+  .comm-card p { font-size: 0.76rem; color: var(--muted); line-height: 1.6; }
 
   /* ─── CTA ─── */
-  .bottom-cta { background: var(--gold); padding: 5rem 2.5rem; text-align: center; }
-  .bottom-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,5vw,3.5rem); font-weight: 700; color: var(--navy); margin-bottom: 0.8rem; line-height: 1.1; }
-  .bottom-cta p { font-size: 1rem; color: rgba(13,27,42,0.65); margin-bottom: 2.5rem; }
+  .bottom-cta {
+    background: var(--gold); padding: 4.5rem 2.5rem; text-align: center;
+  }
+  .bottom-cta h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700;
+    color: var(--navy); margin-bottom: 0.7rem; line-height: 1.1;
+  }
+  .bottom-cta p { font-size: 0.95rem; color: rgba(13,27,42,0.6); margin-bottom: 2rem; }
   .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .btn-dark { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--navy); color: var(--white); padding: 1rem 2rem; border-radius: 2px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+  .btn-dark { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--navy); color: var(--white); padding: 0.95rem 1.8rem; border-radius: 2px; font-weight: 500; font-size: 0.92rem; text-decoration: none; transition: all 0.2s; }
   .btn-dark:hover { background: #1a2f45; transform: translateY(-2px); }
-  .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--navy); border: 2px solid var(--navy); padding: 1rem 2rem; border-radius: 2px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+  .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--navy); border: 2px solid var(--navy); padding: 0.95rem 1.8rem; border-radius: 2px; font-weight: 500; font-size: 0.92rem; text-decoration: none; transition: all 0.2s; }
   .btn-outline:hover { background: rgba(13,27,42,0.08); }
 
   /* ─── FOOTER ─── */
@@ -303,24 +286,29 @@
   .footer-links a:hover { color: var(--gold); }
   .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
 
-  @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
   /* ─── RESPONSIVE ─── */
-  @media(max-width: 900px) {
-    .about-hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-left { padding: 8rem 1.5rem 3rem; }
-    .hero-left::after { display: none; }
-    .hero-right { min-height: 300px; }
-    .story-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
-    .story-left { position: static; }
-    .community-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .accomplishments, .community-section, .values-section, .bottom-cta { padding: 4rem 1.5rem; }
+  @media(max-width: 860px) {
+    .header-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .bio-section { grid-template-columns: 1fr; }
+    .bio-text { padding: 3.5rem 1.5rem; border-right: none; border-bottom: 1px solid rgba(13,27,42,0.08); }
+    .bio-aside { padding: 3rem 1.5rem; }
+    .dark-band-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .dark-band { padding: 4rem 1.5rem; }
+    .stats-stack { flex-direction: row; flex-wrap: wrap; }
+    .stat-row-item { flex: 1; min-width: 140px; border-bottom: none; border-right: 1px solid rgba(13,27,42,0.07); padding-right: 1.5rem; }
+    .stat-row-item:last-child { border-right: none; }
   }
   @media(max-width: 640px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
-    .creds-band { padding: 1.5rem; gap: 1.2rem; }
+    .hamburger { display: flex; }
+    .page-header { padding: 7rem 1.5rem 3rem; }
+    .page-header::before { font-size: 9rem; right: -10px; }
+    .creds-strip { padding: 1.4rem 1.5rem; }
     footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+    .bottom-cta { padding: 3.5rem 1.5rem; }
   }
 </style>
 </head>
@@ -328,218 +316,198 @@
 
 <!-- NAV -->
 <nav>
-  <a href="supreme-mobile-notary.html" class="nav-logo">Supreme Mobile Notary</a>
+  <a href="index.html" class="nav-logo">
+    <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Service Logo">
+    <span>Supreme Mobile Notary</span>
+  </a>
   <ul class="nav-links">
-    <li><a href="supreme-services.html">Services</a></li>
-    <li><a href="supreme-pricing.html">Pricing</a></li>
-    <li><a href="#" class="active">About</a></li>
-    <li><a href="#" class="nav-cta">Book Now</a></li>
+    <li><a href="Services.html">Services</a></li>
+    <li><a href="Pricing.html">Pricing</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="Contact.html">Contact</a></li>
+    <li><a href="Contact.html" class="nav-cta">Book Now</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- ─── HERO ─── -->
-<section class="about-hero">
-  <div class="hero-left">
-    <div class="breadcrumb">
-      <a href="supreme-mobile-notary.html">Home</a>
-      <span>/</span> About
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="Services.html" onclick="closeMobileNav()">Services</a>
+  <a href="Pricing.html" onclick="closeMobileNav()">Pricing</a>
+  <a href="about.html" onclick="closeMobileNav()">About</a>
+  <a href="Contact.html" onclick="closeMobileNav()">Contact</a>
+  <a href="Contact.html" class="mobile-cta">📅 Book Now</a>
+  <div class="mobile-phone">(901) 555-0000</div>
+</div>
+
+<!-- ─── PAGE HEADER ─── -->
+<header class="page-header">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span>/</span> About
+  </div>
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-eyebrow">Meet the Owner</div>
+      <h1>Glenda<br><em>Cothran</em></h1>
+      <div class="header-name-rule"></div>
+      <div class="header-title">Notary Public &nbsp;·&nbsp; Loan Signing Agent &nbsp;·&nbsp; Wedding Officiant</div>
     </div>
-    <div class="hero-eyebrow">Meet the Owner</div>
-    <h1>Glenda<br><em>Cothran</em></h1>
-    <div class="hero-title-line">Notary Public · Wedding Officiant · Community Leader</div>
-    <p class="hero-bio">
-      With <strong>nearly a decade of dedicated service</strong> to the Memphis community, Glenda Cothran built Supreme Mobile Notary on a simple belief: that professional, trustworthy notary services should come to <em>you</em> — wherever you are, whenever you need them.
-    </p>
-    <div class="stat-pills">
-      <div class="stat-pill">
-        <span class="num">10+</span>
-        <span class="lbl">Years Experience</span>
-      </div>
-      <div class="stat-pill">
-        <span class="num">4</span>
-        <span class="lbl">Yrs Officiating</span>
-      </div>
-      <div class="stat-pill">
-        <span class="num">100%</span>
-        <span class="lbl">Insured</span>
+    <div class="header-right">
+      <p>
+        With <strong>over ten years of dedicated service</strong> to the Memphis community, Glenda Cothran built Supreme Mobile Notary on one belief: that professional, trustworthy notary services should come to <em>you</em> — wherever you are, whenever you need them.
+      </p>
+      <div class="header-cta-row">
+        <a href="Contact.html" class="btn-navy">📅 Book an Appointment</a>
+        <a href="tel:+19015550000" class="header-phone">
+          <small>Call or Text</small>
+          (901) 555-0000
+        </a>
       </div>
     </div>
   </div>
+</header>
 
-  <div class="hero-right">
-    <!-- Replace this block with: <img src="glenda-photo.jpg" alt="Glenda Cothran" style="width:100%;height:100%;object-fit:cover;object-position:top"> -->
-    <div class="photo-placeholder">
-      <div class="ph-circle">👩🏾</div>
-      <div class="ph-label">Add Glenda's photo here — replace this placeholder with an &lt;img&gt; tag</div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CREDENTIALS BAND ─── -->
-<div class="creds-band">
-  <span class="band-label">Credentials</span>
-  <ul class="creds-list">
-    <li><span class="check">✓</span> Tennessee Notary Public</li>
-    <li><span class="check">✓</span> NNA Certified Notary</li>
-    <li><span class="check">✓</span> Fully Insured &amp; Bonded</li>
-    <li><span class="check">✓</span> Licensed Wedding Officiant</li>
-    <li><span class="check">✓</span> Loan Signing Agent</li>
+<!-- ─── CREDENTIALS STRIP ─── -->
+<div class="creds-strip">
+  <span class="strip-label">Credentials</span>
+  <ul class="creds-items">
+    <li><span class="dot"></span> Tennessee Notary Public</li>
+    <li><span class="dot"></span> NNA Certified</li>
+    <li><span class="dot"></span> Fully Insured &amp; Bonded</li>
+    <li><span class="dot"></span> Licensed Wedding Officiant</li>
+    <li><span class="dot"></span> Loan Signing Agent</li>
   </ul>
 </div>
 
-<!-- ─── STORY ─── -->
-<section style="background: var(--navy); padding: 0;">
-  <div class="story-section">
-    <div class="story-left">
-      <div class="sec-lbl">Her Story</div>
-      <h2>Built on Trust &amp; Service</h2>
-      <div class="pull-quote">"I wanted people to feel like they had someone in their corner — not just a stamp on a page."</div>
+<!-- ─── BIO + STATS ─── -->
+<div class="bio-section">
+  <div class="bio-text">
+    <div class="sec-label">Her Story</div>
+    <h2>Built on Trust, Driven<br>by Community</h2>
+    <p>
+      Glenda started her notary journey with a straightforward mission: make one of life's most necessary services as accessible and stress-free as possible. What began as a desire to serve her neighbors grew into a full-service mobile notary practice trusted by families, attorneys, real estate professionals, and businesses across Memphis.
+    </p>
+    <div class="pull-quote">
+      "I wanted people to feel like they had someone in their corner — not just a stamp on a page."
     </div>
-    <div class="story-right">
-      <p>
-        Glenda Cothran started her notary journey over <strong>ten years ago</strong> with a straightforward mission: make one of life's most necessary services as accessible and stress-free as possible. What began as a desire to serve her community grew into a full-service mobile notary practice trusted by families, attorneys, real estate professionals, and businesses across the Memphis area.
-      </p>
-      <p>
-        As a <strong>fully insured and NNA-certified notary public</strong>, Glenda brings more than credentials to every appointment — she brings calm, patience, and the kind of professionalism that makes people feel at ease during some of the most important moments of their lives. Whether she's at a real estate closing table, a hospital bedside, or a courthouse steps ceremony, her clients know they're in capable hands.
-      </p>
-      <p>
-        Over the years, Glenda added <strong>wedding officiant services</strong> to her practice — a natural extension of her commitment to being present for life's meaningful milestones. With four years of officiating experience, she has helped countless couples begin their lives together with personalized, heartfelt ceremonies across the Mid-South.
-      </p>
-      <p>
-        What truly sets Glenda apart is her <strong>unwavering belief that serving people means showing up</strong> — not just professionally, but personally. That same spirit drives her community work, her business, and every appointment she keeps.
-      </p>
-    </div>
+    <p>
+      As a <strong>fully insured, NNA-certified notary</strong> and licensed wedding officiant, Glenda shows up with calm professionalism for every signing — whether at a real estate closing table, a hospital bedside, or a courthouse ceremony. She also actively teaches <strong>community survival skills to Memphis youth</strong>, bringing the same spirit of service to the next generation.
+    </p>
   </div>
-</section>
-
-<!-- ─── ACCOMPLISHMENTS ─── -->
-<section class="accomplishments">
-  <div class="sec-lbl">Credentials &amp; Accomplishments</div>
-  <h2>What Glenda<br>Brings to Every Appointment</h2>
-  <div class="accomp-grid">
-
-    <div class="accomp-card">
-      <span class="accomp-icon">📜</span>
-      <span class="accomp-tag">Certification</span>
-      <h3>NNA Certified Notary Public</h3>
-      <p>Glenda holds certification through the National Notary Association — the gold standard in the notary profession. NNA certification requires background screening, testing, and ongoing education to ensure the highest level of professional conduct.</p>
-    </div>
-
-    <div class="accomp-card">
-      <span class="accomp-icon">🛡️</span>
-      <span class="accomp-tag">Insurance &amp; Bonding</span>
-      <h3>Fully Insured Notary</h3>
-      <p>Every appointment is backed by professional notary insurance and bonding. This protects our clients and ensures that Supreme Mobile Notary meets the highest standards of professional accountability in the industry.</p>
-    </div>
-
-    <div class="accomp-card">
-      <span class="accomp-icon">🏠</span>
-      <span class="accomp-tag">Real Estate</span>
-      <h3>Loan Signing Agent</h3>
-      <p>With specialized training as a loan signing agent, Glenda is trusted by lenders, title companies, and escrow officers across the Memphis area to handle real estate closings with precision and professionalism.</p>
-    </div>
-
-    <div class="accomp-card">
-      <span class="accomp-icon">⏱️</span>
-      <span class="accomp-tag">Experience</span>
-      <h3>10+ Years of Service</h3>
-      <p>A decade of showing up — for families, businesses, legal professionals, and individuals — has given Glenda an unmatched depth of experience across every type of notarization the Memphis community needs.</p>
-    </div>
-
-    <div class="accomp-card">
-      <span class="accomp-icon">💍</span>
-      <span class="accomp-tag">Wedding Officiant</span>
-      <h3>Licensed Wedding Officiant</h3>
-      <p>For four years, Glenda has had the honor of officiating wedding ceremonies across the Mid-South — from intimate elopements to full celebrations. She crafts personalized ceremonies that reflect each couple's unique story.</p>
-    </div>
-
-    <div class="accomp-card">
-      <span class="accomp-icon">📋</span>
-      <span class="accomp-tag">Tennessee</span>
-      <h3>State-Commissioned Notary</h3>
-      <p>Commissioned as a Notary Public by the State of Tennessee, Glenda operates in full compliance with all state regulations — giving clients the legal certainty that every document is properly executed and recognized.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ─── COMMUNITY ─── -->
-<section class="community-section">
-  <div class="community-inner">
-    <div class="community-text">
-      <div class="sec-lbl">Community</div>
-      <h2>Giving Back to<br><em>Memphis Youth</em></h2>
-      <p>
-        Glenda's commitment to her community extends far beyond the notary table. She is actively involved in <strong>teaching community survival skills to the youth</strong> of Memphis — equipping young people with the practical knowledge, resilience, and confidence they need to navigate the world.
-      </p>
-      <p>
-        From financial literacy and personal safety to understanding legal documents and civic rights, Glenda believes that <strong>knowledge is the most powerful tool</strong> you can give a young person. Her work with Memphis youth reflects the same values that drive her business: showing up, being prepared, and never leaving someone without the help they need.
-      </p>
-      <p>
-        When you work with Supreme Mobile Notary, you're supporting a business that <strong>reinvests in this community</strong> — one young person, one family, one document at a time.
-      </p>
-    </div>
-    <div class="community-visual">
-      <div class="comm-item">
-        <span class="ci-icon">🎓</span>
-        <div>
-          <h4>Youth Education</h4>
-          <p>Teaching survival and life skills to Memphis-area youth — practical tools for real-world success.</p>
+  <div class="bio-aside">
+    <div class="stats-stack">
+      <div class="stat-row-item">
+        <div class="stat-big">10+</div>
+        <div class="stat-info">
+          <h4>Years of Experience</h4>
+          <p>Serving Memphis &amp; the Mid-South</p>
         </div>
       </div>
-      <div class="comm-item">
-        <span class="ci-icon">💡</span>
-        <div>
-          <h4>Knowledge as Empowerment</h4>
-          <p>Civic rights, financial basics, legal awareness — building confidence from the ground up.</p>
+      <div class="stat-row-item">
+        <div class="stat-big">4</div>
+        <div class="stat-info">
+          <h4>Years Officiating</h4>
+          <p>Weddings, elopements &amp; vow renewals</p>
         </div>
       </div>
-      <div class="comm-item">
-        <span class="ci-icon">🤝</span>
-        <div>
-          <h4>Community-First Business</h4>
-          <p>Every appointment supports a business that actively gives back to the Memphis community.</p>
+      <div class="stat-row-item">
+        <div class="stat-big">7</div>
+        <div class="stat-info">
+          <h4>Days a Week</h4>
+          <p>Available including evenings &amp; after-hours</p>
+        </div>
+      </div>
+      <div class="stat-row-item">
+        <div class="stat-big">100%</div>
+        <div class="stat-info">
+          <h4>Insured &amp; Certified</h4>
+          <p>Bonded, NNA certified &amp; state-commissioned</p>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ─── VALUES ─── -->
-<section class="values-section">
-  <div class="sec-lbl">What Drives Us</div>
-  <h2>The Values Behind<br>Supreme Mobile Notary</h2>
-  <div class="values-grid">
-    <div class="value-item">
-      <div class="v-num">01</div>
-      <h3>Professionalism</h3>
-      <p>Every appointment is treated with the same rigor and care as the most important signing of the year — because for our clients, it often is.</p>
+<!-- ─── VALUES + COMMUNITY ─── -->
+<section class="dark-band">
+  <div class="dark-band-inner">
+
+    <div class="dark-col">
+      <div class="col-label">What Drives Us</div>
+      <h3>The Values Behind<br><em>Every Appointment</em></h3>
+      <ul class="values-list">
+        <li>
+          <div class="v-num-sm">01</div>
+          <div class="v-body">
+            <h4>Professionalism</h4>
+            <p>Every signing is treated with the care of the most important appointment of the year — because for our clients, it often is.</p>
+          </div>
+        </li>
+        <li>
+          <div class="v-num-sm">02</div>
+          <div class="v-body">
+            <h4>Accessibility</h4>
+            <p>We come to you — at home, at work, in the hospital — so nothing stands between you and what you need.</p>
+          </div>
+        </li>
+        <li>
+          <div class="v-num-sm">03</div>
+          <div class="v-body">
+            <h4>Integrity</h4>
+            <p>Fully insured, certified, and always transparent about fees. Every document handled correctly and ethically.</p>
+          </div>
+        </li>
+        <li>
+          <div class="v-num-sm">04</div>
+          <div class="v-body">
+            <h4>Community</h4>
+            <p>We're part of the fabric of Memphis — and we take that responsibility personally.</p>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="value-item">
-      <div class="v-num">02</div>
-      <h3>Accessibility</h3>
-      <p>Professional notary services shouldn't be hard to get. We come to you — at home, at work, in the hospital — so nothing stands between you and what you need.</p>
+
+    <div class="dark-col">
+      <div class="col-label">Community</div>
+      <h3>Giving Back to<br><em>Memphis Youth</em></h3>
+      <div class="comm-stack">
+        <div class="comm-card">
+          <span class="ci">🎓</span>
+          <div>
+            <h4>Youth Education</h4>
+            <p>Teaching survival and life skills to Memphis-area youth — practical tools for real-world success.</p>
+          </div>
+        </div>
+        <div class="comm-card">
+          <span class="ci">💡</span>
+          <div>
+            <h4>Knowledge as Empowerment</h4>
+            <p>Financial literacy, civic rights, legal awareness — building confidence from the ground up.</p>
+          </div>
+        </div>
+        <div class="comm-card">
+          <span class="ci">🤝</span>
+          <div>
+            <h4>Community-First Business</h4>
+            <p>Every appointment supports a business that actively reinvests in the people of Memphis.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="value-item">
-      <div class="v-num">03</div>
-      <h3>Integrity</h3>
-      <p>Fully insured, properly certified, and always transparent about fees. You can trust that every document we touch is handled correctly and ethically.</p>
-    </div>
-    <div class="value-item">
-      <div class="v-num">04</div>
-      <h3>Community</h3>
-      <p>We're not just a business — we're part of the fabric of Memphis. What's good for this community is good for us, and we take that responsibility seriously.</p>
-    </div>
+
   </div>
 </section>
 
 <!-- ─── CTA ─── -->
 <section class="bottom-cta">
-  <h2>Ready to Work<br>with Glenda?</h2>
-  <p>Call or text to book your appointment — same-day service available throughout Memphis.</p>
+  <h2>Ready to Work with Glenda?</h2>
+  <p>Same-day service available throughout Memphis — call, text, or book online.</p>
   <div class="cta-btns">
     <a href="tel:+19015550000" class="btn-dark">📞 Call (901) 555-0000</a>
-    <a href="sms:+19015550000" class="btn-outline">💬 Send a Text</a>
+    <a href="Contact.html" class="btn-outline">📅 Book Online</a>
   </div>
 </section>
 
@@ -547,13 +515,35 @@
 <footer>
   <div class="footer-brand">Supreme Mobile Notary Service<small>Memphis, Tennessee · Licensed &amp; Certified</small></div>
   <ul class="footer-links">
-    <li><a href="supreme-services.html">Services</a></li>
-    <li><a href="supreme-pricing.html">Pricing</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="Services.html">Services</a></li>
+    <li><a href="Pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="Contact.html">Contact</a></li>
   </ul>
   <div class="footer-copy">© 2026 Supreme Mobile Notary Service</div>
 </footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.contains('open');
+    if (isOpen) { closeMobileNav(); }
+    else {
+      mobileNav.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+  function closeMobileNav() {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); });
+</script>
 
 </body>
 </html>
