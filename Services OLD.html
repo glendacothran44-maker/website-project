@@ -31,9 +31,7 @@
     background: rgba(13,27,42,0.96); backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(201,168,76,0.18);
   }
-  .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-  .nav-logo img { height: 42px; width: 42px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(201,168,76,0.3); }
-  .nav-logo span { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; letter-spacing: 0.04em; color: var(--gold); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--gold); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--gold); }
@@ -51,6 +49,7 @@
     position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
   }
+  /* Diagonal line decoration */
   .page-hero-deco {
     position: absolute; top: 0; right: 0; bottom: 0; width: 45%;
     background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.03) 50%);
@@ -93,6 +92,7 @@
   /* ─── SERVICE SECTIONS ─── */
   .services-container { max-width: 1100px; margin: 0 auto; }
 
+  /* Big service blocks — alternating layout */
   .service-block {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 0; border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -109,6 +109,7 @@
     display: flex; align-items: center; justify-content: center;
     min-height: 320px; position: relative; overflow: hidden;
   }
+  /* Alternating bg shades */
   .service-block:nth-child(even) .service-visual { background: #0e1e30; }
   .service-block:nth-child(even) .service-info { background: var(--navy-deep); }
   .service-block:nth-child(odd) .service-info { background: var(--navy); }
@@ -127,6 +128,7 @@
     font-size: 0.85rem; letter-spacing: 0.25em; text-transform: uppercase;
     color: rgba(201,168,76,0.4);
   }
+  /* Background circle */
   .visual-circle {
     position: absolute; width: 240px; height: 240px; border-radius: 50%;
     border: 1px solid rgba(201,168,76,0.07); top: 50%; left: 50%;
@@ -251,22 +253,17 @@
     footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
   }
 </style>
-  <!-- Supabase Client Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-logo">
-    <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Service Logo">
-    <span>Supreme Mobile Notary</span>
-  </a>
+  <a href="index.html" class="nav-logo">Supreme Mobile Notary</a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="Services.html" class="active">Services</a></li>
     <li><a href="Pricing.html">Pricing</a></li>
     <li><a href="about.html">About</a></li>
-    <li><a href="Contact.html">Contact</a></li>
     <li><a href="Contact.html" class="nav-cta">Book Now</a></li>
   </ul>
 </nav>
@@ -274,11 +271,11 @@
 <!-- PAGE HERO -->
 <section class="page-hero">
   <div class="page-hero-deco"></div>
-  <div class="breadcrumb">
-    <a href="index.html">Home</a>
+  <!-- <div class="breadcrumb">
+    <a href="supreme-mobile-notary.html">Home</a>
     <span>/</span>
     Services
-  </div>
+  </div> -->
   <h1>Everything You Need,<br><em>Where You Are.</em></h1>
   <p>From real estate closings to hospital bedside signings — we bring professional notary services to every corner of the Memphis area, seven days a week.</p>
   <div class="hero-tags">
@@ -308,7 +305,7 @@
         <li>Deed of trust signings</li>
         <li>Title transfer documents</li>
       </ul>
-      <a href="Contact.html" class="service-cta">Book a Signing →</a>
+      <a href="tel:+19015550000" class="service-cta">Book a Signing → </a>
     </div>
     <div class="service-visual">
       <div class="visual-circle"></div>
@@ -341,7 +338,7 @@
         <li>Healthcare Power of Attorney</li>
         <li>Financial Power of Attorney</li>
       </ul>
-      <a href="Contact.html" class="service-cta">Schedule Today →</a>
+      <a href="tel:+19015550000" class="service-cta">Schedule Today → </a>
     </div>
   </div>
 
@@ -358,7 +355,7 @@
         <li>Irrevocable Trust documents</li>
         <li>Beneficiary designations</li>
       </ul>
-      <a href="Contact.html" class="service-cta">Book an Appointment →</a>
+      <a href="tel:+19015550000" class="service-cta">Book an Appointment → </a>
     </div>
     <div class="service-visual">
       <div class="visual-circle"></div>
@@ -391,7 +388,7 @@
         <li>Jurats &amp; acknowledgments</li>
         <li>Depositions support</li>
       </ul>
-      <a href="Contact.html" class="service-cta">Contact Us Now →</a>
+      <a href="tel:+19015550000" class="service-cta">Contact Us Now → </a>
     </div>
   </div>
 
@@ -408,7 +405,7 @@
         <li>Do Not Resuscitate (DNR) forms</li>
         <li>Authorization for medical treatment</li>
       </ul>
-      <a href="Contact.html" class="service-cta">Call Anytime →</a>
+      <a href="tel:+19015550000" class="service-cta">Call Anytime → </a>
     </div>
     <div class="service-visual">
       <div class="visual-circle"></div>
@@ -441,7 +438,7 @@
         <li>Immigration forms (acknowledgment)</li>
         <li>Loan documents &amp; promissory notes</li>
       </ul>
-      <a href="Contact.html" class="service-cta">Ask About Your Document →</a>
+      <a href="tel:+19015550000" class="service-cta">Ask About Your Document → </a>
     </div>
   </div>
 
@@ -461,7 +458,7 @@
         <li>Custom marriage contracts upon request</li>
         <li>Family Bible event recording available</li>
       </ul>
-      <a href="Contact.html" class="service-cta">Inquire About Your Date →</a>
+      <a href="tel:+19015550000" class="service-cta">Inquire About Your Date → </a>
     </div>
     <div class="service-visual" style="background: linear-gradient(135deg, #112235 0%, #1a2f45 100%);">
       <div class="visual-circle"></div>
@@ -530,8 +527,6 @@
     </div>
   </div>
 </section>
-
-<!-- SERVICE AREA -->
 <section class="service-area">
   <div class="sec-lbl">Coverage Area</div>
   <h2>We Travel to You</h2>
@@ -544,9 +539,6 @@
     <div class="area-pill"><span class="city">Arlington</span><span class="state">Tennessee</span></div>
     <div class="area-pill"><span class="city">Cordova</span><span class="state">Tennessee</span></div>
     <div class="area-pill"><span class="city">Millington</span><span class="state">Tennessee</span></div>
-    <div class="area-pill"><span class="city">Southaven</span><span class="state">Mississippi</span></div>
-    <div class="area-pill"><span class="city">Olive Branch</span><span class="state">Mississippi</span></div>
-    <div class="area-pill"><span class="city">Horn Lake</span><span class="state">Mississippi</span></div>
   </div>
 </section>
 
@@ -564,6 +556,7 @@
 <footer>
   <div class="footer-brand">Supreme Mobile Notary Service<small>Memphis, Tennessee · Licensed &amp; Certified</small></div>
   <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="Services.html">Services</a></li>
     <li><a href="Pricing.html">Pricing</a></li>
     <li><a href="about.html">About</a></li>
