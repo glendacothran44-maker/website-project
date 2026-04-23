@@ -174,6 +174,44 @@
     footer{padding:2rem 1.5rem;flex-direction:column;align-items:flex-start}
     .hero-actions{flex-direction:column;align-items:flex-start;gap:1.2rem}
   }
+
+  /* ─── MOBILE MENU ─── */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; background: none; border: none; cursor: pointer;
+    padding: 0.4rem; z-index: 200;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px; background: var(--gold);
+    border-radius: 2px; transition: all 0.3s ease; transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-nav {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(7,15,24,0.98); backdrop-filter: blur(12px);
+    z-index: 150; flex-direction: column; align-items: center;
+    justify-content: center; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav.open { display: flex; opacity: 1; pointer-events: all; }
+  .mobile-nav a {
+    color: rgba(255,255,255,0.7); text-decoration: none; font-size: 1.8rem;
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    letter-spacing: 0.04em; padding: 1rem 2rem; transition: color 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.05); width: 100%; text-align: center;
+  }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-nav a.mobile-cta {
+    color: var(--navy); background: var(--gold); margin-top: 1.5rem;
+    border-radius: 2px; width: auto; font-size: 1rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 1rem 2.5rem; border-bottom: none;
+  }
+  .mobile-nav a.mobile-cta:hover { background: var(--gold-light); }
+  .mobile-phone { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: rgba(255,255,255,0.3); margin-top: 2rem; letter-spacing: 0.05em; }
 </style>
   <!-- Supabase Client Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -192,7 +230,20 @@
     <li><a href="Contact.html">Contact</a></li>
     <li><a href="Contact.html" class="nav-cta">Book Now</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile navigation">
+  <a href="Services.html" onclick="closeMobileNav()">Services</a>
+  <a href="Pricing.html" onclick="closeMobileNav()">Pricing</a>
+  <a href="about.html" onclick="closeMobileNav()">About</a>
+  <a href="Contact.html" onclick="closeMobileNav()">Contact</a>
+  <a href="Contact.html" class="mobile-cta">📅 Book Now</a>
+  <div class="mobile-phone">(901) 555-0000</div>
+</div>
 
 <section class="hero">
   <div class="hero-bg"></div>
@@ -283,6 +334,28 @@
 
   <!-- Supabase Initialization -->
   <script>
+    // ─── HAMBURGER ───
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.contains('open');
+    if (isOpen) { closeMobileNav(); }
+    else {
+      mobileNav.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+  function closeMobileNav() {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+
+
     (function() {
       try {
         const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
