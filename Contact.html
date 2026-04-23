@@ -119,7 +119,6 @@
   .avail-item .hours { color: var(--white); font-weight: 500; }
 
   /* ─── RIGHT: FORM ─── */
-  .contact-form-wrap { }
   .form-header { margin-bottom: 2rem; }
   .form-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; line-height: 1.12; margin-bottom: 0.5rem; }
   .form-header p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
@@ -231,6 +230,97 @@
     .area-strip { padding: 3rem 1.5rem; }
     footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
     .form-submit { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ── CALENDLY SECTION ── */
+  .calendly-section {
+    background: var(--navy-mid);
+    padding: 5rem 2.5rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+  .calendly-section .sec-lbl { color: var(--gold); margin-bottom: 0.6rem; }
+  .calendly-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700;
+    line-height: 1.12; margin-bottom: 0.5rem;
+  }
+  .calendly-section .cal-sub {
+    font-size: 0.9rem; color: var(--muted); line-height: 1.7;
+    max-width: 480px; margin-bottom: 2rem;
+  }
+  .calendly-inline-widget {
+    min-width: 320px; height: 700px;
+    border-radius: 4px; overflow: hidden;
+  }
+  .cal-note { margin-top: 1rem; font-size: 0.78rem; color: var(--muted); font-style: italic; }
+  .cal-note a { color: var(--gold); }
+
+  /* ── PAYMENT STRIP ── */
+  .payment-strip {
+    background: var(--navy-deep);
+    padding: 3rem 2.5rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+  .payment-strip .sec-lbl { color: var(--gold); margin-bottom: 0.6rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
+  .payment-strip h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+  .payment-strip .pay-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6; }
+  .payment-methods { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  .pay-badge {
+    display: flex; align-items: center; gap: 0.55rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px; padding: 0.65rem 1.1rem;
+    font-size: 0.85rem; font-weight: 500; color: var(--white); transition: all 0.2s;
+  }
+  .pay-badge:hover { background: rgba(201,168,76,0.1); border-color: var(--gold-border); }
+  .pay-badge .pay-icon { font-size: 1.2rem; }
+  .pay-badge.highlight { border-color: var(--gold-border); background: var(--gold-dim); color: var(--gold); }
+
+  /* ── QR + REVIEWS ROW ── */
+  .qr-review-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .qr-block, .review-block {
+    padding: 3.5rem 2.5rem;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;
+  }
+  .qr-block { border-right: 1px solid rgba(201,168,76,0.1); }
+  .qr-block h3, .review-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); line-height: 1.2; }
+  .qr-block p, .review-block p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; max-width: 340px; }
+  .qr-placeholder {
+    width: 160px; height: 160px; background: var(--white); border-radius: 4px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.5rem; padding: 1rem; border: 3px solid var(--gold);
+  }
+  .qr-label { font-size: 0.65rem; color: var(--navy); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem; }
+  .qr-setup-note {
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    border-radius: 2px; padding: 0.8rem 1rem;
+    font-size: 0.78rem; color: rgba(255,255,255,0.65); line-height: 1.6;
+  }
+  .qr-setup-note strong { color: var(--gold); }
+  .qr-setup-note a { color: var(--gold); }
+  .google-review-btn {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    background: var(--white); color: #1a1a1a;
+    padding: 0.9rem 1.5rem; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+    text-decoration: none; transition: all 0.2s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
+  .google-review-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+  .google-g { font-size: 1.2rem; font-weight: 700; background: linear-gradient(135deg,#4285F4,#EA4335,#FBBC04,#34A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stars-preview { color: #FBBC04; font-size: 1rem; letter-spacing: 0.1em; }
+  .review-count { font-size: 0.78rem; color: #666; margin-top: 0.25rem; }
+  .review-note { font-size: 0.78rem; color: var(--muted); font-style: italic; line-height: 1.6; }
+  @media(max-width:700px) {
+    .qr-review-row { grid-template-columns: 1fr; }
+    .qr-block { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.1); }
+    .calendly-section { padding: 3.5rem 1.5rem; }
+    .calendly-inline-widget { height: 600px; }
   }
 </style>
   <!-- Supabase Client Library -->
@@ -419,6 +509,67 @@
   </div>
 
 </div><!-- /contact-layout -->
+
+
+<!-- PAYMENT METHODS STRIP -->
+<section class="payment-strip">
+  <div class="sec-lbl">How to Pay</div>
+  <h3>We Accept All Major Payment Methods</h3>
+  <p class="pay-sub">Payment is due at time of service. All methods confirmed when you book — no surprises.</p>
+  <div class="payment-methods">
+    <div class="pay-badge highlight"><span class="pay-icon">💵</span> Cash</div>
+    <div class="pay-badge highlight"><span class="pay-icon">💳</span> Credit &amp; Debit Cards</div>
+    <div class="pay-badge"><span class="pay-icon">⚡</span> Zelle</div>
+    <div class="pay-badge"><span class="pay-icon">💙</span> Venmo</div>
+    <div class="pay-badge"><span class="pay-icon">💚</span> CashApp</div>
+    <div class="pay-badge"><span class="pay-icon">🔲</span> Square</div>
+    <div class="pay-badge"><span class="pay-icon">🅿️</span> PayPal</div>
+  </div>
+</section>
+
+<!-- QR CODE + GOOGLE REVIEWS ROW -->
+<div class="qr-review-row">
+  <div class="qr-block">
+    <div class="sec-lbl">Scan to Book</div>
+    <h3>Take Us With You</h3>
+    <p>Scan this code to instantly pull up our booking page on your phone — or share it with someone who needs a notary.</p>
+    <div class="qr-placeholder">
+      <!-- Replace with: <img src="your-qr-code.png" alt="Scan to book" style="width:100%"> -->
+      <span style="font-size:3rem;">📱</span>
+      <span class="qr-label">Scan to Book</span>
+    </div>
+    <div class="qr-setup-note">
+      📱 <strong>To activate:</strong> Visit <a href="https://qr-code-generator.com" target="_blank">qr-code-generator.com</a>, paste your Calendly link, download the QR image, and replace the placeholder above with <code>&lt;img src="your-qr.png"&gt;</code>.
+    </div>
+  </div>
+  <div class="review-block">
+    <div class="sec-lbl">Client Reviews</div>
+    <h3>Happy With Your Service?<br>Leave Us a Review</h3>
+    <p>Reviews help other Memphis families find a notary they can trust. Takes less than a minute.</p>
+    <div>
+      <div class="stars-preview">★★★★★</div>
+      <div class="review-count">Rated 5 stars by our clients</div>
+    </div>
+    <a href="https://g.page/r/YOUR-GOOGLE-BUSINESS-ID/review" target="_blank" class="google-review-btn">
+      <span class="google-g">G</span> Leave a Google Review
+    </a>
+    <p class="review-note">Search "Supreme Mobile Notary Memphis" on Google and click "Write a review" — takes about 60 seconds.</p>
+  </div>
+</div>
+
+<!-- CALENDLY BOOKING SECTION -->
+<section class="calendly-section">
+  <div class="sec-lbl">Online Scheduling</div>
+  <h2>Book Your Appointment<br>Instantly</h2>
+  <p class="cal-sub">Pick a date and time — Glenda will confirm and reach out to finalize the details.</p>
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <div class="calendly-inline-widget"
+    data-url="https://calendly.com/YOUR-CALENDLY-USERNAME/notary-appointment?hide_gdpr_banner=1&background_color=0d1b2a&text_color=ffffff&primary_color=c9a84c"
+    style="min-width:320px;height:700px;">
+  </div>
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <p class="cal-note">Prefer to call? Reach Glenda directly at <a href="tel:+19015550000">(901) 555-0000</a> — same-day appointments available.</p>
+</section>
 
 <!-- SERVICE AREA STRIP -->
 <section class="area-strip">
