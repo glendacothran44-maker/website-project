@@ -240,16 +240,16 @@
 
 <!-- NAV -->
 <nav>
-  <a href="supreme-mobile-notary.html" class="nav-logo">
+  <a href="index.html" class="nav-logo">
     <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Service Logo">
     <span>Supreme Mobile Notary</span>
   </a>
   <ul class="nav-links">
-    <li><a href="supreme-services.html">Services</a></li>
-    <li><a href="supreme-pricing.html">Pricing</a></li>
-    <li><a href="supreme-about.html">About</a></li>
-    <li><a href="contact.html" class="active">Contact</a></li>
-    <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+    <li><a href="Services.html">Services</a></li>
+    <li><a href="Pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="Contact.html" class="active">Contact</a></li>
+    <li><a href="Contact.html" class="nav-cta">Book Now</a></li>
   </ul>
 </nav>
 
@@ -257,7 +257,7 @@
 <section class="page-hero">
   <div class="page-hero-deco"></div>
   <div class="breadcrumb">
-    <a href="supreme-mobile-notary.html">Home</a>
+    <a href="index.html">Home</a>
     <span>/</span> Contact
   </div>
   <h1>Let's Get Your<br>Documents <em>Signed.</em></h1>
@@ -442,10 +442,10 @@
 <footer>
   <div class="footer-brand">Supreme Mobile Notary Service<small>Memphis, Tennessee · Licensed &amp; Certified</small></div>
   <ul class="footer-links">
-    <li><a href="supreme-services.html">Services</a></li>
-    <li><a href="supreme-pricing.html">Pricing</a></li>
-    <li><a href="supreme-about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="Services.html">Services</a></li>
+    <li><a href="Pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="Contact.html">Contact</a></li>
   </ul>
   <div class="footer-copy">© 2026 Supreme Mobile Notary Service</div>
 </footer>
@@ -467,10 +467,16 @@
 
   <!-- Supabase Initialization -->
   <script>
-    const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
-    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log("Supabase connected!");
+    (function() {
+      try {
+        const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
+        window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log("Supabase connected successfully!");
+      } catch(e) {
+        console.warn("Supabase init note:", e.message);
+      }
+    })();
   </script>
 </body>
 </html>

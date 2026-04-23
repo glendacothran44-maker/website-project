@@ -33,7 +33,9 @@
     background: rgba(13,27,42,0.96); backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(201,168,76,0.18);
   }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--gold); text-decoration: none; }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .nav-logo img { height: 42px; width: 42px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(201,168,76,0.3); }
+  .nav-logo span { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; letter-spacing: 0.04em; color: var(--gold); }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--gold); }
@@ -303,7 +305,10 @@
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-logo">Supreme Mobile Notary</a>
+  <a href="index.html" class="nav-logo">
+    <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Service Logo">
+    <span>Supreme Mobile Notary</span>
+  </a>
   <ul class="nav-links">
     <li><a href="Services.html">Services</a></li>
     <li><a href="Pricing.html" class="active">Pricing</a></li>
@@ -628,10 +633,16 @@
 
   <!-- Supabase Initialization -->
   <script>
-    const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
-    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log("Supabase connected!");
+    (function() {
+      try {
+        const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
+        window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log("Supabase connected successfully!");
+      } catch(e) {
+        console.warn("Supabase init note:", e.message);
+      }
+    })();
   </script>
 </body>
 </html>
