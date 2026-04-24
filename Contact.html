@@ -188,6 +188,12 @@
     border-radius: 2px; padding: 1.4rem 1.6rem;
     color: #4ade80; font-size: 0.92rem; line-height: 1.7; margin-top: 1rem;
   }
+  .error-msg {
+    display: none;
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 2px; padding: 1.4rem 1.6rem;
+    color: #f87171; font-size: 0.92rem; line-height: 1.7; margin-top: 1rem;
+  }
 
   /* ─── SERVICE AREA STRIP ─── */
   .area-strip {
@@ -363,6 +369,8 @@
 </style>
   <!-- Supabase Client Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Formspree Ajax Library -->
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </head>
 <body>
 
@@ -464,23 +472,20 @@
       To activate:
         1. Go to https://formspree.io and create a free account
         2. Create a new form — you'll get a unique URL like: https://formspree.io/f/XXXXXXXX
-        3. Replace "YOUR_FORMSPREE_ID" in the action attribute below with your actual ID
+        3. Replace "xlgaoqld" in the action attribute below with your actual ID
         4. That's it — form submissions go straight to your email, no server needed!
     -->
-    <div class="formspree-note">
-      📋 <strong>To activate this form:</strong> Sign up free at <a href="https://formspree.io" target="_blank">formspree.io</a>, create a form, and replace <strong>YOUR_FORMSPREE_ID</strong> in the HTML with your unique ID. Submissions will go directly to your email — no monthly fees for basic use.
-    </div>
+
 
     <form
       class="contact-form"
-      action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+      action="https://formspree.io/f/xlgaoqld"
       method="POST"
       id="bookingForm"
+      data-fs-form
     >
-      <!-- Honeypot spam trap (hidden) -->
+      <!-- Honeypot spam trap (prevents spam) -->
       <input type="text" name="_gotcha" style="display:none">
-      <!-- Redirect after submit (optional — remove if using AJAX) -->
-      <input type="hidden" name="_next" value="https://YOUR-USERNAME.github.io/YOUR-REPO/contact.html?sent=true">
 
       <div class="form-row">
         <div class="field">
@@ -550,12 +555,15 @@
 
       <div class="form-submit">
         <p>We'll confirm your appointment by phone or text within a few hours.</p>
-        <button type="submit" class="btn-submit">Send Booking Request →</button>
+        <button type="submit" class="btn-submit" data-fs-submit-btn>Send Booking Request →</button>
       </div>
     </form>
 
-    <div class="success-msg" id="successMsg">
+    <div class="success-msg" id="successMsg" data-fs-success>
       ✅ <strong>Message sent!</strong> Glenda will follow up with you by phone or text to confirm your appointment details.
+    </div>
+    <div class="error-msg" id="errorMsg" data-fs-error style="display:none">
+      ❌ <strong>Something went wrong.</strong> Please try again or call us directly at (901) 555-0000.
     </div>
   </div>
 
@@ -615,7 +623,7 @@
   <p class="cal-sub">Pick a date and time — Glenda will confirm and reach out to finalize the details.</p>
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <div class="calendly-inline-widget"
-    data-url="https://calendly.com/glendacothran44/30min/notary-appointment?hide_gdpr_banner=1&background_color=0d1b2a&text_color=ffffff&primary_color=c9a84c"
+    data-url="https://calendly.com/glendacothran44/30min?hide_gdpr_banner=1&background_color=0d1b2a&text_color=ffffff&primary_color=c9a84c"
     style="min-width:320px;height:700px;">
   </div>
   <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
@@ -653,13 +661,22 @@
 </footer>
 
 <script>
-  // Show success message if redirected back with ?sent=true
-  if (window.location.search.includes('sent=true')) {
-    document.getElementById('successMsg').style.display = 'block';
-    document.getElementById('bookingForm').style.display = 'none';
-  }
+  // ─── FORMSPREE AJAX INIT ───
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', {
+    formElement: '#bookingForm',
+    formId: 'xlgaoqld',
+    onSuccess: function() {
+      document.getElementById('successMsg').style.display = 'block';
+      document.getElementById('errorMsg').style.display   = 'none';
+      document.getElementById('bookingForm').style.display = 'none';
+    },
+    onError: function() {
+      document.getElementById('errorMsg').style.display = 'block';
+    }
+  });
 
-  // Set minimum date to today
+  // ─── SET MIN DATE TO TODAY ───
   const dateInput = document.getElementById('date');
   if (dateInput) {
     const today = new Date().toISOString().split('T')[0];
