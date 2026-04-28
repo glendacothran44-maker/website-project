@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -123,17 +123,6 @@
   .form-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; line-height: 1.12; margin-bottom: 0.5rem; }
   .form-header p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
 
-  /* GitHub Pages note */
-  .formspree-note {
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    border-radius: 2px; padding: 1rem 1.3rem;
-    font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.6;
-    margin-bottom: 1.8rem;
-  }
-  .formspree-note strong { color: var(--gold); }
-  .formspree-note a { color: var(--gold); }
-
-  /* Form fields */
   .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
   .field { display: flex; flex-direction: column; gap: 0.4rem; }
@@ -181,7 +170,6 @@
   }
   .btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,0.3); }
 
-  /* Success message (shown after submit) */
   .success-msg {
     display: none;
     background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25);
@@ -223,7 +211,6 @@
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
 
-  /* ─── RESPONSIVE ─── */
   @media(max-width: 860px) {
     .contact-layout { grid-template-columns: 1fr; padding: 3.5rem 1.5rem; }
     .contact-info { padding-right: 0; position: static; margin-bottom: 3rem; }
@@ -299,16 +286,14 @@
   .qr-placeholder {
     width: 160px; height: 160px; background: var(--white); border-radius: 4px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 0.5rem; padding: 1rem; border: 3px solid var(--gold);
+    gap: 0.5rem; padding: 0.6rem; border: 3px solid var(--gold);
+    overflow: hidden;
   }
   .qr-label { font-size: 0.65rem; color: var(--navy); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem; }
-  .qr-setup-note {
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    border-radius: 2px; padding: 0.8rem 1rem;
-    font-size: 0.78rem; color: rgba(255,255,255,0.65); line-height: 1.6;
+  .qr-active-note {
+    font-size: 0.78rem; color: rgba(201,168,76,0.9); line-height: 1.5;
   }
-  .qr-setup-note strong { color: var(--gold); }
-  .qr-setup-note a { color: var(--gold); }
+  .qr-active-note strong { color: var(--gold); }
   .google-review-btn {
     display: inline-flex; align-items: center; gap: 0.8rem;
     background: var(--white); color: #1a1a1a;
@@ -366,15 +351,14 @@
   }
   .mobile-nav a.mobile-cta:hover { background: var(--gold-light); }
   .mobile-phone { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: rgba(255,255,255,0.3); margin-top: 2rem; letter-spacing: 0.05em; }
+
+  @media(max-width:640px) { .hamburger { display: flex; } }
 </style>
-  <!-- Supabase Client Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Formspree Ajax Library -->
   <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Service Logo">
@@ -392,7 +376,6 @@
   </button>
 </nav>
 
-<!-- MOBILE NAV DRAWER -->
 <div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile navigation">
   <a href="Services.html" onclick="closeMobileNav()">Services</a>
   <a href="Pricing.html" onclick="closeMobileNav()">Pricing</a>
@@ -402,7 +385,6 @@
   <div class="mobile-phone">(901) 555-0000</div>
 </div>
 
-<!-- HERO -->
 <section class="page-hero">
   <div class="page-hero-deco"></div>
   <div class="breadcrumb">
@@ -413,14 +395,10 @@
   <p>Call, text, or fill out the form below. We'll confirm your appointment quickly — same-day service available throughout the Memphis area.</p>
 </section>
 
-<!-- MAIN CONTACT LAYOUT -->
 <div class="contact-layout">
-
-  <!-- LEFT: CONTACT INFO -->
   <div class="contact-info">
     <div class="sec-lbl">Reach Glenda Directly</div>
     <h2>Get in Touch</h2>
-
     <div class="contact-methods">
       <a href="tel:+19015550000" class="contact-method">
         <span class="cm-icon">📞</span>
@@ -447,7 +425,6 @@
         </div>
       </a>
     </div>
-
     <div class="availability-box">
       <h3><span class="dot"></span> Availability</h3>
       <div class="avail-grid">
@@ -459,24 +436,11 @@
     </div>
   </div>
 
-  <!-- RIGHT: BOOKING FORM -->
   <div class="contact-form-wrap">
     <div class="form-header">
       <h2>Book an Appointment</h2>
       <p>Fill out the form and Glenda will follow up to confirm your appointment details, location, and final pricing.</p>
     </div>
-
-    <!-- 
-      GITHUB PAGES SETUP INSTRUCTIONS:
-      This form uses Formspree — a free form backend that works perfectly with GitHub Pages.
-      To activate:
-        1. Go to https://formspree.io and create a free account
-        2. Create a new form — you'll get a unique URL like: https://formspree.io/f/XXXXXXXX
-        3. Replace "xlgaoqld" in the action attribute below with your actual ID
-        4. That's it — form submissions go straight to your email, no server needed!
-    -->
-
-
     <form
       class="contact-form"
       action="https://formspree.io/f/xlgaoqld"
@@ -484,9 +448,7 @@
       id="bookingForm"
       data-fs-form
     >
-      <!-- Honeypot spam trap (prevents spam) -->
       <input type="text" name="_gotcha" style="display:none">
-
       <div class="form-row">
         <div class="field">
           <label for="fname">First Name *</label>
@@ -497,7 +459,6 @@
           <input type="text" id="lname" name="last_name" placeholder="Smith" required>
         </div>
       </div>
-
       <div class="form-row">
         <div class="field">
           <label for="phone">Phone Number *</label>
@@ -508,7 +469,6 @@
           <input type="email" id="email" name="email" placeholder="jane@email.com">
         </div>
       </div>
-
       <div class="field">
         <label for="service">Service Needed *</label>
         <select id="service" name="service" required>
@@ -524,7 +484,6 @@
           <option value="Other">Other — I'll describe below</option>
         </select>
       </div>
-
       <div class="form-row">
         <div class="field">
           <label for="date">Preferred Date *</label>
@@ -542,23 +501,19 @@
           </select>
         </div>
       </div>
-
       <div class="field">
         <label for="location">Signing Location / City *</label>
         <input type="text" id="location" name="location" placeholder="e.g. Germantown, my home address, Baptist Hospital..." required>
       </div>
-
       <div class="field">
         <label for="message">Additional Details</label>
         <textarea id="message" name="message" placeholder="Anything helpful — number of signers, document details, special circumstances..."></textarea>
       </div>
-
       <div class="form-submit">
         <p>We'll confirm your appointment by phone or text within a few hours.</p>
         <button type="submit" class="btn-submit" data-fs-submit-btn>Send Booking Request →</button>
       </div>
     </form>
-
     <div class="success-msg" id="successMsg" data-fs-success>
       ✅ <strong>Message sent!</strong> Glenda will follow up with you by phone or text to confirm your appointment details.
     </div>
@@ -566,11 +521,8 @@
       ❌ <strong>Something went wrong.</strong> Please try again or call us directly at (901) 555-0000.
     </div>
   </div>
+</div>
 
-</div><!-- /contact-layout -->
-
-
-<!-- PAYMENT METHODS STRIP -->
 <section class="payment-strip">
   <div class="sec-lbl">How to Pay</div>
   <h3>We Accept All Major Payment Methods</h3>
@@ -592,14 +544,11 @@
     <div class="sec-lbl">Scan to Book</div>
     <h3>Take Us With You</h3>
     <p>Scan this code to instantly pull up our booking page on your phone — or share it with someone who needs a notary.</p>
+    <!-- ✅ LIVE QR CODE — points to https://calendly.com/glendacothran44/30min -->
     <div class="qr-placeholder">
-      <!-- Replace with: <img src="your-qr-code.png" alt="Scan to book" style="width:100%"> -->
-      <span style="font-size:3rem;">📱</span>
-      <span class="qr-label">Scan to Book</span>
+      <img src="data:image/png;base64,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" alt="Scan to book Supreme Mobile Notary on Calendly" style="width:100%;height:100%;border-radius:2px;display:block;">
     </div>
-    <div class="qr-setup-note">
-      📱 <strong>To activate:</strong> Visit <a href="https://qr-code-generator.com" target="_blank">qr-code-generator.com</a>, paste your Calendly link, download the QR image, and replace the placeholder above with <code>&lt;img src="your-qr.png"&gt;</code>.
-    </div>
+    <p class="qr-active-note">✅ <strong>Live &amp; Active</strong> — Scan with any phone camera to book instantly</p>
   </div>
   <div class="review-block">
     <div class="sec-lbl">Client Reviews</div>
@@ -616,7 +565,6 @@
   </div>
 </div>
 
-<!-- CALENDLY BOOKING SECTION -->
 <section class="calendly-section">
   <div class="sec-lbl">Online Scheduling</div>
   <h2>Book Your Appointment<br>Instantly</h2>
@@ -630,7 +578,6 @@
   <p class="cal-note">Prefer to call? Reach Glenda directly at <a href="tel:+19015550000">(901) 555-0000</a> — same-day appointments available.</p>
 </section>
 
-<!-- SERVICE AREA STRIP -->
 <section class="area-strip">
   <div class="sec-lbl">We Travel To You</div>
   <p>Serving Memphis and the entire Mid-South region — 7 days a week.</p>
@@ -645,7 +592,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-brand">Supreme Mobile Notary Service<small>Memphis, Tennessee · Licensed &amp; Certified</small></div>
   <ul class="footer-links">
@@ -658,7 +604,6 @@
 </footer>
 
 <script>
-  // ─── FORMSPREE AJAX INIT ───
   window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
   formspree('initForm', {
     formElement: '#bookingForm',
@@ -673,7 +618,6 @@
     }
   });
 
-  // ─── SET MIN DATE TO TODAY ───
   const dateInput = document.getElementById('date');
   if (dateInput) {
     const today = new Date().toISOString().split('T')[0];
@@ -681,9 +625,7 @@
   }
 </script>
 
-  <!-- Supabase Initialization -->
-  <script>
-    // ─── HAMBURGER ───
+<script>
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobileNav');
   hamburger.addEventListener('click', () => {
@@ -704,17 +646,16 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
 
-
-    (function() {
-      try {
-        const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
-        window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log("Supabase connected successfully!");
-      } catch(e) {
-        console.warn("Supabase init note:", e.message);
-      }
-    })();
-  </script>
+  (function() {
+    try {
+      const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
+      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
+      window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      console.log("Supabase connected successfully!");
+    } catch(e) {
+      console.warn("Supabase init note:", e.message);
+    }
+  })();
+</script>
 </body>
 </html>
