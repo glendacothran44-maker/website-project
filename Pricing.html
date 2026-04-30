@@ -644,52 +644,66 @@
       btn.classList.add('open');
     }
   }<script>
+   html}
+</script>
+
+<section style="max-width:900px; margin:3rem auto; padding:0 1.5rem;">
+  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Our Clients</h2>
+  <p id="clients-loading" style="color:#666;">Loading clients...</p>
+  <p id="clients-error" style="display:none; color:red;"></p>
+  <table id="clients-table" style="display:none; width:100%; border-collapse:collapse;">
+    <thead>
+      <tr style="background:#f5f5f5;">
+        <th style="text-align:left; padding:10px 12px; border-bottom:2px solid #ddd;">Name</th>
+        <th style="text-align:left; padding:10px 12px; border-bottom:2px solid #ddd;">Email</th>
+        <th style="text-align:left; padding:10px 12px; border-bottom:2px solid #ddd;">Phone</th>
+        <th style="text-align:left; padding:10px 12px; border-bottom:2px solid #ddd;">Notes</th>
+      </tr>
+    </thead>
+    <tbody id="clients-body"></tbody>
+  </table>
+</section>
+
+<script>
 async function loadClients() {
-  const { data, error } = await window.db
-    .from('clients')
-    .select('*');
+  try {
+    const { data, error } = await window.db
+      .from('clients')
+      .select('*');
 
-  document.getElementById('clients-loading').style.display = 'none';
+    document.getElementById('clients-loading').style.display = 'none';
 
-  if (error) {
-    const errDiv = document.getElementById('clients-error');
-    errDiv.style.display = 'block';
-    errDiv.textContent = 'Error: ' + error.message;
-    return;
+    if (error) {
+      const e = document.getElementById('clients-error');
+      e.style.display = 'block';
+      e.textContent = 'Could not load clients: ' + error.message;
+      return;
+    }
+
+    const tbody = document.getElementById('clients-body');
+    data.forEach(client => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td style="padding:10px 12px; border-bottom:1px solid #eee;">${client.name || ''}</td>
+        <td style="padding:10px 12px; border-bottom:1px solid #eee;">${client.email || ''}</td>
+        <td style="padding:10px 12px; border-bottom:1px solid #eee;">${client.phone || ''}</td>
+        <td style="padding:10px 12px; border-bottom:1px solid #eee;">${client.notes || ''}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    document.getElementById('clients-table').style.display = 'table';
+
+  } catch(err) {
+    document.getElementById('clients-loading').style.display = 'none';
+    const e = document.getElementById('clients-error');
+    e.style.display = 'block';
+    e.textContent = 'Error: ' + err.message;
   }
-
-  const tbody = document.getElementById('clients-body');
-  data.forEach(client => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td style="padding:8px; border-bottom:1px solid #eee;">${client.name}</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">${client.email}</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">${client.phone}</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">${client.notes}</td>
-    `;
-    tbody.appendChild(row);
-  });
-
-  document.getElementById('clients-table').style.display = 'table';
 }
 
-loadClients();
+window.addEventListener('load', loadClients);
 </script>
 
-</script>
-
-  <!-- Supabase Initialization -->
-  <script>
-    (function() {
-      try {
-        const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
-        window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log("Supabase connected successfully!");
-      } catch(e) {
-        console.warn("Supabase init note:", e.message);
-      }
-    })();
-  </script>
 </body>
 </html>
