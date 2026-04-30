@@ -77,7 +77,22 @@
     max-width: 500px; line-height: 1.8; margin-bottom: 0;
     animation: fadeUp 0.6s 0.35s ease both;
   }
-
+<section id="clients-section">
+  <h2>Our Clients</h2>
+  <div id="clients-loading">Loading clients...</div>
+  <div id="clients-error" style="display:none; color:red;"></div>
+  <table id="clients-table" style="display:none; width:100%; border-collapse:collapse;">
+    <thead>
+      <tr>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Name</th>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Email</th>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Phone</th>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Notes</th>
+      </tr>
+    </thead>
+    <tbody id="clients-body"></tbody>
+  </table>
+</section>
   /* ─── TN STATE NOTE ─── */
   .state-note {
     background: var(--gold-dim); border: 1px solid var(--gold-border);
@@ -628,7 +643,39 @@
       answer.classList.add('open');
       btn.classList.add('open');
     }
+  }<script>
+async function loadClients() {
+  const { data, error } = await window.db
+    .from('clients')
+    .select('*');
+
+  document.getElementById('clients-loading').style.display = 'none';
+
+  if (error) {
+    const errDiv = document.getElementById('clients-error');
+    errDiv.style.display = 'block';
+    errDiv.textContent = 'Error: ' + error.message;
+    return;
   }
+
+  const tbody = document.getElementById('clients-body');
+  data.forEach(client => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td style="padding:8px; border-bottom:1px solid #eee;">${client.name}</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">${client.email}</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">${client.phone}</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">${client.notes}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  document.getElementById('clients-table').style.display = 'table';
+}
+
+loadClients();
+</script>
+
 </script>
 
   <!-- Supabase Initialization -->

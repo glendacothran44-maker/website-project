@@ -288,8 +288,9 @@
   }
   .mobile-nav a.mobile-cta:hover { background: var(--gold-light); }
   .mobile-phone { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: rgba(255,255,255,0.3); margin-top: 2rem; letter-spacing: 0.05em; }
+
+  @media(max-width:640px) { .hamburger { display: flex; } }
 </style>
-  <!-- Supabase Client Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -582,7 +583,7 @@
   </div>
 </section>
 
-<!-- SERVICE AREA -->
+<!-- SERVICE AREA — Tennessee only -->
 <section class="service-area">
   <div class="sec-lbl">Coverage Area</div>
   <h2>We Travel to You</h2>
@@ -595,9 +596,6 @@
     <div class="area-pill"><span class="city">Arlington</span><span class="state">Tennessee</span></div>
     <div class="area-pill"><span class="city">Cordova</span><span class="state">Tennessee</span></div>
     <div class="area-pill"><span class="city">Millington</span><span class="state">Tennessee</span></div>
-    <div class="area-pill"><span class="city">Southaven</span><span class="state">Mississippi</span></div>
-    <div class="area-pill"><span class="city">Olive Branch</span><span class="state">Mississippi</span></div>
-    <div class="area-pill"><span class="city">Horn Lake</span><span class="state">Mississippi</span></div>
   </div>
 </section>
 
@@ -623,9 +621,7 @@
   <div class="footer-copy">© 2026 Supreme Mobile Notary Service</div>
 </footer>
 
-  <!-- Supabase Initialization -->
-  <script>
-    // ─── HAMBURGER ───
+<script>
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobileNav');
   hamburger.addEventListener('click', () => {
@@ -646,17 +642,16 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
 
-
-    (function() {
-      try {
-        const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
-        window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log("Supabase connected successfully!");
-      } catch(e) {
-        console.warn("Supabase init note:", e.message);
-      }
-    })();
-  </script>
+  (function() {
+    try {
+      const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
+      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
+      window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      console.log("Supabase connected successfully!");
+    } catch(e) {
+      console.warn("Supabase init note:", e.message);
+    }
+  })();
+</script>
 </body>
 </html>
