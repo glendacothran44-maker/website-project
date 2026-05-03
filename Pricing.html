@@ -1,412 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pricing | Supreme Mobile Notary Service · Memphis, TN</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing | Supreme Mobile Notary Service · Memphis, TN</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #112235;
+    --navy-deep: #070f18;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: rgba(201,168,76,0.12);
+    --gold-border: rgba(201,168,76,0.25);
+    --cream: #f5f0e8;
+    --white: #ffffff;
+    --slate: #4a5568;
+    --muted: rgba(255,255,255,0.5);
+    --muted-less: rgba(255,255,255,0.65);
+  }
 
-  <!-- Supabase CDN — must be first -->
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: rgba(13,27,42,0.96); backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.18);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .nav-logo img { height: 42px; width: 42px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(201,168,76,0.3); }
+  .nav-logo span { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; letter-spacing: 0.04em; color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-cta { background: var(--gold) !important; color: var(--navy) !important; padding: 0.5rem 1.2rem; border-radius: 2px; }
+  .nav-cta:hover { background: var(--gold-light) !important; }
+
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    padding: 9rem 2.5rem 5rem;
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #0d1b2a 0%, #112235 60%, #0a1520 100%);
+  }
+  .page-hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
+  }
+  .page-hero-deco {
+    position: absolute; top: 0; right: 0; bottom: 0; width: 45%;
+    background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.025) 50%);
+    pointer-events: none;
+  }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb span { color: rgba(255,255,255,0.2); }
+
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 700;
+    line-height: 1.06; max-width: 580px; margin-bottom: 1.4rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--gold); }
+  .page-hero p {
+    font-size: 1.05rem; font-weight: 300; color: var(--muted-less);
+    max-width: 500px; line-height: 1.8; margin-bottom: 0;
+    animation: fadeUp 0.6s 0.35s ease both;
+  }
+<section id="clients-section">
+  <h2>Our Clients</h2>
+  <div id="clients-loading">Loading clients...</div>
+  <div id="clients-error" style="display:none; color:red;"></div>
+  <table id="clients-table" style="display:none; width:100%; border-collapse:collapse;">
+    <thead>
+      <tr>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Name</th>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Email</th>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Phone</th>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Notes</th>
+      </tr>
+    </thead>
+    <tbody id="clients-body"></tbody>
+  </table>
+</section>
+  /* ─── TN STATE NOTE ─── */
+  .state-note {
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    border-radius: 2px; padding: 1.2rem 1.8rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin: 3rem 2.5rem 0; max-width: 820px;
+    animation: fadeUp 0.6s 0.45s ease both;
+  }
+  .state-note .note-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .state-note p { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
+  .state-note strong { color: var(--gold); font-weight: 500; }
+
+  /* ─── PRICING SECTION WRAPPER ─── */
+  .pricing-wrap { padding: 5rem 2.5rem; }
+  .sec-lbl { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; }
+  .sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.12; margin-bottom: 0.6rem; }
+  .sec-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 500px; margin-bottom: 2.5rem; }
+
+  /* ─── GENERAL NOTARIZATIONS TABLE ─── */
+  .price-table {
+    width: 100%; max-width: 780px; border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  .price-table thead tr {
+    border-bottom: 1px solid var(--gold-border);
+  }
+  .price-table thead th {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; padding: 0 0 0.9rem;
+    text-align: left;
+  }
+  .price-table thead th:last-child { text-align: right; }
+  .price-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.15s;
+  }
+  .price-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+  .price-table tbody td { padding: 1rem 0; font-size: 0.92rem; color: var(--muted-less); vertical-align: top; }
+  .price-table tbody td:first-child { color: var(--white); font-weight: 500; }
+  .price-table tbody td:last-child { text-align: right; }
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--gold);
+    white-space: nowrap;
+  }
+  .price-note { font-size: 0.78rem; color: var(--muted); display: block; margin-top: 0.15rem; }
+  .per-sig { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  .table-footnote { font-size: 0.78rem; color: var(--muted); margin-top: 0.8rem; font-style: italic; }
+
+  /* ─── LOAN SIGNING CARDS ─── */
+  .loan-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1.2rem; max-width: 900px; }
+  .loan-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 2px; padding: 2rem 1.8rem;
+    background: rgba(255,255,255,0.02);
+    position: relative; transition: all 0.25s;
+  }
+  .loan-card:hover { border-color: var(--gold-border); background: var(--gold-dim); transform: translateY(-3px); }
+  .loan-card.featured {
+    border-color: var(--gold-border); background: var(--gold-dim);
+  }
+  .featured-badge {
+    position: absolute; top: -1px; right: 1.5rem;
+    background: var(--gold); color: var(--navy);
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 0 0 3px 3px;
+  }
+  .loan-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .loan-card .card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.4rem; min-height: 2.5rem; }
+  .loan-price { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .loan-price sup { font-size: 1.1rem; vertical-align: top; margin-top: 0.4rem; display: inline-block; }
+  .loan-price .from { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.2rem; }
+  .loan-includes { list-style: none; margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .loan-includes li { font-size: 0.82rem; color: var(--muted-less); display: flex; align-items: center; gap: 0.5rem; }
+  .loan-includes li::before { content: '✓'; color: var(--gold); font-size: 0.75rem; flex-shrink: 0; }
+
+  /* ─── POA / WILLS ─── */
+  .poa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1px; max-width: 900px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
+  .poa-cell {
+    background: var(--navy); padding: 1.8rem 1.5rem;
+    transition: background 0.2s;
+  }
+  .poa-cell:hover { background: var(--navy-mid); }
+  .poa-cell .poa-icon { font-size: 1.4rem; margin-bottom: 0.7rem; }
+  .poa-cell h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--white); }
+  .poa-cell p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+  .poa-price { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+  .poa-price .poa-from { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.1rem; }
+
+  /* ─── TRAVEL & SURCHARGES ─── */
+  .fees-section { background: var(--cream); padding: 5rem 2.5rem; }
+  .fees-section .sec-lbl { color: #8a6d2a; }
+  .fees-section .sec-title { color: var(--navy); }
+  .fees-section .sec-sub { color: var(--slate); }
+  .fees-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.5rem; max-width: 900px; }
+  .fee-card {
+    background: var(--white); border: 1px solid rgba(13,27,42,0.08);
+    padding: 1.8rem; border-radius: 2px; position: relative; overflow: hidden;
+    transition: all 0.25s;
+  }
+  .fee-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.25s; transform-origin: left; }
+  .fee-card:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(13,27,42,0.1); }
+  .fee-card:hover::after { transform: scaleX(1); }
+  .fee-card .fee-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+  .fee-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+  .fee-card .fee-amount { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); margin-bottom: 0.5rem; }
+  .fee-card .fee-placeholder { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: #b8860b; background: #fef9ee; border: 1px dashed #d4a017; padding: 0.2rem 0.6rem; border-radius: 2px; display: inline-block; margin-bottom: 0.5rem; }
+  .fee-card p { font-size: 0.83rem; color: var(--slate); line-height: 1.65; }
+
+  /* ─── FAQ ─── */
+  .faq-section { background: var(--navy); padding: 5rem 2.5rem; }
+  .faq-section::before { content: ''; display: block; height: 1px; background: linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent); margin-bottom: 5rem; margin-top: -5rem; }
+  .faq-list { max-width: 760px; display: flex; flex-direction: column; gap: 0; }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .faq-question {
+    width: 100%; background: none; border: none; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
+    text-align: left; padding: 1.4rem 0; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    transition: color 0.2s;
+  }
+  .faq-question:hover { color: var(--gold); }
+  .faq-question .faq-icon { color: var(--gold); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.25s; }
+  .faq-question.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer { font-size: 0.88rem; color: var(--muted); line-height: 1.8; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s ease; padding: 0; }
+  .faq-answer.open { max-height: 200px; padding-bottom: 1.4rem; }
+
+  /* ─── BOTTOM CTA ─── */
+  .bottom-cta { background: var(--gold); padding: 5rem 2.5rem; text-align: center; }
+  .bottom-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,5vw,3.5rem); font-weight: 700; color: var(--navy); margin-bottom: 0.8rem; line-height: 1.1; }
+  .bottom-cta p { font-size: 1rem; color: rgba(13,27,42,0.65); margin-bottom: 2.5rem; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-dark { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--navy); color: var(--white); padding: 1rem 2rem; border-radius: 2px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+  .btn-dark:hover { background: #1a2f45; transform: translateY(-2px); }
+  .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--navy); border: 2px solid var(--navy); padding: 1rem 2rem; border-radius: 2px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { background: rgba(13,27,42,0.08); }
+
+  /* ─── FOOTER ─── */
+  footer { background: var(--navy-deep); padding: 2.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; border-top: 1px solid rgba(201,168,76,0.12); }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--gold); }
+  .footer-brand small { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.3); font-weight: 300; margin-top: 0.15rem; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { color: rgba(255,255,255,0.35); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.2); }
+
+
+  /* ─── PAYMENT STRIP ─── */
+  .payment-strip {
+    background: var(--navy-deep);
+    padding: 3rem 2.5rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+  .payment-strip .sec-lbl { color: var(--gold); margin-bottom: 0.6rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
+  .payment-strip h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+  .payment-strip .pay-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6; }
+  .payment-methods { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  .pay-badge {
+    display: flex; align-items: center; gap: 0.55rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px; padding: 0.65rem 1.1rem;
+    font-size: 0.85rem; font-weight: 500; color: var(--white);
+    transition: all 0.2s;
+  }
+  .pay-badge:hover { background: rgba(201,168,76,0.1); border-color: var(--gold-border); }
+  .pay-badge .pay-icon { font-size: 1.2rem; }
+  .pay-badge.highlight { border-color: var(--gold-border); background: var(--gold-dim); color: var(--gold); }
+
+  /* ─── MOBILE MENU ─── */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; background: none; border: none; cursor: pointer;
+    padding: 0.4rem; z-index: 200;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px; background: var(--gold);
+    border-radius: 2px; transition: all 0.3s ease; transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-nav {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(7,15,24,0.98); backdrop-filter: blur(12px);
+    z-index: 150; flex-direction: column; align-items: center;
+    justify-content: center; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav.open { display: flex; opacity: 1; pointer-events: all; }
+  .mobile-nav a {
+    color: rgba(255,255,255,0.7); text-decoration: none; font-size: 1.8rem;
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    letter-spacing: 0.04em; padding: 1rem 2rem; transition: color 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.05); width: 100%; text-align: center;
+  }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-nav a.mobile-cta {
+    color: var(--navy); background: var(--gold); margin-top: 1.5rem;
+    border-radius: 2px; width: auto; font-size: 1rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 1rem 2.5rem; border-bottom: none;
+  }
+  .mobile-nav a.mobile-cta:hover { background: var(--gold-light); }
+  .mobile-phone { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: rgba(255,255,255,0.3); margin-top: 2rem; letter-spacing: 0.05em; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media(max-width:640px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .page-hero { padding: 7rem 1.5rem 3.5rem; }
+    .state-note { margin: 2rem 1.5rem 0; }
+    .pricing-wrap, .fees-section, .faq-section, .bottom-cta { padding: 3.5rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+    .hamburger { display: flex; }
+    .nav-links { display: none; }
+  }
+</style>
+  <!-- Supabase Client Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --gold: #c9a84c;
-      --gold-light: #e2c47a;
-      --dark: #0d0d0d;
-      --dark2: #141414;
-      --dark3: #1c1c1c;
-      --text: #e8e8e8;
-      --muted: #888;
-      --border: #2a2a2a;
-      --white: #ffffff;
-      --red: #ff6b6b;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--dark);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    /* ── NAV ── */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.2rem 3rem;
-      background: var(--dark);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: var(--white);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
-    .nav-logo img { height: 40px; width: 40px; border-radius: 50%; object-fit: cover; }
-    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
-    .nav-book {
-      background: var(--gold);
-      color: var(--dark);
-      padding: 0.55rem 1.4rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .nav-book:hover { background: var(--gold-light); }
-
-    /* ── HERO ── */
-    .hero {
-      padding: 5rem 3rem 4rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .breadcrumb { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
-    .breadcrumb a { color: var(--muted); text-decoration: none; }
-    .breadcrumb a:hover { color: var(--gold); }
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--white);
-      margin-bottom: 1.25rem;
-    }
-    .hero h1 em { color: var(--gold); font-style: italic; }
-    .hero p { font-size: 1.1rem; color: var(--muted); max-width: 560px; }
-
-    /* ── SECTIONS ── */
-    .section { padding: 4rem 3rem; max-width: 900px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-    }
-    .section h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-    }
-    .section > p { color: var(--muted); margin-bottom: 2rem; }
-    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
-
-    /* ── STATE FEE NOTICE ── */
-    .notice {
-      background: var(--dark3);
-      border-left: 3px solid var(--gold);
-      padding: 1rem 1.5rem;
-      border-radius: 0 6px 6px 0;
-      margin: 0 3rem 3rem;
-      max-width: 854px;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
-    .notice strong { color: var(--text); }
-
-    /* ── TABLE ── */
-    .price-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    .price-table th {
-      text-align: left;
-      padding: 10px 14px;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--gold);
-      border-bottom: 1px solid var(--border);
-    }
-    .price-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 0.93rem; color: var(--text); }
-    .price-table tr:last-child td { border-bottom: none; }
-    .price-table .fee-col { color: var(--gold); font-weight: 600; white-space: nowrap; }
-    .table-note { font-size: 0.82rem; color: var(--muted); margin-top: 0.75rem; font-style: italic; }
-
-    /* ── CARDS ── */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-    .card {
-      background: var(--dark3);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.75rem;
-      position: relative;
-    }
-    .card.featured { border-color: var(--gold); }
-    .card-badge {
-      position: absolute;
-      top: -1px; right: 1.5rem;
-      background: var(--gold);
-      color: var(--dark);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 3px 10px;
-      border-radius: 0 0 6px 6px;
-    }
-    .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
-    .card h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
-    .card .price { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); margin: 0.5rem 0; }
-    .card .price span { font-size: 0.9rem; color: var(--muted); font-family: 'Inter', sans-serif; }
-    .card ul { list-style: none; margin-top: 1rem; }
-    .card ul li { font-size: 0.88rem; color: var(--muted); padding: 0.3rem 0; padding-left: 1.1rem; position: relative; }
-    .card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-size: 0.8rem; }
-
-    /* ── SURCHARGES ── */
-    .surcharge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
-    .surcharge-card {
-      background: var(--dark3);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.5rem;
-      text-align: center;
-    }
-    .surcharge-card .s-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-    .surcharge-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
-    .surcharge-card .s-price { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold); margin: 0.4rem 0; }
-    .surcharge-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
-
-    /* ── FAQ ── */
-    .faq-list { margin-top: 1.5rem; }
-    .faq-item { border-bottom: 1px solid var(--border); }
-    .faq-question {
-      width: 100%;
-      background: none;
-      border: none;
-      color: var(--text);
-      text-align: left;
-      padding: 1.1rem 0;
-      font-size: 0.97rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: 'Inter', sans-serif;
-    }
-    .faq-question:hover { color: var(--gold); }
-    .faq-question .faq-icon { color: var(--gold); font-size: 1.3rem; line-height: 1; transition: transform 0.25s; }
-    .faq-answer { display: none; padding-bottom: 1rem; font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
-    .faq-item.open .faq-answer { display: block; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-    /* ── PAYMENT ── */
-    .payment-methods { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
-    .pm {
-      background: var(--dark3);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.6rem 1.2rem;
-      font-size: 0.88rem;
-      color: var(--text);
-    }
-
-    /* ── CTA ── */
-    .cta-section {
-      background: var(--gold);
-      padding: 4rem 3rem;
-      text-align: center;
-    }
-    .cta-section h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-      color: var(--dark);
-      margin-bottom: 0.75rem;
-    }
-    .cta-section p { color: rgba(0,0,0,0.65); margin-bottom: 2rem; }
-    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-dark {
-      background: var(--dark);
-      color: var(--white);
-      padding: 0.8rem 2rem;
-      border-radius: 4px;
-      text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 600;
-      transition: background 0.2s;
-    }
-    .btn-dark:hover { background: #222; }
-    .btn-outline-dark {
-      border: 2px solid var(--dark);
-      color: var(--dark);
-      padding: 0.8rem 2rem;
-      border-radius: 4px;
-      text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-    .btn-outline-dark:hover { background: var(--dark); color: var(--white); }
-
-    /* ── CLIENTS SECTION ── */
-    .clients-section {
-      padding: 4rem 3rem;
-      background: var(--dark2);
-      border-top: 1px solid var(--border);
-    }
-    .clients-inner { max-width: 900px; margin: 0 auto; }
-    .clients-inner .section-label { display: block; margin-bottom: 0.5rem; }
-    .clients-inner h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 0.5rem;
-    }
-    .clients-inner > p { color: var(--muted); font-size: 0.92rem; margin-bottom: 2rem; }
-    #clients-loading { color: var(--muted); font-style: italic; }
-    #clients-error {
-      display: none;
-      color: var(--red);
-      background: rgba(255,107,107,0.08);
-      border: 1px solid rgba(255,107,107,0.2);
-      padding: 1rem 1.25rem;
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-    #clients-table {
-      display: none;
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.93rem;
-    }
-    #clients-table thead th {
-      text-align: left;
-      padding: 10px 14px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      border-bottom: 2px solid var(--gold);
-      font-weight: 600;
-    }
-    #clients-table tbody td {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
-    }
-    #clients-table tbody tr:hover { background: var(--dark3); }
-    #clients-table tbody tr:last-child td { border-bottom: none; }
-
-    /* ── FOOTER ── */
-    footer {
-      background: #080808;
-      padding: 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 2rem;
-      border-top: 1px solid var(--border);
-    }
-    .footer-brand p { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; }
-    .footer-brand .brand-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      color: var(--white);
-    }
-    .footer-links { display: flex; gap: 2rem; list-style: none; }
-    .footer-links a { text-decoration: none; color: var(--muted); font-size: 0.85rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-copy { color: var(--muted); font-size: 0.82rem; align-self: flex-end; }
-
-    /* ── MOBILE NAV ── */
-    .mobile-nav-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
-    .mobile-nav { display: none; }
-
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .nav-book { display: none; }
-      .mobile-nav-toggle { display: block; }
-      .mobile-nav {
-        display: flex;
-        flex-direction: column;
-        background: var(--dark2);
-        padding: 1rem 1.5rem;
-        gap: 0.5rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .mobile-nav.hidden { display: none; }
-      .mobile-nav a { color: var(--muted); text-decoration: none; padding: 0.6rem 0; font-size: 0.95rem; border-bottom: 1px solid var(--border); }
-      .mobile-nav a:last-child { border-bottom: none; color: var(--gold); font-weight: 600; }
-      .hero { padding: 3rem 1.5rem 2rem; }
-      .section { padding: 3rem 1.5rem; }
-      .notice { margin: 0 1.5rem 2rem; }
-      .cta-section { padding: 3rem 1.5rem; }
-      .clients-section { padding: 3rem 1.5rem; }
-      footer { padding: 2rem 1.5rem; flex-direction: column; }
-      #clients-table { font-size: 0.82rem; }
-      #clients-table thead th, #clients-table tbody td { padding: 8px 10px; }
-    }
-  </style>
 </head>
 <body>
 
-<!-- ── NAVIGATION ── -->
+<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Service Logo">
-    Supreme Mobile Notary
+    <span>Supreme Mobile Notary</span>
   </a>
   <ul class="nav-links">
     <li><a href="Services.html">Services</a></li>
     <li><a href="Pricing.html" class="active">Pricing</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="Contact.html">Contact</a></li>
+    <li><a href="Contact.html" class="nav-cta">Book Now</a></li>
   </ul>
-  <a href="Contact.html" class="nav-book">Book Now</a>
-  <button class="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">☰</button>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-<div class="mobile-nav hidden" id="mobileNav">
-  <a href="Services.html">Services</a>
-  <a href="Pricing.html">Pricing</a>
-  <a href="about.html">About</a>
-  <a href="Contact.html">Contact</a>
-  <a href="Contact.html">📅 Book Now</a>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="Services.html" onclick="closeMobileNav()">Services</a>
+  <a href="Pricing.html" onclick="closeMobileNav()">Pricing</a>
+  <a href="about.html" onclick="closeMobileNav()">About</a>
+  <a href="Contact.html" onclick="closeMobileNav()">Contact</a>
+  <a href="Contact.html" class="mobile-cta">📅 Book Now</a>
+  <div class="mobile-phone">(901) 555-0000</div>
 </div>
 
-<!-- ── HERO ── -->
-<div class="hero">
-  <p class="breadcrumb"><a href="index.html">Home</a> / Pricing</p>
-  <h1>Clear, Honest <em>Pricing.</em></h1>
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-deco"></div>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    Pricing
+  </div>
+  <h1>Clear, Honest<br><em>Pricing.</em></h1>
   <p>No hidden fees. No surprises. Know exactly what you'll pay before we arrive — and call us anytime with questions.</p>
+</section>
+
+<!-- TN STATE NOTE -->
+<div class="state-note">
+  <span class="note-icon">📌</span>
+  <p><strong>Tennessee State Fee Cap:</strong> Tennessee law limits notary fees to <strong>$5.00 per notarial act</strong> (signature). Our service and travel fees are separate from this state-regulated amount and cover our time, travel, and availability to come directly to you.</p>
 </div>
 
-<!-- ── STATE FEE NOTICE ── -->
-<div class="notice">
-  📌 <strong>Tennessee State Fee Cap:</strong> Tennessee law limits notary fees to <strong>$5.00 per notarial act</strong> (signature). Our service and travel fees are separate from this state-regulated amount and cover our time, travel, and availability to come directly to you.
-</div>
+<!-- ─── GENERAL NOTARIZATIONS ─── -->
+<section class="pricing-wrap">
+  <div class="sec-lbl">Standard Services</div>
+  <h2 class="sec-title">General Notarizations</h2>
+  <p class="sec-sub">For individual documents, affidavits, acknowledgments, jurats, and most standard notarizations.</p>
 
-<hr class="divider">
-
-<!-- ── GENERAL NOTARIZATIONS ── -->
-<div class="section">
-  <p class="section-label">Standard Services</p>
-  <h2>General Notarizations</h2>
-  <p>For individual documents, affidavits, acknowledgments, jurats, and most standard notarizations.</p>
   <table class="price-table">
     <thead>
       <tr>
@@ -416,52 +379,71 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td>Notarial Act (per signature)</td><td>State-regulated · acknowledgments, jurats, oaths</td><td class="fee-col">$5</td></tr>
-      <tr><td>Mobile Service Fee</td><td>Base fee for coming to your location</td><td class="fee-col">$25</td></tr>
-      <tr><td>After-Hours Surcharge</td><td>Appointments before 8am or after 7pm</td><td class="fee-col">+$15</td></tr>
-      <tr><td>Travel Fee</td><td>Based on distance — confirmed at booking</td><td class="fee-col">TBD</td></tr>
-      <tr><td>Additional Signers</td><td>Same appointment, each additional signer</td><td class="fee-col">$5/ea</td></tr>
+      <tr>
+        <td>Notarial Act <span class="per-sig">(per signature)</span></td>
+        <td><span class="price-note">State-regulated · acknowledgments, jurats, oaths</span></td>
+        <td><span class="price-amount">$5</span></td>
+      </tr>
+      <tr>
+        <td>Mobile Service Fee</td>
+        <td><span class="price-note">Base fee for coming to your location</span></td>
+        <td><span class="price-amount">$25</span></td>
+      </tr>
+      <tr>
+        <td>After-Hours Surcharge</td>
+        <td><span class="price-note">Appointments before 8am or after 7pm</span></td>
+        <td><span class="price-amount">+$15</span></td>
+      </tr>
+      <tr>
+        <td>Travel Fee</td>
+        <td><span class="price-note">Based on distance — confirmed at booking</span></td>
+        <td><span class="price-amount">TBD</span></td>
+      </tr>
+      <tr>
+        <td>Additional Signers</td>
+        <td><span class="price-note">Same appointment, each additional signer</span></td>
+        <td><span class="price-amount">$5<span style="font-size:0.9rem">/ea</span></span></td>
+      </tr>
     </tbody>
   </table>
-  <p class="table-note">* All fees confirmed before your appointment. No surprise charges on arrival.</p>
-</div>
+  <p class="table-footnote">* All fees confirmed before your appointment. No surprise charges on arrival.</p>
+</section>
 
-<hr class="divider">
+<!-- ─── LOAN SIGNINGS ─── -->
+<section class="pricing-wrap" style="padding-top: 0;">
+  <div class="sec-lbl">Real Estate</div>
+  <h2 class="sec-title">Loan Signings</h2>
+  <p class="sec-sub">Flat-rate packages for real estate closings and mortgage signings — includes all notarial acts within the package.</p>
 
-<!-- ── LOAN SIGNINGS ── -->
-<div class="section">
-  <p class="section-label">Real Estate</p>
-  <h2>Loan Signings</h2>
-  <p>Flat-rate packages for real estate closings and mortgage signings — includes all notarial acts within the package.</p>
-  <div class="cards">
-    <div class="card">
+  <div class="loan-cards">
+    <div class="loan-card">
       <h3>Purchase / Sale</h3>
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Standard real estate purchase or sale closing package.</p>
-      <div class="price">$150 <span>starting at</span></div>
-      <ul>
+      <p class="card-desc">Standard real estate purchase or sale closing package.</p>
+      <div class="loan-price"><span class="from">Starting at</span><sup>$</sup>150</div>
+      <ul class="loan-includes">
         <li>All notarial acts included</li>
         <li>Document review &amp; prep</li>
         <li>Mobile — we come to you</li>
         <li>E-docs or paper accepted</li>
       </ul>
     </div>
-    <div class="card featured">
-      <div class="card-badge">Most Common</div>
+    <div class="loan-card featured">
+      <div class="featured-badge">Most Common</div>
       <h3>Refinance</h3>
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Full refinance closing package — all pages, all signatures.</p>
-      <div class="price">$125 <span>starting at</span></div>
-      <ul>
+      <p class="card-desc">Full refinance closing package — all pages, all signatures.</p>
+      <div class="loan-price"><span class="from">Starting at</span><sup>$</sup>125</div>
+      <ul class="loan-includes">
         <li>All notarial acts included</li>
         <li>Document review &amp; prep</li>
         <li>Mobile — we come to you</li>
         <li>E-docs or paper accepted</li>
       </ul>
     </div>
-    <div class="card">
+    <div class="loan-card">
       <h3>HELOC / Equity</h3>
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Home equity line of credit and equity loan signings.</p>
-      <div class="price">$100 <span>starting at</span></div>
-      <ul>
+      <p class="card-desc">Home equity line of credit and equity loan signings.</p>
+      <div class="loan-price"><span class="from">Starting at</span><sup>$</sup>100</div>
+      <ul class="loan-includes">
         <li>All notarial acts included</li>
         <li>Document review &amp; prep</li>
         <li>Mobile — we come to you</li>
@@ -469,166 +451,156 @@
       </ul>
     </div>
   </div>
-  <p class="table-note">* Final loan signing fees may vary based on document count and lender requirements. Confirmed at booking.</p>
-</div>
+  <p class="table-footnote" style="margin-top:1.2rem">* Final loan signing fees may vary based on document count and lender requirements. Confirmed at booking.</p>
+</section>
 
-<hr class="divider">
+<!-- ─── POA / WILLS ─── -->
+<section class="pricing-wrap" style="padding-top: 0;">
+  <div class="sec-lbl">Estate &amp; Legal</div>
+  <h2 class="sec-title">Powers of Attorney &amp; Wills</h2>
+  <p class="sec-sub">Flat service fees covering all notarial acts for estate planning and legal authorization documents.</p>
 
-<!-- ── POWERS OF ATTORNEY ── -->
-<div class="section">
-  <p class="section-label">Estate &amp; Legal</p>
-  <h2>Powers of Attorney &amp; Wills</h2>
-  <p>Flat service fees covering all notarial acts for estate planning and legal authorization documents.</p>
-  <div class="cards">
-    <div class="card">
-      <div class="card-icon">📋</div>
+  <div class="poa-grid">
+    <div class="poa-cell">
+      <div class="poa-icon">📋</div>
       <h3>Power of Attorney</h3>
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">General, durable, limited, or healthcare POA — single document.</p>
-      <div class="price">$40 <span>starting at</span></div>
+      <p>General, durable, limited, or healthcare POA — single document.</p>
+      <div class="poa-price"><span class="poa-from">Starting at</span>$40</div>
     </div>
-    <div class="card">
-      <div class="card-icon">📜</div>
+    <div class="poa-cell">
+      <div class="poa-icon">📜</div>
       <h3>Last Will &amp; Testament</h3>
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Will signing with required witnesses and notarial certification.</p>
-      <div class="price">$50 <span>starting at</span></div>
+      <p>Will signing with required witnesses and notarial certification.</p>
+      <div class="poa-price"><span class="poa-from">Starting at</span>$50</div>
     </div>
-    <div class="card">
-      <div class="card-icon">🏛️</div>
+    <div class="poa-cell">
+      <div class="poa-icon">🏛️</div>
       <h3>Living Trust</h3>
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Revocable or irrevocable trust document package notarization.</p>
-      <div class="price">$60 <span>starting at</span></div>
+      <p>Revocable or irrevocable trust document package notarization.</p>
+      <div class="poa-price"><span class="poa-from">Starting at</span>$60</div>
     </div>
-    <div class="card">
-      <div class="card-icon">🏥</div>
+    <div class="poa-cell">
+      <div class="poa-icon">🏥</div>
       <h3>Advance Directive</h3>
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Healthcare directives, living wills, and DNR documentation.</p>
-      <div class="price">$40 <span>starting at</span></div>
+      <p>Healthcare directives, living wills, and DNR documentation.</p>
+      <div class="poa-price"><span class="poa-from">Starting at</span>$40</div>
     </div>
   </div>
-  <p class="table-note">* Mobile service fee and travel fee apply to all estate &amp; legal appointments.</p>
-</div>
+  <p class="table-footnote" style="margin-top:1.2rem">* Mobile service fee and travel fee apply to all estate &amp; legal appointments.</p>
+</section>
 
-<hr class="divider">
+<!-- ─── TRAVEL & SURCHARGES ─── -->
+<section class="fees-section">
+  <div class="sec-lbl">Additional Fees</div>
+  <h2 class="sec-title" style="color:var(--navy)">Travel &amp; Surcharges</h2>
+  <p class="sec-sub" style="color:var(--slate)">These fees are always disclosed upfront — confirmed before your appointment is booked.</p>
 
-<!-- ── TRAVEL & SURCHARGES ── -->
-<div class="section">
-  <p class="section-label">Additional Fees</p>
-  <h2>Travel &amp; Surcharges</h2>
-  <p>These fees are always disclosed upfront — confirmed before your appointment is booked.</p>
-  <div class="surcharge-grid">
-    <div class="surcharge-card">
-      <div class="s-icon">🚗</div>
+  <div class="fees-grid">
+    <div class="fee-card">
+      <div class="fee-icon">🚗</div>
       <h3>Travel Fee</h3>
-      <div class="s-price">TBD</div>
-      <p>We're still finalizing our travel fee structure. Call or text for a quick quote based on your location.</p>
+      <div class="fee-placeholder">To Be Set</div>
+      <p>We're still finalizing our travel fee structure. Call or text for a quick quote based on your location. We always confirm costs before booking — no surprises.</p>
     </div>
-    <div class="surcharge-card">
-      <div class="s-icon">🌙</div>
+    <div class="fee-card">
+      <div class="fee-icon">🌙</div>
       <h3>After-Hours Surcharge</h3>
-      <div class="s-price">+$15</div>
-      <p>Applies to appointments before 8:00 AM or after 7:00 PM.</p>
+      <div class="fee-amount">+$15</div>
+      <p>Applies to appointments scheduled before 8:00 AM or after 7:00 PM. We're still available — just call or text to confirm availability.</p>
     </div>
-    <div class="surcharge-card">
-      <div class="s-icon">⚡</div>
+    <div class="fee-card">
+      <div class="fee-icon">⚡</div>
       <h3>Same-Day / Rush</h3>
-      <div class="s-price">+$20</div>
-      <p>Rush fee applies when booking within 2 hours of needed appointment time.</p>
+      <div class="fee-amount">+$20</div>
+      <p>Need us today? We do our best to accommodate urgent requests. Rush fee applies when booking within 2 hours of needed appointment time.</p>
     </div>
-    <div class="surcharge-card">
-      <div class="s-icon">🏥</div>
+    <div class="fee-card">
+      <div class="fee-icon">🏥</div>
       <h3>Hospital / Facility</h3>
-      <div class="s-price">Included</div>
-      <p>No extra charge for hospitals, hospice, or care facilities. Compassion doesn't cost extra.</p>
+      <div class="fee-amount">Included</div>
+      <p>No extra charge for visiting hospitals, hospice, or care facilities. Bedside visits are part of what we do — compassion doesn't cost extra.</p>
     </div>
   </div>
-</div>
+</section>
 
-<hr class="divider">
-
-<!-- ── FAQ ── -->
-<div class="section">
-  <p class="section-label">Questions</p>
-  <h2>Pricing FAQ</h2>
+<!-- ─── FAQ ─── -->
+<section class="faq-section">
+  <div class="sec-lbl">Questions</div>
+  <h2 class="sec-title" style="margin-bottom:2.5rem">Pricing FAQ</h2>
   <div class="faq-list">
+
     <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">Do I pay before or after the appointment? <span class="faq-icon">+</span></button>
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do I pay before or after the appointment?
+        <span class="faq-icon">+</span>
+      </button>
       <div class="faq-answer">Payment is due at the time of service. We accept cash, Zelle, Venmo, CashApp, and most major credit cards. Payment method can be confirmed when you book.</div>
     </div>
+
     <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">What if I need multiple documents notarized? <span class="faq-icon">+</span></button>
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What if I need multiple documents notarized?
+        <span class="faq-icon">+</span>
+      </button>
       <div class="faq-answer">Each notarial act (signature) is $5 per Tennessee law. If you have several documents during the same appointment, the mobile service fee only applies once — making it very cost-effective to bundle everything together.</div>
     </div>
+
     <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">Are weekends more expensive? <span class="faq-icon">+</span></button>
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Are weekends more expensive?
+        <span class="faq-icon">+</span>
+      </button>
       <div class="faq-answer">Weekend appointments during normal hours (8am–7pm) are the same price as weekdays. Only appointments outside those hours incur the after-hours surcharge of $15.</div>
     </div>
+
     <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">What if my appointment runs long? <span class="faq-icon">+</span></button>
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What if my appointment runs long?
+        <span class="faq-icon">+</span>
+      </button>
       <div class="faq-answer">For standard notarizations, there's no time limit — we stay until everything is properly signed and certified. For loan signings, the flat rate covers the full package regardless of how long it takes.</div>
     </div>
+
     <div class="faq-item">
-      <button class="faq-question" onclick="toggleFaq(this)">Is there a cancellation fee? <span class="faq-icon">+</span></button>
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Is there a cancellation fee?
+        <span class="faq-icon">+</span>
+      </button>
       <div class="faq-answer">We understand plans change. We ask for as much notice as possible if you need to reschedule. Cancellations with less than 1 hour notice on same-day bookings may incur a small trip fee. We'll always work with you.</div>
     </div>
+
   </div>
-</div>
+</section>
 
-<hr class="divider">
-
-<!-- ── PAYMENT METHODS ── -->
-<div class="section">
-  <p class="section-label">How to Pay</p>
-  <h2>We Accept All Major Payment Methods</h2>
-  <p>Payment is due at time of service. All methods confirmed when you book — no surprises.</p>
+<!-- PAYMENT METHODS STRIP -->
+<section class="payment-strip">
+  <div class="sec-lbl">How to Pay</div>
+  <h3>We Accept All Major Payment Methods</h3>
+  <p class="pay-sub">Payment is due at time of service. All methods confirmed when you book — no surprises.</p>
   <div class="payment-methods">
-    <div class="pm">💵 Cash</div>
-    <div class="pm">💳 Credit &amp; Debit Cards</div>
-    <div class="pm">⚡ Zelle</div>
-    <div class="pm">💙 Venmo</div>
-    <div class="pm">💚 CashApp</div>
-    <div class="pm">🔲 Square</div>
-    <div class="pm">🅿️ PayPal</div>
+    <div class="pay-badge highlight"><span class="pay-icon">💵</span> Cash</div>
+    <div class="pay-badge highlight"><span class="pay-icon">💳</span> Credit &amp; Debit Cards</div>
+    <div class="pay-badge"><span class="pay-icon">⚡</span> Zelle</div>
+    <div class="pay-badge"><span class="pay-icon">💙</span> Venmo</div>
+    <div class="pay-badge"><span class="pay-icon">💚</span> CashApp</div>
+    <div class="pay-badge"><span class="pay-icon">🔲</span> Square</div>
+    <div class="pay-badge"><span class="pay-icon">🅿️</span> PayPal</div>
   </div>
-</div>
+</section>
 
-<!-- ── CTA ── -->
-<div class="cta-section">
-  <h2>Questions About Pricing?</h2>
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <h2>Questions About<br>Pricing?</h2>
   <p>Just call or text — we'll give you an exact quote in minutes, no obligation.</p>
-  <div class="cta-buttons">
+  <div class="cta-btns">
     <a href="tel:+19015550000" class="btn-dark">📞 Call (901) 555-0000</a>
-    <a href="sms:+19015550000" class="btn-outline-dark">💬 Text for a Quote</a>
+    <a href="sms:+19015550000" class="btn-outline">💬 Text for a Quote</a>
   </div>
-</div>
+</section>
 
-<!-- ── CLIENTS SECTION ── -->
-<div class="clients-section">
-  <div class="clients-inner">
-    <span class="section-label">Client Records</span>
-    <h2>Our Clients</h2>
-    <p>Current clients on file with Supreme Mobile Notary Service.</p>
-    <p id="clients-loading">Loading clients…</p>
-    <p id="clients-error"></p>
-    <table id="clients-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody id="clients-body"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-brand">
-    <div class="brand-name">Supreme Mobile Notary Service</div>
-    <p>Memphis, Tennessee · Licensed &amp; Certified</p>
-  </div>
+  <div class="footer-brand">Supreme Mobile Notary Service<small>Memphis, Tennessee · Licensed &amp; Certified</small></div>
   <ul class="footer-links">
     <li><a href="Services.html">Services</a></li>
     <li><a href="Pricing.html">Pricing</a></li>
@@ -638,95 +610,101 @@
   <div class="footer-copy">© 2026 Supreme Mobile Notary Service</div>
 </footer>
 
-<!-- ── SCRIPTS ── -->
 <script>
-  // Mobile nav
-  function toggleMobileNav() {
-    var nav = document.getElementById('mobileNav');
-    nav.classList.toggle('hidden');
-  }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      document.getElementById('mobileNav').classList.add('hidden');
+  // ─── HAMBURGER ───
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.contains('open');
+    if (isOpen) { closeMobileNav(); }
+    else {
+      mobileNav.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
     }
   });
-
-  // FAQ accordion
-  function toggleFaq(btn) {
-    var item = btn.parentElement;
-    var wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
-    if (!wasOpen) item.classList.add('open');
+  function closeMobileNav() {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
   }
-</script>
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
 
-<!-- Supabase initialization -->
-<script>
-  (function() {
-    try {
-      var SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
-      var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
-      window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      console.log("Supabase connected successfully!");
-    } catch(e) {
-      console.warn("Supabase init note:", e.message);
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    // close all
+    document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('open'));
+    // open clicked if it was closed
+    if (!isOpen) {
+      answer.classList.add('open');
+      btn.classList.add('open');
     }
-  })();
+  }<script>
+   html}
 </script>
 
-<!-- Load clients from Supabase -->
-<script>
-  window.addEventListener('load', async function() {
-    var loadingEl = document.getElementById('clients-loading');
-    var errorEl   = document.getElementById('clients-error');
-    var tableEl   = document.getElementById('clients-table');
-    var tbodyEl   = document.getElementById('clients-body');
+<section style="max-width:900px; margin:3rem auto; padding:0 1.5rem;">
+  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Our Clients</h2>
+  <p id="clients-loading" style="color:#666;">Loading clients...</p>
+  <p id="clients-error" style="display:none; color:red;"></p>
+  <table id="clients-table" style="display:none; width:100%; border-collapse:collapse;">
+    <thead>
+      <tr style="background:#f5f5f5;">
+        <th style="text-align:left; padding:10px 12px; border-bottom:2px solid #ddd;">Name</th>
+        <th style="text-align:left; padding:10px 12px; border-bottom:2px solid #ddd;">Email</th>
+        <th style="text-align:left; padding:10px 12px; border-bottom:2px solid #ddd;">Phone</th>
+        <th style="text-align:left; padding:10px 12px; border-bottom:2px solid #ddd;">Notes</th>
+      </tr>
+    </thead>
+    <tbody id="clients-body"></tbody>
+  </table>
+</section>
 
-    if (typeof window.db === 'undefined') {
-      loadingEl.style.display = 'none';
-      errorEl.style.display   = 'block';
-      errorEl.textContent     = 'Database connection not ready. Please refresh the page.';
+<script>
+async function loadClients() {
+  try {
+    const { data, error } = await window.db
+      .from('clients')
+      .select('*');
+
+    document.getElementById('clients-loading').style.display = 'none';
+
+    if (error) {
+      const e = document.getElementById('clients-error');
+      e.style.display = 'block';
+      e.textContent = 'Could not load clients: ' + error.message;
       return;
     }
 
-    try {
-      var result = await window.db.from('clients').select('*');
-      var data   = result.data;
-      var error  = result.error;
+    const tbody = document.getElementById('clients-body');
+    data.forEach(client => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td style="padding:10px 12px; border-bottom:1px solid #eee;">${client.name || ''}</td>
+        <td style="padding:10px 12px; border-bottom:1px solid #eee;">${client.email || ''}</td>
+        <td style="padding:10px 12px; border-bottom:1px solid #eee;">${client.phone || ''}</td>
+        <td style="padding:10px 12px; border-bottom:1px solid #eee;">${client.notes || ''}</td>
+      `;
+      tbody.appendChild(row);
+    });
 
-      loadingEl.style.display = 'none';
+    document.getElementById('clients-table').style.display = 'table';
 
-      if (error) {
-        errorEl.style.display = 'block';
-        errorEl.textContent   = 'Could not load clients: ' + error.message;
-        return;
-      }
+  } catch(err) {
+    document.getElementById('clients-loading').style.display = 'none';
+    const e = document.getElementById('clients-error');
+    e.style.display = 'block';
+    e.textContent = 'Error: ' + err.message;
+  }
+}
 
-      if (!data || data.length === 0) {
-        loadingEl.style.display = 'block';
-        loadingEl.textContent   = 'No clients on file.';
-        return;
-      }
-
-      data.forEach(function(client) {
-        var row = document.createElement('tr');
-        row.innerHTML =
-          '<td>' + (client.name  || '—') + '</td>' +
-          '<td>' + (client.email || '—') + '</td>' +
-          '<td>' + (client.phone || '—') + '</td>' +
-          '<td>' + (client.notes || '—') + '</td>';
-        tbodyEl.appendChild(row);
-      });
-
-      tableEl.style.display = 'table';
-
-    } catch(err) {
-      loadingEl.style.display = 'none';
-      errorEl.style.display   = 'block';
-      errorEl.textContent     = 'Unexpected error: ' + err.message;
-    }
-  });
+window.addEventListener('load', loadClients);
 </script>
 
 </body>
-</html>
+
+copy "C:\Users\glend\Downloads\Pricing.html" "C:\Users\glend\Desktop\website folder\Pricing.html" && git add . && git commit -m "fix supabase project URL" && git push
