@@ -213,8 +213,8 @@
   .mobile-nav a.mobile-cta:hover { background: var(--gold-light); }
   .mobile-phone { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: rgba(255,255,255,0.3); margin-top: 2rem; letter-spacing: 0.05em; }
 </style>
-  <!-- Supabase Client Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  
 </head>
 <body>
 
@@ -321,6 +321,12 @@
   </div>
 </section>
 
+<div id="client-list">
+    <p>Loading clients...</p>
+</div>
+
+
+
 <footer>
   <div class="footer-brand">Supreme Mobile Notary Service<small>Memphis, Tennessee · Licensed &amp; Certified</small></div>
   <ul class="footer-links">
@@ -356,16 +362,77 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
 
 
-    (function() {
-      try {
-        const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
-        window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log("Supabase connected successfully!");
-      } catch(e) {
-        console.warn("Supabase init note:", e.message);
-      }
-    })();
+    // (function() {
+    //   try {
+    //     const SUPABASE_URL = "https://xtrncgmggfwfzffiorow.supabase.co";
+    //     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8";
+    //     window.db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    //     console.log("Supabase connected successfully!");
+    //   } catch(e) {
+    //     console.warn("Supabase init note:", e.message);
+    //   }
+    // })();
   </script>
+<!-- Add Supabase library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+  <!-- Supabase Client Library -->
+   // Replace these with YOUR credentials from Supabase
+const SUPABASE_URL = 'https://kjnvbposqpncmeedyzjw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_q1fRfGhAGa39SRxMoDQ2wQ_nK7gcJG7';
+
+// Create the connection
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Test the connection
+console.log('Supabase connected!');
+console.log("test");
+// Add this after your connection code
+async function testConnection() {
+    const { data, error } = await supabaseClient
+        .from('clients')
+        .select('*');
+
+    if (error) {
+        console.error('Connection error:', error);
+    } else {
+        console.log('Success! Your clients:', data);
+    }
+}
+
+// Run the test
+testConnection();
+
+async function displayClients() {
+    const { data, error } = await supabaseClient
+        .from('clients')
+        .select('*');
+
+    if (error) {
+        document.getElementById('client-list').innerHTML =
+            'Error loading clients';
+        return;
+    }
+
+    let html = '<h3>My Clients</h3>';
+
+    data.forEach(client => {
+        html += `
+            <div style="padding: 15px; margin: 10px 0;
+                        background: black; border-radius: 8px;">
+                <strong>${client.name}</strong><br>
+                Email: ${client.email}<br>
+                Phone: ${client.phone}
+            </div>
+        `;
+    });
+
+    document.getElementById('client-list').innerHTML = html;
+}
+
+// Load clients when page opens
+displayClients();
+
+</script>
 </body>
 </html>
