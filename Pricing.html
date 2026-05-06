@@ -697,6 +697,7 @@
           <th>Email</th>
           <th>Phone</th>
           <th>Notes</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody id="clients-body"></tbody>
@@ -836,7 +837,8 @@
           '<td>' + (client.name  || '—') + '</td>' +
           '<td>' + (client.email || '—') + '</td>' +
           '<td>' + (client.phone || '—') + '</td>' +
-          '<td>' + (client.notes || '—') + '</td>';
+          '<td>' + (client.notes || '—') + '</td>' +
+          '<td><button onclick="deleteClient(' + client.id + ')" style="background: #ff6b6b; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Delete</button></td>';
         tbodyEl.appendChild(row);
       });
 
@@ -848,6 +850,30 @@
       errorEl.textContent     = 'Unexpected error: ' + err.message;
     }
   });
+</script>
+
+<script>
+
+async function deleteClient(id) {
+
+  try {
+
+    const { error } = await window.db.from('clients').delete().eq('id', id);
+
+    if (error) throw error;
+
+    // Refresh the page to reload clients
+
+    location.reload();
+
+  } catch (err) {
+
+    alert('Error deleting client: ' + err.message);
+
+  }
+
+}
+
 </script>
 
 </body>
