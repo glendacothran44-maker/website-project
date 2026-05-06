@@ -940,7 +940,7 @@ async function addClient() {
 
     if (window.editingId) {
 
-      result = await supabase.from('clients').update({ name, email, phone, notes }).eq('id', window.editingId);
+      result = await window.db.from('clients').update({ name, email, phone, notes }).eq('id', window.editingId);
 
     } else {
 
