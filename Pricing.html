@@ -944,7 +944,7 @@ async function addClient() {
 
     } else {
 
-      result = await supabase.from('clients').insert({ name, email, phone, notes });
+      result = await window.db.from('clients').insert({ name, email, phone, notes });
 
     }
 
