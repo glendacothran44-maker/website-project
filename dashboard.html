@@ -339,10 +339,10 @@
 
   <!-- Controls -->
   <div class="controls">
-    <button class="filter-btn active" onclick="filterBookings('all')">All Bookings</button>
-    <button class="filter-btn" onclick="filterBookings('pending')">Pending</button>
-    <button class="filter-btn" onclick="filterBookings('confirmed')">Confirmed</button>
-    <button class="filter-btn" onclick="filterBookings('completed')">Completed</button>
+    <button class="filter-btn active" data-status="all" onclick="filterBookings('all', event)">All Bookings</button>
+    <button class="filter-btn" data-status="pending" onclick="filterBookings('pending', event)">Pending</button>
+    <button class="filter-btn" data-status="confirmed" onclick="filterBookings('confirmed', event)">Confirmed</button>
+    <button class="filter-btn" data-status="completed" onclick="filterBookings('completed', event)">Completed</button>
     <button class="refresh-btn" onclick="loadDashboard()">🔄 Refresh</button>
   </div>
 
@@ -479,12 +479,15 @@
     document.getElementById('emptyState').style.display = 'none';
   }
 
-  function filterBookings(status) {
+  function filterBookings(status, event) {
     currentFilter = status;
 
     // Update button states
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    const activeButton = event?.target || document.querySelector(`.filter-btn[data-status="${status}"]`);
+    if (activeButton) {
+      activeButton.classList.add('active');
+    }
 
     // Filter and display
     let filtered = allBookings;
