@@ -7,8 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,24 +21,24 @@
       --border: #2a2a2a;
       --white: #ffffff;
       --red: #ff6b6b;
-      --green: #6dc96d;
     }
 
     body {
       font-family: 'Inter', sans-serif;
       background: var(--dark);
       color: var(--text);
-      line-height: 1.6;
+      min-height: 100vh;
     }
 
     /* ── NAV ── */
     nav {
+      background: rgba(13,13,13,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.2rem 3rem;
-      background: var(--dark);
-      border-bottom: 1px solid var(--border);
+      height: 70px;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -48,500 +46,397 @@
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 10px;
       text-decoration: none;
       color: var(--white);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 600;
     }
-    .nav-logo img { height: 40px; width: 40px; border-radius: 50%; object-fit: cover; }
-    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-logo img { height: 38px; width: 38px; border-radius: 50%; object-fit: cover; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
-    .nav-book {
+    .nav-cta {
       background: var(--gold);
       color: var(--dark);
-      padding: 0.55rem 1.4rem;
+      padding: 0.5rem 1.2rem;
       border-radius: 4px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
       text-decoration: none;
+      letter-spacing: 0.03em;
       transition: background 0.2s;
     }
-    .nav-book:hover { background: var(--gold-light); }
-    .mobile-nav-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
-    .mobile-nav { display: none; }
+    .nav-cta:hover { background: var(--gold-light); }
+    .nav-mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; cursor: pointer; }
+    .nav-mobile { display: none; }
 
-    /* ── HERO ── */
-    .hero {
-      padding: 5rem 3rem 4rem;
-      max-width: 900px;
-      margin: 0 auto;
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-mobile-toggle { display: block; }
+      .nav-mobile.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 70px; left: 0; right: 0;
+        background: var(--dark2);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 2rem;
+        gap: 1rem;
+        z-index: 99;
+      }
+      .nav-mobile a { color: var(--text); text-decoration: none; font-size: 0.95rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+      .nav-mobile a:last-child { border-bottom: none; color: var(--gold); font-weight: 600; }
     }
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--white);
-      margin-bottom: 1.25rem;
-    }
-    .hero h1 em { color: var(--gold); font-style: italic; }
-    .hero p { font-size: 1.1rem; color: var(--muted); max-width: 560px; }
 
-    /* ── FORM SECTION ── */
-    .booking-section {
-      padding: 4rem 3rem;
-      background: var(--dark2);
-      border-top: 1px solid var(--border);
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+      background: linear-gradient(180deg, #141414 0%, var(--dark) 100%);
       border-bottom: 1px solid var(--border);
     }
-    .booking-inner { max-width: 700px; margin: 0 auto; }
-    .booking-inner .section-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; font-weight: 500; }
-    .booking-inner h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 0.5rem;
-    }
-    .booking-inner > p { color: var(--muted); font-size: 0.92rem; margin-bottom: 2rem; }
-
-    .booking-form { display: grid; gap: 1.25rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-row.full { grid-template-columns: 1fr; }
-
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label {
-      font-size: 0.78rem;
+    .page-header .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
       color: var(--gold);
-      font-weight: 600;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
     }
-    .form-group input,
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+    .page-header h1 em { color: var(--gold); font-style: italic; }
+    .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 500px; margin: 0 auto; }
+
+    /* ── MAIN LAYOUT ── */
+    .booking-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .booking-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── CALENDLY SECTION ── */
+    .calendly-section {}
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .section-title em { color: var(--gold); font-style: italic; }
+    .section-subtitle { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+
+    .calendly-wrapper {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 660px;
+    }
+
+    /* ── PRICING SIDEBAR ── */
+    .sidebar {}
+    .pricing-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      position: sticky;
+      top: 90px;
+    }
+    .pricing-card-header {
+      background: linear-gradient(135deg, #1a1500, #2a1f00);
+      border-bottom: 1px solid #3a2e00;
+      padding: 1.25rem 1.5rem;
+    }
+    .pricing-card-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+    .pricing-card-header p { font-size: 0.78rem; color: #a08840; }
+    .pricing-card-body { padding: 1.5rem; }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
     .form-group select,
-    .form-group textarea {
+    .form-group input[type="text"] {
+      width: 100%;
       background: var(--dark3);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 0.75rem 1rem;
       color: var(--text);
+      padding: 0.6rem 0.75rem;
+      font-size: 0.88rem;
       font-family: 'Inter', sans-serif;
-      font-size: 0.93rem;
       outline: none;
       transition: border-color 0.2s;
-      width: 100%;
+      appearance: none;
     }
-    .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--gold); }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .form-group option { background: var(--dark3); color: var(--text); }
+    .form-group input:focus { border-color: var(--gold); }
 
-    /* Quote Display */
-    .quote-box {
-      background: var(--dark3);
-      border: 2px solid var(--gold);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      text-align: center;
-    }
-    .quote-label { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-    .quote-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem;
-      color: var(--gold);
-      margin: 0.5rem 0;
-    }
-    .quote-breakdown { font-size: 0.85rem; color: var(--muted); margin-top: 1rem; }
-
-    /* Checkboxes */
-    .checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+    .checkbox-group { display: flex; flex-direction: column; gap: 0.5rem; }
     .checkbox-item {
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      padding: 0.75rem;
-      background: var(--dark3);
-      border: 1px solid var(--border);
-      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.2s;
+      font-size: 0.85rem;
+      color: var(--text);
     }
-    .checkbox-item:hover { border-color: var(--gold); }
-    .checkbox-item input[type="checkbox"] { cursor: pointer; accent-color: var(--gold); }
-    .checkbox-item label { cursor: pointer; flex: 1; margin: 0; }
+    .checkbox-item input[type="checkbox"] { accent-color: var(--gold); width: 15px; height: 15px; cursor: pointer; }
 
-    /* Submit Button */
-    .form-submit {
-      background: var(--gold);
-      color: var(--dark);
-      border: none;
-      border-radius: 6px;
-      padding: 0.95rem 2rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.04em;
-      transition: background 0.2s;
-      width: 100%;
-      margin-top: 1rem;
-    }
-    .form-submit:hover { background: var(--gold-light); }
-    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-
-    /* Message Boxes */
-    .success-msg, .error-msg {
-      display: none;
+    .cost-display {
+      background: linear-gradient(135deg, #1a1500, #2a1f00);
+      border: 1px solid #3a2e00;
+      border-radius: 8px;
       padding: 1rem 1.25rem;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      margin-top: 1rem;
+      margin-top: 1.25rem;
     }
-    .success-msg {
-      background: rgba(109, 201, 109, 0.1);
-      border: 1px solid rgba(109, 201, 109, 0.3);
-      color: var(--green);
+    .cost-display .cost-label { font-size: 0.75rem; color: #a08840; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.25rem; }
+    .cost-display .cost-amount { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--gold); line-height: 1; }
+    .cost-display .cost-note { font-size: 0.75rem; color: #a08840; margin-top: 0.25rem; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+
+    .service-list { display: flex; flex-direction: column; gap: 0.4rem; }
+    .service-item { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); }
+    .service-item .price { color: var(--gold-light); font-weight: 500; }
+
+    .what-to-bring {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
     }
-    .error-msg {
-      background: rgba(255, 107, 107, 0.08);
-      border: 1px solid rgba(255, 107, 107, 0.2);
-      color: var(--red);
+    .what-to-bring h4 {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
     }
+    .bring-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .bring-list li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.83rem; color: var(--muted); }
+    .bring-list li::before { content: "✓"; color: var(--gold); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
 
     /* ── FOOTER ── */
     footer {
-      background: #080808;
-      padding: 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 2rem;
+      background: var(--dark2);
       border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
     }
-    .footer-brand p { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; }
-    .footer-brand .brand-name {
+    .footer-brand {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--white);
+      margin-bottom: 0.3rem;
     }
-    .footer-links { display: flex; gap: 2rem; list-style: none; }
-    .footer-links a { text-decoration: none; color: var(--muted); font-size: 0.85rem; transition: color 0.2s; }
+    .footer-sub { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
     .footer-links a:hover { color: var(--gold); }
-    .footer-copy { color: var(--muted); font-size: 0.82rem; align-self: flex-end; }
-
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .nav-book { display: none; }
-      .mobile-nav-toggle { display: block; }
-      .mobile-nav {
-        display: flex;
-        flex-direction: column;
-        background: var(--dark2);
-        padding: 1rem 1.5rem;
-        gap: 0.5rem;
-        border-bottom: 1px solid var(--border);
-      }
-      .mobile-nav.hidden { display: none; }
-      .mobile-nav a { color: var(--muted); text-decoration: none; padding: 0.6rem 0; font-size: 0.95rem; border-bottom: 1px solid var(--border); }
-      .mobile-nav a:last-child { border-bottom: none; color: var(--gold); font-weight: 600; }
-      .hero { padding: 3rem 1.5rem 2rem; }
-      .booking-section { padding: 3rem 1.5rem; }
-      footer { padding: 2rem 1.5rem; flex-direction: column; }
-      .form-row { grid-template-columns: 1fr; }
-      .checkbox-group { grid-template-columns: 1fr; }
-    }
+    .footer-copy { font-size: 0.75rem; color: #555; }
   </style>
 </head>
 <body>
 
-<!-- ── NAVIGATION ── -->
-<nav>
-  <a href="index.html" class="nav-logo">
-    <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Service Logo">
-    Supreme Mobile Notary
-  </a>
-  <ul class="nav-links">
-    <li><a href="Services.html">Services</a></li>
-    <li><a href="Pricing.html">Pricing</a></li>
-    <li><a href="booking.html" class="active">Book</a></li>
-    
-    <li><a href="about.html">About</a></li>
-    <li><a href="Contact.html">Contact</a></li>
-  </ul>
-  <a href="booking.html" class="nav-book">Book Now</a>
-  <button class="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">☰</button>
-</nav>
-<div class="mobile-nav hidden" id="mobileNav">
-  <a href="Services.html">Services</a>
-  <a href="Pricing.html">Pricing</a>
-  <a href="booking.html">Book</a>
-  
-  <a href="about.html">About</a>
-  <a href="Contact.html">Contact</a>
-</div>
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Logo">
+      Supreme Mobile Notary
+    </a>
+    <ul class="nav-links">
+      <li><a href="Services.html">Services</a></li>
+      <li><a href="Pricing.html">Pricing</a></li>
+      <li><a href="booking.html" class="active">Book</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="Contact.html">Contact</a></li>
+    </ul>
+    <a href="booking.html" class="nav-cta">📅 Book Now</a>
+    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-mobile').classList.toggle('open')">☰</button>
+    <div class="nav-mobile">
+      <a href="Services.html">Services</a>
+      <a href="Pricing.html">Pricing</a>
+      <a href="booking.html">Book</a>
+      <a href="about.html">About</a>
+      <a href="Contact.html">Contact</a>
+      <a href="booking.html">📅 Book Now</a>
+    </div>
+  </nav>
 
-<!-- ── HERO ── -->
-<div class="hero">
-  <h1>Book Your <em>Appointment</em></h1>
-  <p>Schedule your notary appointment in minutes. Get an instant quote, choose your time, and we'll come to you.</p>
-</div>
-
-<!-- ── BOOKING FORM ── -->
-<div class="booking-section">
-  <div class="booking-inner">
-    <span class="section-label">Quick Booking</span>
-    <h2>Get an Appointment</h2>
-    <p>Fill out the form below and we'll confirm your appointment within 24 hours.</p>
-
-    <form id="bookingForm" class="booking-form" onsubmit="submitBooking(event)">
-      <!-- Contact Information -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="client-name">Full Name *</label>
-          <input type="text" id="client-name" placeholder="Jane Smith" required>
-        </div>
-        <div class="form-group">
-          <label for="client-phone">Phone *</label>
-          <input type="tel" id="client-phone" placeholder="(901) 555-0123" required>
-        </div>
-      </div>
-
-      <div class="form-row full">
-        <div class="form-group">
-          <label for="client-email">Email</label>
-          <input type="email" id="client-email" placeholder="jane@email.com">
-        </div>
-      </div>
-
-      <!-- Service Selection -->
-      <div class="form-row full">
-        <div class="form-group">
-          <label for="service-type">Service Type *</label>
-          <select id="service-type" required onchange="updateQuote()">
-            <option value="">-- Select a Service --</option>
-            <optgroup label="Standard Services">
-              <option value="notarial_act">Notarial Act (per signature) - $5</option>
-              <option value="mobile_service">Mobile Service Fee - $25</option>
-            </optgroup>
-            <optgroup label="Real Estate">
-              <option value="refinance">Refinance - $125</option>
-              <option value="purchase_sale">Purchase / Sale - $150</option>
-              <option value="heloc">HELOC / Equity - $100</option>
-            </optgroup>
-            <optgroup label="Estate & Legal">
-              <option value="power_of_attorney">Power of Attorney - $40</option>
-              <option value="will">Last Will & Testament - $50</option>
-              <option value="trust">Living Trust - $60</option>
-              <option value="advance_directive">Advance Directive - $40</option>
-            </optgroup>
-          </select>
-        </div>
-      </div>
-
-      <!-- Date & Time -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="appointment-date">Appointment Date *</label>
-          <input type="date" id="appointment-date" required onchange="updateQuote()">
-        </div>
-        <div class="form-group">
-          <label for="appointment-time">Appointment Time *</label>
-          <input type="time" id="appointment-time" required>
-        </div>
-      </div>
-
-      <!-- Location -->
-      <div class="form-row full">
-        <div class="form-group">
-          <label for="location">Location / Address *</label>
-          <input type="text" id="location" placeholder="e.g., 123 Main St, Memphis, TN 38101" required>
-        </div>
-      </div>
-
-      <!-- Additional Services -->
-      <div class="form-group">
-        <label style="color: var(--gold); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem;">Additional Options</label>
-        <div class="checkbox-group">
-          <div class="checkbox-item">
-            <input type="checkbox" id="after-hours" onchange="updateQuote()">
-            <label for="after-hours">After-Hours (+$15)</label>
-          </div>
-          <div class="checkbox-item">
-            <input type="checkbox" id="rush-service" onchange="updateQuote()">
-            <label for="rush-service">Rush Service (+$20)</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Additional Signers -->
-      <div class="form-group">
-        <label for="additional-signers">Additional Signers</label>
-        <select id="additional-signers" onchange="updateQuote()">
-          <option value="0">None</option>
-          <option value="1">1 person (+$5)</option>
-          <option value="2">2 people (+$10)</option>
-          <option value="3">3 people (+$15)</option>
-          <option value="4">4+ people (+$20)</option>
-        </select>
-      </div>
-
-      <!-- Notes -->
-      <div class="form-group">
-        <label for="notes">Additional Notes</label>
-        <textarea id="notes" placeholder="e.g., any special instructions or requirements..."></textarea>
-      </div>
-
-      <!-- Quote Display -->
-      <div class="quote-box">
-        <div class="quote-label">Estimated Cost</div>
-        <div class="quote-price" id="quotePrice">$0</div>
-        <div class="quote-breakdown" id="quoteBreakdown">Select a service to calculate price</div>
-      </div>
-
-      <!-- Submit Button -->
-      <button type="submit" class="form-submit" id="submitBtn">📅 Request Appointment</button>
-      <div id="success-msg" class="success-msg">✅ Appointment requested! We'll confirm within 24 hours.</div>
-      <div id="error-msg" class="error-msg"></div>
-    </form>
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="label">Schedule Online</div>
+    <h1>Book Your <em>Appointment</em></h1>
+    <p>Pick a time that works for you. We'll come to your home, office, hospital, or wherever you need us.</p>
   </div>
-</div>
 
-<!-- ── FOOTER ── -->
-<footer>
-  <div class="footer-brand">
-    <div class="brand-name">Supreme Mobile Notary Service</div>
-    <p>Memphis, Tennessee · Licensed & Certified</p>
+  <!-- MAIN LAYOUT -->
+  <div class="booking-layout">
+
+    <!-- LEFT: CALENDLY -->
+    <div class="calendly-section">
+      <h2 class="section-title">Choose Your <em>Time</em></h2>
+      <p class="section-subtitle">Select an available slot below — instant confirmation, no waiting.</p>
+      <div class="calendly-wrapper">
+        <!-- Calendly inline widget -->
+        <div
+          class="calendly-inline-widget"
+          data-url="https://calendly.com/glendacothran44/30min?hide_gdpr_banner=1&background_color=141414&text_color=e8e8e8&primary_color=c9a84c"
+          style="min-width:100%; height:660px;">
+        </div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      </div>
+    </div>
+
+    <!-- RIGHT: PRICING CALCULATOR + INFO -->
+    <div class="sidebar">
+
+      <div class="pricing-card">
+        <div class="pricing-card-header">
+          <h3>💰 Price Estimator</h3>
+          <p>Calculate your estimated cost before booking</p>
+        </div>
+        <div class="pricing-card-body">
+
+          <div class="form-group">
+            <label>Service Type</label>
+            <select id="serviceSelect" onchange="calculateCost()">
+              <option value="">-- Select a Service --</option>
+              <optgroup label="Standard Services">
+                <option value="5">Notarial Act (per signature) — $5</option>
+                <option value="25">Mobile Service Fee — $25</option>
+              </optgroup>
+              <optgroup label="Real Estate">
+                <option value="125">Refinance — $125</option>
+                <option value="150">Purchase / Sale — $150</option>
+                <option value="100">HELOC / Equity — $100</option>
+              </optgroup>
+              <optgroup label="Estate &amp; Legal">
+                <option value="40">Power of Attorney — $40</option>
+                <option value="50">Last Will &amp; Testament — $50</option>
+                <option value="60">Living Trust — $60</option>
+                <option value="40">Advance Directive — $40</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Additional Options</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" value="15" onchange="calculateCost()"> After-Hours (+$15)
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" value="20" onchange="calculateCost()"> Rush Service (+$20)
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Additional Signers</label>
+            <select id="signersSelect" onchange="calculateCost()">
+              <option value="0">None</option>
+              <option value="5">1 person (+$5)</option>
+              <option value="10">2 people (+$10)</option>
+              <option value="15">3 people (+$15)</option>
+              <option value="20">4+ people (+$20)</option>
+            </select>
+          </div>
+
+          <div class="cost-display">
+            <div class="cost-label">Estimated Total</div>
+            <div class="cost-amount" id="costAmount">$0</div>
+            <div class="cost-note" id="costNote">Select a service above</div>
+          </div>
+
+          <hr class="divider">
+
+          <div class="service-list">
+            <div class="service-item"><span>Mobile service fee</span><span class="price">$25</span></div>
+            <div class="service-item"><span>After-hours</span><span class="price">+$15</span></div>
+            <div class="service-item"><span>Rush service</span><span class="price">+$20</span></div>
+            <div class="service-item"><span>Real estate closings</span><span class="price">from $100</span></div>
+            <div class="service-item"><span>Estate &amp; legal docs</span><span class="price">from $40</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="what-to-bring">
+        <h4>What to Have Ready</h4>
+        <ul class="bring-list">
+          <li>Valid government-issued photo ID</li>
+          <li>All document pages (unsigned)</li>
+          <li>Any co-signers present at location</li>
+          <li>Payment ready (cash, card, or Zelle)</li>
+          <li>Address confirmed and accessible</li>
+        </ul>
+      </div>
+
+    </div>
   </div>
-  <ul class="footer-links">
-    <li><a href="Services.html">Services</a></li>
-    <li><a href="Pricing.html">Pricing</a></li>
-    <li><a href="booking.html">Book</a></li>
-    
-    
-    <li><a href="about.html">About</a></li>
-    <li><a href="Contact.html">Contact</a></li>
-  </ul>
-  <div class="footer-copy">© 2026 Supreme Mobile Notary Service</div>
-</footer>
 
-<!-- ── SCRIPTS ── -->
-<script src="supabase-config.js"></script>
-<script>
-  // Mobile nav toggle
-  function toggleMobileNav() {
-    var nav = document.getElementById('mobileNav');
-    nav.classList.toggle('hidden');
-  }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      document.getElementById('mobileNav').classList.add('hidden');
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">Supreme Mobile Notary Service</div>
+    <div class="footer-sub">Memphis, Tennessee · Licensed &amp; Certified</div>
+    <div class="footer-links">
+      <a href="Services.html">Services</a>
+      <a href="Pricing.html">Pricing</a>
+      <a href="about.html">About</a>
+      <a href="Contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 Supreme Mobile Notary Service</div>
+  </footer>
+
+  <script>
+    function calculateCost() {
+      const service = parseFloat(document.getElementById('serviceSelect').value) || 0;
+      const signers = parseFloat(document.getElementById('signersSelect').value) || 0;
+      const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked');
+      let extras = 0;
+      checkboxes.forEach(cb => extras += parseFloat(cb.value));
+      const total = service + signers + extras;
+      document.getElementById('costAmount').textContent = '$' + total;
+      document.getElementById('costNote').textContent = total > 0
+        ? 'Estimated — final price confirmed at booking'
+        : 'Select a service above';
     }
-  });
-
-  // Quote Calculator
-  const servicePrices = {
-    'notarial_act': 5,
-    'mobile_service': 25,
-    'refinance': 125,
-    'purchase_sale': 150,
-    'heloc': 100,
-    'power_of_attorney': 40,
-    'will': 50,
-    'trust': 60,
-    'advance_directive': 40
-  };
-
-  function updateQuote() {
-    const serviceType = document.getElementById('service-type').value;
-    const afterHours = document.getElementById('after-hours').checked ? 15 : 0;
-    const rushService = document.getElementById('rush-service').checked ? 20 : 0;
-    const additionalSigners = parseInt(document.getElementById('additional-signers').value) * 5;
-
-    if (!serviceType) {
-      document.getElementById('quotePrice').textContent = '$0';
-      document.getElementById('quoteBreakdown').textContent = 'Select a service to calculate price';
-      return;
-    }
-
-    const basePrice = servicePrices[serviceType] || 0;
-    const totalPrice = basePrice + afterHours + rushService + additionalSigners;
-
-    document.getElementById('quotePrice').textContent = '$' + totalPrice.toFixed(2);
-
-    let breakdown = 'Base: $' + basePrice.toFixed(2);
-    if (afterHours) breakdown += ' + After-Hours: $' + afterHours.toFixed(2);
-    if (rushService) breakdown += ' + Rush: $' + rushService.toFixed(2);
-    if (additionalSigners) breakdown += ' + Signers: $' + additionalSigners.toFixed(2);
-
-    document.getElementById('quoteBreakdown').textContent = breakdown;
-  }
-
-  // Form Submission
-  async function submitBooking(event) {
-    event.preventDefault();
-
-    const btn = document.getElementById('submitBtn');
-    const successMsg = document.getElementById('success-msg');
-    const errorMsg = document.getElementById('error-msg');
-
-    btn.disabled = true;
-    btn.textContent = 'Booking...';
-    successMsg.style.display = 'none';
-    errorMsg.style.display = 'none';
-
-    try {
-      const booking = {
-        client_name: document.getElementById('client-name').value,
-        client_email: document.getElementById('client-email').value || null,
-        client_phone: document.getElementById('client-phone').value,
-        appointment_date: document.getElementById('appointment-date').value,
-        appointment_time: document.getElementById('appointment-time').value,
-        service_type: document.getElementById('service-type').value,
-        location: document.getElementById('location').value,
-        notes: document.getElementById('notes').value || null,
-        estimated_cost: parseFloat(document.getElementById('quotePrice').textContent.replace('$', '')) || 0,
-        status: 'pending'
-      };
-
-      const result = await insertToSupabase('bookings', booking);
-
-      if (result) {
-        successMsg.style.display = 'block';
-        document.getElementById('bookingForm').reset();
-        document.getElementById('quotePrice').textContent = '$0';
-        document.getElementById('quoteBreakdown').textContent = 'Select a service to calculate price';
-        
-        setTimeout(() => {
-          window.location.href = 'booking.html';
-        }, 2000);
-      } else {
-        throw new Error('Failed to create booking');
-      }
-
-    } catch (err) {
-      errorMsg.textContent = '❌ Error: ' + err.message;
-      errorMsg.style.display = 'block';
-    } finally {
-      btn.disabled = false;
-      btn.textContent = '📅 Request Appointment';
-    }
-  }
-
-  // Initialize quote on load
-  window.addEventListener('load', () => {
-    const dateInput = document.getElementById('appointment-date');
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.min = today;
-  });
-</script>
+  </script>
 
 </body>
 </html>
