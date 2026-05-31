@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQs | Supreme Mobile Notary Service · Memphis, TN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e2c47a;
+      --dark: #0d0d0d;
+      --dark2: #141414;
+      --dark3: #1c1c1c;
+      --text: #e8e8e8;
+      --muted: #888;
+      --border: #2a2a2a;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: rgba(13,13,13,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--white);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .nav-logo img { height: 38px; width: 38px; border-radius: 50%; object-fit: cover; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); }
+    .nav-mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; cursor: pointer; }
+    .nav-mobile { display: none; }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-mobile-toggle { display: block; }
+      .nav-mobile.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 70px; left: 0; right: 0;
+        background: var(--dark2);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 2rem;
+        gap: 1rem;
+        z-index: 99;
+      }
+      .nav-mobile a { color: var(--text); text-decoration: none; font-size: 0.95rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+      .nav-mobile a:last-child { border-bottom: none; color: var(--gold); font-weight: 600; }
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      background: linear-gradient(180deg, #141414 0%, var(--dark) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+    .page-header h1 em { color: var(--gold); font-style: italic; }
+    .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 520px; margin: 0 auto; }
+
+    /* MAIN */
+    .faq-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 5rem;
+    }
+
+    /* CATEGORY FILTER */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .filter-btn.active { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .section-label:first-of-type { margin-top: 0; }
+
+    /* FAQ ITEMS */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .faq-item.hidden { display: none; }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.25rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      cursor: pointer;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.4;
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--gold); }
+    .faq-question.open { color: var(--gold); }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-top: 1px;
+      transition: transform 0.25s, background 0.2s;
+      background: var(--dark3);
+    }
+    .faq-question.open .faq-icon { transform: rotate(45deg); background: var(--gold); color: var(--dark); border-color: var(--gold); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.25s;
+    }
+    .faq-answer.open { max-height: 600px; }
+    .faq-answer-inner {
+      padding: 0 0 1.5rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+    .faq-answer-inner p { margin-bottom: 0.75rem; }
+    .faq-answer-inner p:last-child { margin-bottom: 0; }
+    .faq-answer-inner ul {
+      margin: 0.5rem 0 0.75rem 0;
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .faq-answer-inner ul li { display: flex; align-items: flex-start; gap: 0.5rem; }
+    .faq-answer-inner ul li::before { content: "✦"; color: var(--gold); font-size: 0.65rem; margin-top: 5px; flex-shrink: 0; }
+    .faq-answer-inner strong { color: var(--text); font-weight: 500; }
+    .faq-answer-inner a { color: var(--gold); text-decoration: none; }
+    .faq-answer-inner a:hover { text-decoration: underline; }
+
+    /* CTA BAND */
+    .cta-band {
+      background: linear-gradient(135deg, #1a1500, #2a1f00);
+      border: 1px solid #3a2e00;
+      border-radius: 12px;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .cta-band h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .cta-band h3 em { color: var(--gold); font-style: italic; }
+    .cta-band p { color: #a08840; font-size: 0.88rem; margin-bottom: 1.25rem; }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 0.65rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.65rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--gold); color: var(--dark); }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark2);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 0.3rem; }
+    .footer-sub { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.75rem; color: #555; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Logo">
+      Supreme Mobile Notary
+    </a>
+    <ul class="nav-links">
+      <li><a href="Services.html">Services</a></li>
+      <li><a href="Pricing.html">Pricing</a></li>
+      <li><a href="booking.html">Book</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html" class="active">FAQs</a></li>
+      <li><a href="Contact.html">Contact</a></li>
+    </ul>
+    <a href="booking.html" class="nav-cta">📅 Book Now</a>
+    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-mobile').classList.toggle('open')">☰</button>
+    <div class="nav-mobile">
+      <a href="Services.html">Services</a>
+      <a href="Pricing.html">Pricing</a>
+      <a href="booking.html">Book</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQs</a>
+      <a href="Contact.html">Contact</a>
+      <a href="booking.html">📅 Book Now</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="label">Got Questions?</div>
+    <h1>Frequently Asked <em>Questions</em></h1>
+    <p>Everything you need to know before your appointment — answered clearly and honestly.</p>
+  </div>
+
+  <!-- FAQ CONTENT -->
+  <div class="faq-wrap">
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterFAQ('all', this)">All Questions</button>
+      <button class="filter-btn" onclick="filterFAQ('pricing', this)">Pricing & Fees</button>
+      <button class="filter-btn" onclick="filterFAQ('process', this)">How It Works</button>
+      <button class="filter-btn" onclick="filterFAQ('credentials', this)">Credentials</button>
+      <button class="filter-btn" onclick="filterFAQ('clients', this)">Who We Serve</button>
+      <button class="filter-btn" onclick="filterFAQ('prep', this)">Before You Book</button>
+    </div>
+
+    <!-- PRICING -->
+    <div class="section-label" data-category="pricing">Pricing & Fees</div>
+
+    <div class="faq-item" data-category="pricing">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        What should I know about your pricing — are there discounts or extra fees?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Our pricing is transparent and straightforward. Here's what to expect:</p>
+          <ul>
+            <li><strong>Standard notarial acts</strong> are $5 per signature, per document — this is the state-regulated fee in Tennessee.</li>
+            <li><strong>Mobile service fee</strong> is $25, which covers travel to your location anywhere in the Memphis metro area.</li>
+            <li><strong>Specialty services</strong> like real estate closings start at $100–$150, and estate documents like Powers of Attorney start at $40.</li>
+            <li><strong>After-hours appointments</strong> (evenings and early mornings) carry an additional $15 fee.</li>
+            <li><strong>Rush or same-day service</strong> is available for an additional $20 — we understand urgency happens.</li>
+          </ul>
+          <p>We do not charge hidden fees. The price we quote is the price you pay. Multiple signers on the same document? Each additional person is just $5 more. Use our <a href="booking.html">Price Estimator on the booking page</a> to calculate your total before you schedule.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="pricing">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        What forms of payment do you accept?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>We accept cash, all major credit and debit cards, Zelle, and CashApp. Payment is collected at the time of service. For real estate closings, payment is typically coordinated through the title company or escrow agent.</p>
+          <p>We do not require a deposit to hold your appointment — your Calendly booking is enough to confirm your slot.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="section-label" data-category="process">How It Works</div>
+
+    <div class="faq-item" data-category="process">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        What is your typical process for working with a new client?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Working with us for the first time is simple and stress-free. Here's what the process looks like from start to finish:</p>
+          <ul>
+            <li><strong>Step 1 — Book online.</strong> Use our booking page to choose a date and time that works for you. You'll enter your address and the type of document so we arrive fully prepared.</li>
+            <li><strong>Step 2 — Instant confirmation.</strong> You'll receive an automatic confirmation email with your appointment details, plus a reminder the day before.</li>
+            <li><strong>Step 3 — We come to you.</strong> We travel to your home, office, hospital, or any location in the Memphis area. No need to travel anywhere.</li>
+            <li><strong>Step 4 — Document review.</strong> When we arrive, we review your documents to make sure everything is in order before any signatures are applied.</li>
+            <li><strong>Step 5 — Notarization.</strong> We verify your identity, witness your signature, and apply the official notary seal. The whole appointment typically takes 15–30 minutes.</li>
+            <li><strong>Step 6 — You're done.</strong> You leave with fully executed, legally valid documents. Payment is collected at the end of the appointment.</li>
+          </ul>
+          <p>Have questions before your appointment? Call or text us anytime and we'll respond promptly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="process">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        How quickly can you come out? Do you offer same-day appointments?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Yes — same-day and even within-the-hour appointments are often available. We operate 7 days a week, including weekends and most holidays. Real estate closings, hospital visits, and urgent legal signings are given priority scheduling.</p>
+          <p>For same-day service, please call or text directly rather than booking online so we can confirm availability immediately. A $20 rush fee applies for same-day bookings made within 4 hours of the appointment.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREDENTIALS -->
+    <div class="section-label" data-category="credentials">Credentials & Training</div>
+
+    <div class="faq-item" data-category="credentials">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        What education and training do you have as a notary?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Supreme Mobile Notary is fully credentialed and trained to handle a wide range of notarization needs in Tennessee:</p>
+          <ul>
+            <li><strong>Tennessee Commissioned Notary Public</strong> — licensed and bonded through the State of Tennessee</li>
+            <li><strong>Certified Notary Signing Agent (NSA)</strong> — specialized training for real estate and loan document signings, background-screened through the National Notary Association</li>
+            <li><strong>Licensed Wedding Officiant</strong> — authorized to legally solemnize marriages in Tennessee</li>
+            <li><strong>Ongoing continuing education</strong> in notary law, document handling, and best practices</li>
+          </ul>
+          <p>We stay current on Tennessee notary statutes so every document we notarize is legally valid and properly executed. If you have questions about whether your specific document qualifies, just ask — we're happy to advise before your appointment.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIENTS -->
+    <div class="section-label" data-category="clients">Who We Serve</div>
+
+    <div class="faq-item" data-category="clients">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        What types of clients do you typically work with?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>We serve a wide range of individuals, families, and businesses throughout the Memphis metro area:</p>
+          <ul>
+            <li><strong>Homeowners & buyers</strong> — real estate closings, refinances, and title transfers</li>
+            <li><strong>Families & caregivers</strong> — Powers of Attorney, living wills, and advance directives for elderly or ill loved ones</li>
+            <li><strong>Hospital & hospice patients</strong> — bedside notarizations at any Memphis-area medical facility, handled with sensitivity and care</li>
+            <li><strong>Attorneys & law firms</strong> — affidavits, sworn statements, and court document support</li>
+            <li><strong>Title companies & lenders</strong> — loan signing packages and closing document execution</li>
+            <li><strong>Businesses</strong> — contracts, corporate resolutions, and business agreements</li>
+            <li><strong>Individuals & couples</strong> — travel consent letters, immigration forms, and wedding ceremonies</li>
+          </ul>
+          <p>Whether it's a routine document or a sensitive family matter, we bring the same professionalism and care to every appointment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="clients">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        Can you come to a hospital or nursing home?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Yes — hospital and bedside notarizations are one of our most requested services. We regularly visit patients at Memphis-area hospitals, hospice facilities, nursing homes, and rehabilitation centers.</p>
+          <p>We understand these situations are often time-sensitive and emotionally charged. We arrive promptly, handle everything with discretion, and work respectfully with medical staff and family members. The signer must be of sound mind and signing voluntarily — if there are concerns about capacity, please let us know in advance so we can discuss how to proceed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREP -->
+    <div class="section-label" data-category="prep">Before You Book</div>
+
+    <div class="faq-item" data-category="prep">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        What should I think through before calling a mobile notary?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Great question — a little preparation saves time and ensures your appointment goes smoothly. Here are the key things to consider before you book:</p>
+          <ul>
+            <li><strong>Do you have valid photo ID?</strong> Every signer must present a current, government-issued photo ID — driver's license, passport, or military ID. Expired IDs cannot be accepted by law.</li>
+            <li><strong>Is the document complete?</strong> Fill in all blanks on the form before we arrive — except the signature lines. Do NOT sign beforehand. If a document has blanks, it cannot be notarized.</li>
+            <li><strong>Are all signers available?</strong> Everyone who needs to sign must be physically present at the same location. We cannot notarize a document for someone who isn't there.</li>
+            <li><strong>Do you need witnesses?</strong> Some documents — like wills in Tennessee — require witnesses in addition to a notary. Check your document's requirements and arrange witnesses in advance if needed.</li>
+            <li><strong>What type of notarization is required?</strong> Most documents need either an acknowledgment or a jurat. If you're unsure, we can help you identify which type your document requires.</li>
+            <li><strong>Is the document in English?</strong> We can notarize documents in foreign languages as long as the signer can communicate with us and understands what they're signing. We cannot translate documents.</li>
+          </ul>
+          <p>Not sure if your situation is covered? Call or text before booking and we'll answer any questions in minutes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="prep">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        What ID is accepted for notarization?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Tennessee law requires signers to present satisfactory evidence of identity. Acceptable forms of ID include:</p>
+          <ul>
+            <li>State-issued driver's license (current)</li>
+            <li>U.S. Passport or Passport Card</li>
+            <li>Military identification card</li>
+            <li>Government-issued photo ID card</li>
+          </ul>
+          <p>The ID must be current and not expired. If you don't have an acceptable form of ID, credible witness identification may be available in certain situations — contact us to discuss your specific circumstances before your appointment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="prep">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        Can you notarize a document if I've already signed it?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>It depends on the type of notarization required. For an <strong>acknowledgment</strong> — the most common type — you can sign beforehand, as long as you appear before us and acknowledge that you signed it voluntarily. For a <strong>jurat</strong>, you must sign in our presence. When in doubt, do not sign your document until the notary is present. It's always easier to sign in front of us than to redo a document.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="prep">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        What areas do you serve?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>We serve Memphis and the surrounding Mid-South region, including:</p>
+          <ul>
+            <li>Memphis, Germantown, Collierville, Bartlett</li>
+            <li>Arlington, Cordova, Millington</li>
+            <li>Olive Branch, MS and Southaven, MS</li>
+            <li>Horn Lake, MS and surrounding DeSoto County areas</li>
+          </ul>
+          <p>Don't see your city listed? Call or text us — we likely cover it or can make arrangements. We're available 7 days a week including weekends and most holidays.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-band">
+      <h3>Still Have a <em>Question?</em></h3>
+      <p>Call or text us — we respond within minutes and are available 7 days a week.</p>
+      <div class="cta-buttons">
+        <a href="booking.html" class="btn-gold">📅 Book an Appointment</a>
+        <a href="Contact.html" class="btn-outline">💬 Contact Us</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">Supreme Mobile Notary Service</div>
+    <div class="footer-sub">Memphis, Tennessee · Licensed & Certified</div>
+    <div class="footer-links">
+      <a href="Services.html">Services</a>
+      <a href="Pricing.html">Pricing</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQs</a>
+      <a href="Contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 Supreme Mobile Notary Service</div>
+  </footer>
+
+  <script>
+    function toggleFAQ(btn) {
+      const answer = btn.nextElementSibling;
+      const isOpen = answer.classList.contains('open');
+      document.querySelectorAll('.faq-answer.open').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-question.open').forEach(q => q.classList.remove('open'));
+      if (!isOpen) {
+        answer.classList.add('open');
+        btn.classList.add('open');
+      }
+    }
+
+    function filterFAQ(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.faq-item').forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+      document.querySelectorAll('.section-label').forEach(label => {
+        if (category === 'all' || label.dataset.category === category) {
+          label.style.display = '';
+        } else {
+          label.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
