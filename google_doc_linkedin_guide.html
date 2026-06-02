@@ -19,8 +19,10 @@
 .tip{background:var(--color-background-success);border:0.5px solid var(--color-border-success);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-success);line-height:1.6;margin-top:1.25rem}
 .warn{background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-warning);line-height:1.6;margin-top:.85rem}
 .divider{height:0.5px;background:var(--color-border-tertiary);margin:1.75rem 0}
-    .hidden-dashboard-link { margin-left: 0.45rem; opacity: 0.55; color: inherit; text-decoration: none; transition: opacity 0.2s ease; }
+    .hidden-dashboard-link { position: relative; margin-left: 0.45rem; opacity: 0.55; color: inherit; text-decoration: none; transition: opacity 0.2s ease; }
     .hidden-dashboard-link:hover { opacity: 1; }
+    .hidden-dashboard-link::after { content: ''; position: absolute; bottom: 140%; left: 50%; transform: translateX(-50%); width: 48px; height: 48px; background-image: url('supreme_logo.jpeg'); background-size: contain; background-repeat: no-repeat; background-position: center; border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,0.45); opacity: 0; pointer-events: none; transition: opacity 0.12s ease, transform 0.12s ease; }
+    .hidden-dashboard-link:hover::after, .hidden-dashboard-link:focus::after { opacity: 1; transform: translateX(-50%) translateY(-6px); }
     footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.95rem; color: #555; }
   <div class="phase">
     <div class="phase-label">Phase 1 — Upload the .docx to Google Drive</div>
