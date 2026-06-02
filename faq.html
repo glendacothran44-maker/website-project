@@ -287,6 +287,8 @@
     .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
     .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
     .footer-links a:hover { color: var(--gold); }
+    .hidden-dashboard-link { margin-left: 0.45rem; opacity: 0.55; color: inherit; text-decoration: none; transition: opacity 0.2s ease; }
+    .hidden-dashboard-link:hover { opacity: 1; }
     .footer-copy { font-size: 0.75rem; color: #555; }
   </style>
 </head>
@@ -559,7 +561,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-brand">Supreme Mobile Notary Service</div>
+    <div class="footer-brand">Supreme Mobile Notary Service<small>Memphis, Tennessee · Licensed &amp; Certified <a href="clients.html" class="hidden-dashboard-link" aria-label="Hidden client page">🔐</a></small></div>
     <div class="footer-sub">Memphis, Tennessee · Licensed & Certified</div>
     <div class="footer-links">
       <a href="Services.html">Services</a>

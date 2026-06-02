@@ -1,0 +1,207 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Capstone Planning — Google Doc</title>
+<style>body{font-family:Arial,sans-serif;margin:1.5rem;}h1{font-size:1.8rem;margin-bottom:0.75rem;}h2{font-size:1.3rem;margin:1.2rem 0 0.4rem;}p{margin:0.35rem 0;}ul{margin:0.4rem 0 0.8rem 1.2rem;}li{margin:0.2rem 0;}</style>
+    .hidden-dashboard-link { margin-left: 0.45rem; opacity: 0.55; color: inherit; text-decoration: none; transition: opacity 0.2s ease; }
+    .hidden-dashboard-link:hover { opacity: 1; }
+    footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.95rem; color: #555; }
+</style>
+</head>
+<body>
+<h1>Capstone Planning — Google Doc</h1>
+<h2>Slide 1</h2>
+<p>FEATURE  1</p>
+<p>Client Booking System</p>
+<p>+ Supabase Database</p>
+<p>How it was built &#194;&#183; How it works &#194;&#183; Why it matters for Supreme Mobile Notary</p>
+<p>24/7</p>
+<p>Online Booking</p>
+<p>Live DB</p>
+<p>Supabase</p>
+<p>0 Lost</p>
+<p>Appointments</p>
+<p>Supreme Mobile Notary Service  &#194;&#183;  Capstone Presentation</p>
+<h2>Slide 2</h2>
+<p>Feature 1  &#194;&#183;  Booking System + Supabase  &#194;&#183;  What It Is</p>
+<p>In Plain English</p>
+<p>(The 5-Year-Old Version)</p>
+<p>&#240;Ÿ“‹</p>
+<p>Imagine a sign-up sheet at a doctor&#39;s office &#226;€” except it lives on your website and is open 24 hours a day.</p>
+<p>&#226;š&#161;</p>
+<p>A client fills it out &#226;€” name, phone, date, document type &#226;€” and the info magically appears in your private dashboard.</p>
+<p>&#240;Ÿ—„&#239;&#184;</p>
+<p>That&#39;s Supabase: a live digital filing cabinet in the cloud that holds every booking safely, forever.</p>
+<p>&#226;œ…</p>
+<p>You log in from any phone or computer and see all your appointments with one tap.</p>
+<p>The Data Journey</p>
+<p>Step by step, client to calendar</p>
+<p>1</p>
+<p>Client visits your website</p>
+<p>Finds the booking form on supremenotary.com</p>
+<p>2</p>
+<p>Fills out the form</p>
+<p>Name, phone, date, document type, address</p>
+<p>3</p>
+<p>Supabase saves the row</p>
+<p>Data instantly written to your live PostgreSQL database</p>
+<p>4</p>
+<p>You see it instantly</p>
+<p>Admin dashboard shows status: Pending / Confirmed / Done</p>
+<p>5</p>
+<p>You call to confirm</p>
+<p>Client gets professional confirmation &#226;€” trust goes up</p>
+<h2>Slide 3</h2>
+<p>Feature 1  &#194;&#183;  Booking System + Supabase  &#194;&#183;  How It Was Built</p>
+<p>&#240;ŸŸ&#162;  Supabase Setup</p>
+<p>Created free Supabase project at supabase.com</p>
+<p>Built &#39;appointments&#39; table with columns:</p>
+<p>  id &#194;&#183; client_name &#194;&#183; phone &#194;&#183; email</p>
+<p>  date &#194;&#183; time &#194;&#183; doc_type &#194;&#183; location</p>
+<p>  urgency &#194;&#183; status &#194;&#183; created_at</p>
+<p>Enabled Row-Level Security for privacy</p>
+<p>Copied API URL + anon key to connect to site</p>
+<p>&#240;ŸŒ  Website Form (HTML + JS)</p>
+<p>Built HTML form: name, phone, date/time picker</p>
+<p>Added document type dropdown (7 types)</p>
+<p>Standard vs Same-Day Rush radio buttons</p>
+<p>Imported Supabase JS SDK via script tag</p>
+<p>On submit &#226;†’ supabase.from(&#39;appointments&#39;).insert()</p>
+<p>Success state shows client a reference number</p>
+<p>Admin view shows all rows in styled table</p>
+<p>Appointment Status Flow</p>
+<p>PENDING</p>
+<p>Just submitted</p>
+<p>CONFIRMED</p>
+<p>You called back</p>
+<p>IN PROGRESS</p>
+<p>Appointment day</p>
+<p>COMPLETED</p>
+<p>Signed + sealed</p>
+<p>&#240;Ÿ’&#161;  Business Value: Clients can book while you sleep &#194;&#183; Zero missed leads &#194;&#183; Professional credibility &#194;&#183; Zero cost with Supabase free tier</p>
+<h2>Slide 4</h2>
+<p>Feature 1  &#194;&#183;  Booking System + Supabase  &#194;&#183;  Business Impact</p>
+<p>&#226;Œ  BEFORE</p>
+<p>&#226;œ•</p>
+<p>Clients had to call or text to book</p>
+<p>&#226;œ•</p>
+<p>You had to be available to respond</p>
+<p>&#226;œ•</p>
+<p>Busy people gave up and moved on</p>
+<p>&#226;œ•</p>
+<p>Appointments written in a notebook</p>
+<p>&#226;œ•</p>
+<p>Easy to lose or forget details</p>
+<p>&#226;œ•</p>
+<p>No record of who booked or when</p>
+<p>&#226;œ•</p>
+<p>No professional confirmation sent</p>
+<p>&#226;œ…  AFTER</p>
+<p>Clients book 24/7 from any device</p>
+<p>You wake up to new appointments waiting</p>
+<p>Zero lost leads &#226;€” form is always open</p>
+<p>Every booking stored in Supabase forever</p>
+<p>Search, filter, and sort all appointments</p>
+<p>Client history always at your fingertips</p>
+<p>Professional confirmation builds trust</p>
+<h2>Slide 5</h2>
+<p>FEATURE  2</p>
+<p>Instant Quote</p>
+<p>Calculator</p>
+<p>How it was built &#194;&#183; How it works &#194;&#183; Why it converts more clients</p>
+<p>Real-Time</p>
+<p>Price Updates</p>
+<p>Zero</p>
+<p>Phone Tag</p>
+<p>More</p>
+<p>Conversions</p>
+<p>Supreme Mobile Notary Service  &#194;&#183;  Capstone Presentation</p>
+<h2>Slide 6</h2>
+<p>Feature 2  &#194;&#183;  Instant Quote Calculator  &#194;&#183;  What It Is</p>
+<p>In Plain English</p>
+<p>(The 5-Year-Old Version)</p>
+<p>&#240;Ÿ•</p>
+<p>Imagine ordering a pizza online &#226;€” you pick your toppings and the price updates instantly. This is that, but for notary services.</p>
+<p>&#240;ŸŽ›&#239;&#184;</p>
+<p>A client picks their document type, how far you need to travel, how many signers, and any add-ons.</p>
+<p>&#240;Ÿ’&#161;</p>
+<p>The calculator does the math automatically and shows a price in real time &#226;€” no form to submit, no waiting.</p>
+<p>&#240;Ÿ“&#178;</p>
+<p>When they like the price, one button takes them straight to the booking form. No phone tag. No guessing.</p>
+<p>The Pricing Logic</p>
+<p>4 inputs &#226;†’ 1 live price</p>
+<p>&#240;Ÿ“„  Document Type</p>
+<p>&#194;&#183; General: $35</p>
+<p>&#194;&#183; Power of Attorney: $75</p>
+<p>&#194;&#183; Medical: $65</p>
+<p>&#194;&#183; Real Estate: $175</p>
+<p>&#194;&#183; Loan Docs: $110</p>
+<p>&#194;&#183; Will/Trust: $90</p>
+<p>&#240;Ÿš—  Travel Distance</p>
+<p>&#194;&#183; 0&#226;€“5 mi: free</p>
+<p>&#194;&#183; 6&#226;€“15 mi: +$10</p>
+<p>&#194;&#183; 16&#226;€“25 mi: +$20</p>
+<p>&#194;&#183; 26&#226;€“35 mi: +$35</p>
+<p>&#194;&#183; 36&#226;€“50 mi: +$50</p>
+<p>&#240;Ÿ‘&#165;  Extra Signers</p>
+<p>&#194;&#183; 1st signer included</p>
+<p>&#194;&#183; Each additional: +$15</p>
+<p>&#226;š&#161;  Add-ons</p>
+<p>&#194;&#183; Rush: +$25 &#194;&#183; Print: +$15</p>
+<p>&#194;&#183; Copies: +$20 &#194;&#183; After-hours: +$35</p>
+<h2>Slide 7</h2>
+<p>Feature 2  &#194;&#183;  Instant Quote Calculator  &#194;&#183;  How It Was Built</p>
+<p>&#240;ŸŒ  HTML, CSS &amp; JavaScript</p>
+<p>Document type grid (6 cards, radio buttons)</p>
+<p>Distance slider &#226;€” range input 1 to 50 miles</p>
+<p>Signer +/&#226;ˆ’ counter (min 1, max 10)</p>
+<p>4 checkbox add-ons (rush, print, copies, after-hours)</p>
+<p>updateAll() function fires on every input change</p>
+<p>Calculates total, updates display in real time</p>
+<p>Breakdown panel shows line-by-line pricing</p>
+<p>&#240;ŸŽ&#168;  UX Design Decisions</p>
+<p>Visual cards (not a boring dropdown) for doc type</p>
+<p>Slider for distance &#226;€” feels intuitive on mobile</p>
+<p>Price updates as you drag &#226;€” no submit button</p>
+<p>Gold color on live price = eye goes there first</p>
+<p>Breakdown panel: hidden until price &gt; base</p>
+<p>Book This button = direct path to booking form</p>
+<p>Matches Supreme Notary navy + gold brand palette</p>
+<p>&#240;Ÿ“Š  Example Calculation: Real Estate Closing, 20 mi, 2 signers, Same-Day Rush</p>
+<p>Real Estate Closing (base)</p>
+<p>$175</p>
+<p>+ Travel, 20 miles</p>
+<p>+$20</p>
+<p>+ Extra signer (2nd person)</p>
+<p>+$15</p>
+<p>+ Same-Day Rush</p>
+<p>+$25</p>
+<p>= $235 Total</p>
+<h2>Slide 8</h2>
+<p>Feature 2  &#194;&#183;  Instant Quote Calculator  &#194;&#183;  Business Impact</p>
+<p>&#226;Œ  BEFORE</p>
+<p>&#226;œ•</p>
+<p>Clients had to call just to ask the price</p>
+<p>&#226;œ•</p>
+<p>You repeated pricing info over and over</p>
+<p>&#226;œ•</p>
+<p>Price uncertainty killed interest fast</p>
+<p>&#226;œ•</p>
+<p>Clients went to competitors who showed pricing</p>
+<p>&#226;œ•</p>
+<p>No easy way to compare service options</p>
+<p>&#226;œ•</p>
+<p>Rush vs. standard? No clear explanation</p>
+<p>&#226;œ•</p>
+<p>Felt informal &#226;€” not like a real business</p>
+<p>&#226;œ…  AFTER</p>
+<p>Price shown instantly &#226;€” no phone call needed</p>
+<p>Clients self-qualify before reaching out</p>
+<p>Upfront pricing = higher trust &amp; confidence</p>
+<p>Competitive edge over notaries with no pricing</p>
+<p>Options are clear: document, distance, add-ons</p>
+<p>Rush pricing visible = clients choose willingly</p>
+<p>Looks like an established, professional business</p>
+<footer>Hidden access: <a href="clients.html" class="hidden-dashboard-link" aria-label="Hidden client page">🔐 Client dashboard</a></footer>
+</body></html>

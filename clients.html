@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Access | Supreme Mobile Notary Service</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <style>
+    body { margin: 0; font-family: 'Inter', sans-serif; background: #070f18; color: #f8f8f8; }
+    .page-shell { max-width: 980px; margin: 3rem auto; padding: 0 1.5rem; }
+    h1, h2 { margin: 0 0 1rem; line-height: 1.1; }
+    h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); }
+    .intro { color: #bfc7d5; margin-bottom: 2rem; max-width: 760px; }
+    .pin-box { display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; margin-bottom: 1rem; }
+    input { width: 100%; padding: 1rem 1.1rem; border-radius: 10px; border: 1px solid #2c3a51; background: #0f1726; color: #fff; }
+    button { border: none; padding: 1rem 1.3rem; border-radius: 10px; background: #c9a84c; color: #070f18; font-weight: 600; cursor: pointer; }
+    button:hover { background: #e1c16c; }
+    .message { margin-top: 0.8rem; color: #f38b8b; font-size: 0.95rem; }
+    .hidden { display: none; }
+    .client-table { width: 100%; border-collapse: collapse; margin-top: 1.75rem; }
+    .client-table th, .client-table td { padding: 1rem; border: 1px solid rgba(255,255,255,0.08); }
+    .client-table th { text-align: left; background: rgba(201,168,76,0.08); color: #f4e0b4; }
+    .client-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+    .client-table td { color: #dfe4f0; }
+    .footer-note { margin-top: 2rem; color: #8f97ab; font-size: 0.96rem; }
+    .footer-note a { color: #c9a84c; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <h1>Client Access</h1>
+    <p class="intro">Enter the PIN to reveal the hidden client page. This is the protected link for client names, phone numbers, appointment details, and Supabase access.</p>
+
+    <div id="authCard">
+      <div class="pin-box">
+        <input id="pinInput" type="password" placeholder="Enter client PIN" autocomplete="off" />
+        <button id="pinSubmit">Unlock</button>
+      </div>
+      <div id="authError" class="message hidden">Incorrect PIN. Please try again.</div>
+    </div>
+
+    <div id="clientArea" class="hidden">
+      <h2>Hidden Client List</h2>
+      <table class="client-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Appointment</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="clientRows"></tbody>
+      </table>
+      <div id="clientStatus" class="message" style="display:none;color:#dce3ff;"></div>
+    </div>
+
+    <p class="footer-note">Note: this page is intentionally hidden and only available via the locked footer icon from other site pages.</p>
+  </div>
+
+  <script>
+    const SECRET_PIN = '4287';
+    const pinInput = document.getElementById('pinInput');
+    const pinSubmit = document.getElementById('pinSubmit');
+    const authError = document.getElementById('authError');
+    const authCard = document.getElementById('authCard');
+    const clientArea = document.getElementById('clientArea');
+    const clientRows = document.getElementById('clientRows');
+    const clientStatus = document.getElementById('clientStatus');
+
+    pinSubmit.addEventListener('click', async () => {
+      authError.classList.add('hidden');
+      const pin = pinInput.value.trim();
+      if (pin !== SECRET_PIN) {
+        authError.classList.remove('hidden');
+        return;
+      }
+      authCard.classList.add('hidden');
+      clientArea.classList.remove('hidden');
+      await loadClientList();
+    });
+
+    async function loadClientList() {
+      clientStatus.style.display = 'block';
+      clientStatus.textContent = 'Loading client details…';
+      if (!window.supabaseClient) {
+        clientStatus.textContent = 'Supabase client is not available.';
+        return;
+      }
+
+      const { data, error } = await window.supabaseClient
+        .from('clients')
+        .select('name,phone,email,appointment_date,status')
+        .order('appointment_date', { ascending: false });
+
+      if (error || !data) {
+        clientStatus.textContent = 'Unable to load clients. Check Supabase settings.';
+        return;
+      }
+
+      if (data.length === 0) {
+        clientStatus.textContent = 'No client records found.';
+        return;
+      }
+
+      clientStatus.style.display = 'none';
+      clientRows.innerHTML = data.map(row => `
+        <tr>
+          <td>${escapeHtml(row.name)}</td>
+          <td>${escapeHtml(row.phone)}</td>
+          <td>${escapeHtml(row.email)}</td>
+          <td>${escapeHtml(row.appointment_date || '')}</td>
+          <td>${escapeHtml(row.status || '')}</td>
+        </tr>`).join('');
+    }
+
+    function escapeHtml(value) {
+      return String(value || '').replace(/[&<>'"]/g, char => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;'
+      })[char]);
+    }
+  </script>
+</body>
+</html>
