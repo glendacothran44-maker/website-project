@@ -302,7 +302,7 @@
   <script>
     const SUPABASE_URL = 'https://kjnvbposqpncmeedyzjw.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_q1fRfGhAGa39SRxMoDQ2wQ_nK7gcJG7';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     function calculateCost() {
       const service = parseFloat(document.getElementById('serviceSelect').value) || 0;
