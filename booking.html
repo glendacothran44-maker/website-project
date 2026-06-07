@@ -342,7 +342,7 @@
       statusMsg.style.display = 'none';
 
       try {
-        const { error } = await supabase.from('bookings').insert([{
+        const { error } = await supabaseClient.frombase.from('bookings').insert([{
           client_name: clientName, client_email: clientEmail, client_phone: clientPhone,
           service_type: serviceType, appointment_date: apptDate, appointment_time: apptTime,
           document_type: documentType, location_address: locationAddr,
