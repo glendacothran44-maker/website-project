@@ -5,7 +5,8 @@
 
 const SUPABASE_CONFIG = {
   URL: "https://kjnvbposqpncmeedyzjw.supabase.co",
-  KEY: "sb_publishable_q1fRfGhAGa39SRxMoDQ2wQ_nK7gcJG7"
+  KEY: "sb_publishable_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtqbnZicG9zcXBuY21lZWR5emp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNjQxNDIsImV4cCI6MjA5MTk0MDE0Mn0.07M_mvw589Let0pk01VBqSa1tqZiT49a43Qjw9HMug0
+"
 };
 
 // Initialize Supabase globally
