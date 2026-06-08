@@ -7,22 +7,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --gold: #c9a84c; --gold-light: #e2c47a; --dark: #0d0d0d; --dark2: #141414;
       --dark3: #1c1c1c; --text: #e8e8e8; --muted: #888; --border: #2a2a2a;
-      --white: #ffffff; --red: #ff6b6b; --green: #1D9E75;
+      --white: #ffffff; --green: #1D9E75;
     }
     body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); min-height: 100vh; }
+
+    /* ── NAV ── */
     nav { background: rgba(13,13,13,0.97); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 70px; position: sticky; top: 0; z-index: 100; }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; }
     .nav-logo img { height: 38px; width: 38px; border-radius: 50%; object-fit: cover; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
-    .nav-cta { background: var(--gold); color: var(--dark); padding: 0.5rem 1.2rem; border-radius: 4px; font-size: 0.82rem; font-weight: 600; text-decoration: none; letter-spacing: 0.03em; transition: background 0.2s; }
+    .nav-cta { background: var(--gold); color: var(--dark); padding: 0.5rem 1.2rem; border-radius: 4px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: background 0.2s; }
     .nav-cta:hover { background: var(--gold-light); }
     .nav-mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; cursor: pointer; }
     .nav-mobile { display: none; }
@@ -33,35 +34,26 @@
       .nav-mobile a { color: var(--text); text-decoration: none; font-size: 0.95rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
       .nav-mobile a:last-child { border-bottom: none; color: var(--gold); font-weight: 600; }
     }
+
+    /* ── PAGE HEADER ── */
     .page-header { text-align: center; padding: 4rem 2rem 2rem; background: linear-gradient(180deg, #141414 0%, var(--dark) 100%); border-bottom: 1px solid var(--border); }
     .page-header .label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.75rem; }
     .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; color: var(--white); line-height: 1.2; margin-bottom: 0.75rem; }
     .page-header h1 em { color: var(--gold); font-style: italic; }
     .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 500px; margin: 0 auto; }
+
+    /* ── LAYOUT ── */
     .booking-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 5rem; display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: start; }
     @media (max-width: 900px) { .booking-layout { grid-template-columns: 1fr; } }
+
     .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
     .section-title em { color: var(--gold); font-style: italic; }
     .section-subtitle { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+
+    /* ── CALENDLY ── */
     .calendly-wrapper { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; min-height: 660px; }
-    .capture-form { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 1.5rem; }
-    .capture-form-header { background: linear-gradient(135deg, #0a1a0a, #0f280f); border-bottom: 1px solid #1a3a1a; padding: 1.25rem 1.5rem; }
-    .capture-form-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: #5abd5a; }
-    .capture-form-header p { font-size: 0.78rem; color: #5a9a5a; margin-top: 2px; }
-    .capture-form-body { padding: 1.5rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-    .form-group { margin-bottom: 0.85rem; }
-    .form-group label { display: block; font-size: 0.75rem; font-weight: 500; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.35rem; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--dark3); border: 1px solid var(--border); border-radius: 6px; color: var(--text); padding: 0.6rem 0.75rem; font-size: 0.88rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; appearance: none; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
-    .form-group textarea { resize: vertical; min-height: 70px; }
-    .submit-btn { width: 100%; background: var(--green); color: var(--white); border: none; border-radius: 6px; padding: 0.75rem; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: background 0.2s; margin-top: 0.5rem; letter-spacing: 0.02em; }
-    .submit-btn:hover { background: #17855f; }
-    .submit-btn:disabled { background: #444; cursor: not-allowed; }
-    .status-msg { display: none; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.85rem; margin-top: 0.75rem; text-align: center; }
-    .status-msg.success { display: block; background: #0f280f; border: 1px solid #1a3a1a; color: #5abd5a; }
-    .status-msg.error { display: block; background: #280f0f; border: 1px solid #3a1a1a; color: #bd5a5a; }
+
+    /* ── PRICE ESTIMATOR ── */
     .pricing-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: sticky; top: 90px; }
     .pricing-card-header { background: linear-gradient(135deg, #1a1500, #2a1f00); border-bottom: 1px solid #3a2e00; padding: 1.25rem 1.5rem; }
     .pricing-card-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--gold); margin-bottom: 0.25rem; }
@@ -82,11 +74,15 @@
     .service-list { display: flex; flex-direction: column; gap: 0.4rem; }
     .service-item { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); }
     .service-item .price { color: var(--gold-light); font-weight: 500; }
+
+    /* ── WHAT TO BRING ── */
     .what-to-bring { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-top: 1.5rem; }
     .what-to-bring h4 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 0.75rem; }
     .bring-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
     .bring-list li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.83rem; color: var(--muted); }
     .bring-list li::before { content: "✓"; color: var(--gold); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── FOOTER ── */
     footer { background: var(--dark2); border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; }
     .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 0.3rem; }
     .footer-sub { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem; }
@@ -97,6 +93,7 @@
   </style>
 </head>
 <body>
+
   <nav>
     <a href="index.html" class="nav-logo">
       <img src="supreme_logo.jpeg" alt="Supreme Mobile Notary Logo">
@@ -130,88 +127,20 @@
   </div>
 
   <div class="booking-layout">
+
+    <!-- LEFT: Calendly only -->
     <div>
       <h2 class="section-title">Choose Your <em>Time</em></h2>
-      <p class="section-subtitle">Select an available slot below — instant confirmation, no waiting.</p>
+      <p class="section-subtitle">Select an available slot below — instant confirmation sent to your email.</p>
       <div class="calendly-wrapper">
         <div class="calendly-inline-widget"
           data-url="https://calendly.com/glendacothran44/30min?hide_gdpr_banner=1&background_color=141414&text_color=e8e8e8&primary_color=c9a84c"
           style="min-width:100%; height:660px;"></div>
         <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
       </div>
-
-      <div class="capture-form">
-        <div class="capture-form-header">
-          <h3>✅ Complete Your Booking Details</h3>
-          <p>Fill this out after selecting your time above — saves your appointment to our system</p>
-        </div>
-        <div class="capture-form-body">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Full Name *</label>
-              <input type="text" id="clientName" placeholder="Jane Smith">
-            </div>
-            <div class="form-group">
-              <label>Phone Number *</label>
-              <input type="text" id="clientPhone" placeholder="(901) 555-0000">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Email Address *</label>
-            <input type="text" id="clientEmail" placeholder="you@email.com">
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Appointment Date *</label>
-              <input type="text" id="apptDate" placeholder="e.g. June 17, 2026">
-            </div>
-            <div class="form-group">
-              <label>Appointment Time *</label>
-              <input type="text" id="apptTime" placeholder="e.g. 11:00 AM">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Full Address (where you need us) *</label>
-            <input type="text" id="locationAddress" placeholder="123 Main St, Memphis, TN 38101">
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Service Type *</label>
-              <select id="serviceType">
-                <option value="">-- Select --</option>
-                <option>Notarial Act</option>
-                <option>Real Estate Closing</option>
-                <option>Refinance</option>
-                <option>Power of Attorney</option>
-                <option>Last Will &amp; Testament</option>
-                <option>Living Trust</option>
-                <option>Advance Directive</option>
-                <option>Affidavit / Court Document</option>
-                <option>Hospital / Bedside Signing</option>
-                <option>Travel Consent</option>
-                <option>Wedding Ceremony</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Document Type</label>
-              <input type="text" id="documentType" placeholder="e.g. Power of Attorney">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Estimated Total</label>
-            <input type="text" id="totalPriceInput" placeholder="Use the estimator → then it auto-fills" readonly style="background:#111; cursor:default;">
-          </div>
-          <div class="form-group">
-            <label>Additional Notes</label>
-            <textarea id="notesField" placeholder="Access codes, parking notes, special instructions..."></textarea>
-          </div>
-          <button class="submit-btn" id="submitBtn" onclick="saveBooking()">💾 Save My Booking Details</button>
-          <div class="status-msg" id="statusMsg"></div>
-        </div>
-      </div>
     </div>
 
+    <!-- RIGHT: Price estimator + what to bring -->
     <div>
       <div class="pricing-card">
         <div class="pricing-card-header">
@@ -284,6 +213,7 @@
         </ul>
       </div>
     </div>
+
   </div>
 
   <footer>
@@ -300,12 +230,6 @@
   </footer>
 
   <script>
-    // Initialize Supabase after page loads
-    const supabaseClient = supabase.createClient(
-      "https://xtrncgmggfwfzffiorow.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8"
-    );
-
     function calculateCost() {
       const service = parseFloat(document.getElementById('serviceSelect').value) || 0;
       const signers = parseFloat(document.getElementById('signersSelect').value) || 0;
@@ -315,69 +239,8 @@
       const total = service + signers + extras;
       document.getElementById('costAmount').textContent = '$' + total;
       document.getElementById('costNote').textContent = total > 0 ? 'Estimated — final price confirmed at booking' : 'Select a service above';
-      if (total > 0) document.getElementById('totalPriceInput').value = '$' + total + ' (estimated)';
-    }
-
-    async function saveBooking() {
-      const btn = document.getElementById('submitBtn');
-      const statusMsg = document.getElementById('statusMsg');
-      const clientName = document.getElementById('clientName').value.trim();
-      const clientPhone = document.getElementById('clientPhone').value.trim();
-      const clientEmail = document.getElementById('clientEmail').value.trim();
-      const apptDate = document.getElementById('apptDate').value.trim();
-      const apptTime = document.getElementById('apptTime').value.trim();
-      const locationAddr = document.getElementById('locationAddress').value.trim();
-      const serviceType = document.getElementById('serviceType').value.trim();
-      const documentType = document.getElementById('documentType').value.trim();
-      const totalPriceRaw = document.getElementById('totalPriceInput').value.trim();
-      const notes = document.getElementById('notesField').value.trim();
-
-      if (!clientName || !clientPhone || !clientEmail || !apptDate || !apptTime || !locationAddr || !serviceType) {
-        statusMsg.className = 'status-msg error';
-        statusMsg.textContent = '⚠️ Please fill in all required fields marked with *';
-        return;
-      }
-
-      const priceMatch = totalPriceRaw.match(/\d+/);
-      const totalPrice = priceMatch ? parseFloat(priceMatch[0]) : null;
-
-      btn.disabled = true;
-      btn.textContent = 'Saving...';
-      statusMsg.className = 'status-msg';
-      statusMsg.style.display = 'none';
-
-      try {
-        const { error } = await supabaseClient.from('bookings').insert([{
-          client_name: clientName,
-          client_email: clientEmail,
-          client_phone: clientPhone,
-          service_type: serviceType,
-          appointment_date: apptDate,
-          appointment_time: apptTime,
-          document_type: documentType || null,
-          location_address: locationAddr,
-          status: 'pending',
-          total_price: totalPrice,
-          notes: notes || null
-        }]);
-        if (error) throw error;
-        statusMsg.className = 'status-msg success';
-        statusMsg.textContent = '✅ Booking details saved! We will see you at your appointment.';
-        btn.textContent = '✅ Saved Successfully';
-        btn.style.background = '#17855f';
-        ['clientName','clientPhone','clientEmail','apptDate','apptTime','locationAddress','documentType','notesField'].forEach(id => {
-          document.getElementById(id).value = '';
-        });
-        document.getElementById('serviceType').selectedIndex = 0;
-        document.getElementById('totalPriceInput').value = '';
-      } catch (err) {
-        statusMsg.className = 'status-msg error';
-        statusMsg.textContent = '❌ Something went wrong. Please call us at (901) 555-0000.';
-        btn.disabled = false;
-        btn.textContent = '💾 Save My Booking Details';
-        console.error('Supabase error:', err);
-      }
     }
   </script>
+
 </body>
 </html>
