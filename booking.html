@@ -97,11 +97,15 @@
   </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const supabaseClient = supabase.createClient(
-    "https://xtrncgmggfwfzffiorow.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8"
-  );
-</script></head>
+  <script>
+  let supabaseClient;
+  window.addEventListener('load', function() {
+    supabaseClient = supabase.createClient(
+      "https://xtrncgmggfwfzffiorow.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cm5jZ21nZ2Z3ZnpmZmlvcm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzYzODYsImV4cCI6MjA5MTc1MjM4Nn0.qRZY25wZ82EK7L5d44fLTUbc0iviGXI-MpVvwNEmH_8"
+    );
+  });
+</script>
 <body>
   <nav>
     <a href="index.html" class="nav-logo">
