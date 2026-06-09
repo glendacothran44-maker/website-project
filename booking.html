@@ -45,7 +45,6 @@
     /* ── LAYOUT ── */
     .booking-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 5rem; display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: start; }
     @media (max-width: 900px) { .booking-layout { grid-template-columns: 1fr; } }
-
     .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
     .section-title em { color: var(--gold); font-style: italic; }
     .section-subtitle { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
@@ -70,10 +69,17 @@
     .cost-display .cost-label { font-size: 0.75rem; color: #a08840; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.25rem; }
     .cost-display .cost-amount { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--gold); line-height: 1; }
     .cost-display .cost-note { font-size: 0.75rem; color: #a08840; margin-top: 0.25rem; }
+    .cost-breakdown { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .cost-line { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); }
+    .cost-line .cost-line-amount { color: #a08840; font-weight: 500; }
     .divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
     .service-list { display: flex; flex-direction: column; gap: 0.4rem; }
     .service-item { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); }
     .service-item .price { color: var(--gold-light); font-weight: 500; }
+
+    /* ── TRAVEL ZONE NOTE ── */
+    .zone-note { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15); border-radius: 6px; padding: 0.6rem 0.85rem; margin-top: 0.4rem; font-size: 0.75rem; color: #a08840; line-height: 1.5; display: none; }
+    .zone-note.visible { display: block; }
 
     /* ── WHAT TO BRING ── */
     .what-to-bring { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-top: 1.5rem; }
@@ -128,7 +134,7 @@
 
   <div class="booking-layout">
 
-    <!-- LEFT: Calendly only -->
+    <!-- LEFT: Calendly -->
     <div>
       <h2 class="section-title">Choose Your <em>Time</em></h2>
       <p class="section-subtitle">Select an available slot below — instant confirmation sent to your email.</p>
@@ -145,9 +151,10 @@
       <div class="pricing-card">
         <div class="pricing-card-header">
           <h3>💰 Price Estimator</h3>
-          <p>Calculate your estimated cost before booking</p>
+          <p>Calculate your full estimated cost before booking</p>
         </div>
         <div class="pricing-card-body">
+
           <div class="est-group">
             <label>Service Type</label>
             <select id="serviceSelect" onchange="calculateCost()">
@@ -169,6 +176,19 @@
               </optgroup>
             </select>
           </div>
+
+          <div class="est-group">
+            <label>Travel Zone</label>
+            <select id="travelSelect" onchange="calculateCost()">
+              <option value="0">-- Select Your Zone --</option>
+              <option value="25">Local · Within 10 miles · +$25</option>
+              <option value="35">Standard · 11–20 miles · +$35</option>
+              <option value="50">Extended · 21–35 miles · +$50</option>
+              <option value="0" id="regionalOption">Regional · 36+ miles · Call for quote</option>
+            </select>
+            <div class="zone-note" id="zoneNote"></div>
+          </div>
+
           <div class="est-group">
             <label>Additional Options</label>
             <div class="checkbox-group">
@@ -176,6 +196,7 @@
               <label class="checkbox-item"><input type="checkbox" value="20" onchange="calculateCost()"> Rush Service (+$20)</label>
             </div>
           </div>
+
           <div class="est-group">
             <label>Additional Signers</label>
             <select id="signersSelect" onchange="calculateCost()">
@@ -186,18 +207,22 @@
               <option value="20">4+ people (+$20)</option>
             </select>
           </div>
+
           <div class="cost-display">
             <div class="cost-label">Estimated Total</div>
             <div class="cost-amount" id="costAmount">$0</div>
-            <div class="cost-note" id="costNote">Select a service above</div>
+            <div class="cost-note" id="costNote">Select a service and travel zone above</div>
+            <div class="cost-breakdown" id="costBreakdown"></div>
           </div>
+
           <hr class="divider">
           <div class="service-list">
             <div class="service-item"><span>Mobile service fee</span><span class="price">$25</span></div>
+            <div class="service-item"><span>Travel · Local (≤10mi)</span><span class="price">$25</span></div>
+            <div class="service-item"><span>Travel · Standard (11–20mi)</span><span class="price">$35</span></div>
+            <div class="service-item"><span>Travel · Extended (21–35mi)</span><span class="price">$50</span></div>
             <div class="service-item"><span>After-hours</span><span class="price">+$15</span></div>
             <div class="service-item"><span>Rush service</span><span class="price">+$20</span></div>
-            <div class="service-item"><span>Real estate closings</span><span class="price">from $100</span></div>
-            <div class="service-item"><span>Estate &amp; legal docs</span><span class="price">from $40</span></div>
           </div>
         </div>
       </div>
@@ -230,15 +255,81 @@
   </footer>
 
   <script>
+    // Zone descriptions for the note box
+    const zoneDescriptions = {
+      "25": "📍 Local Zone — Midtown, Downtown, East Memphis, Whitehaven",
+      "35": "📍 Standard Zone — Germantown, Bartlett, Cordova, Millington",
+      "50": "📍 Extended Zone — Collierville, Arlington, Lakeland, Munford"
+    };
+
     function calculateCost() {
-      const service = parseFloat(document.getElementById('serviceSelect').value) || 0;
-      const signers = parseFloat(document.getElementById('signersSelect').value) || 0;
+      const serviceVal = document.getElementById('serviceSelect').value;
+      const travelVal  = document.getElementById('travelSelect').value;
+      const signersVal = parseFloat(document.getElementById('signersSelect').value) || 0;
       const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked');
+
+      const service = parseFloat(serviceVal) || 0;
+      const travel  = parseFloat(travelVal)  || 0;
       let extras = 0;
       checkboxes.forEach(cb => extras += parseFloat(cb.value));
-      const total = service + signers + extras;
-      document.getElementById('costAmount').textContent = '$' + total;
-      document.getElementById('costNote').textContent = total > 0 ? 'Estimated — final price confirmed at booking' : 'Select a service above';
+
+      // Zone note
+      const zoneNote = document.getElementById('zoneNote');
+      const travelSelect = document.getElementById('travelSelect');
+      const selectedText = travelSelect.options[travelSelect.selectedIndex].text;
+
+      if (travelVal === "0" && selectedText.includes("Regional")) {
+        zoneNote.textContent = "📞 Regional zone — please call or text for a custom travel quote.";
+        zoneNote.classList.add('visible');
+      } else if (zoneDescriptions[travelVal]) {
+        zoneNote.textContent = zoneDescriptions[travelVal];
+        zoneNote.classList.add('visible');
+      } else {
+        zoneNote.classList.remove('visible');
+      }
+
+      // If regional selected, don't add travel to total
+      const isRegional = (travelVal === "0" && selectedText.includes("Regional"));
+      const total = service + (isRegional ? 0 : travel) + signersVal + extras;
+
+      // Update total display
+      const costAmount = document.getElementById('costAmount');
+      const costNote   = document.getElementById('costNote');
+      const breakdown  = document.getElementById('costBreakdown');
+
+      if (isRegional) {
+        costAmount.textContent = service + signersVal + extras > 0
+          ? '$' + (service + signersVal + extras) + ' + travel'
+          : 'Call for travel quote';
+        costNote.textContent = 'Regional travel fee quoted separately — call or text us.';
+      } else if (total > 0) {
+        costAmount.textContent = '$' + total;
+        costNote.textContent = 'Estimated — final price confirmed at booking';
+      } else {
+        costAmount.textContent = '$0';
+        costNote.textContent = 'Select a service and travel zone above';
+      }
+
+      // Build itemized breakdown
+      let lines = [];
+      if (service > 0) lines.push(['Service fee', '$' + service]);
+      if (travel > 0 && !isRegional) lines.push(['Travel (' + getTravelLabel(travelVal) + ')', '$' + travel]);
+      if (signersVal > 0) lines.push(['Additional signers', '+$' + signersVal]);
+      checkboxes.forEach(cb => {
+        const label = cb.closest('.checkbox-item').textContent.trim();
+        lines.push([label, '+$' + cb.value]);
+      });
+
+      breakdown.innerHTML = lines.map(([label, amount]) =>
+        `<div class="cost-line"><span>${label}</span><span class="cost-line-amount">${amount}</span></div>`
+      ).join('');
+    }
+
+    function getTravelLabel(val) {
+      if (val === "25") return "Local";
+      if (val === "35") return "Standard";
+      if (val === "50") return "Extended";
+      return "";
     }
   </script>
 
