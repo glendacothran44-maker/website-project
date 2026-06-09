@@ -43,157 +43,62 @@
   .nav-cta:hover { background: var(--gold-light) !important; }
 
   /* ─── HAMBURGER / MOBILE NAV ─── */
-  .hamburger {
-    display: none; flex-direction: column; justify-content: center;
-    gap: 5px; background: none; border: none; cursor: pointer;
-    padding: 0.4rem; z-index: 200;
-  }
+  .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.4rem; z-index: 200; }
   .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; transition: all 0.3s ease; transform-origin: center; }
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
   .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .mobile-nav {
-    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(7,15,24,0.98); backdrop-filter: blur(12px);
-    z-index: 150; flex-direction: column; align-items: center;
-    justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-  }
+  .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(7,15,24,0.98); backdrop-filter: blur(12px); z-index: 150; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
   .mobile-nav.open { display: flex; opacity: 1; pointer-events: all; }
-  .mobile-nav a {
-    color: rgba(255,255,255,0.7); text-decoration: none; font-size: 1.8rem;
-    font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.04em;
-    padding: 1rem 2rem; transition: color 0.2s;
-    border-bottom: 1px solid rgba(255,255,255,0.05); width: 100%; text-align: center;
-  }
+  .mobile-nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.04em; padding: 1rem 2rem; transition: color 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); width: 100%; text-align: center; }
   .mobile-nav a:hover { color: var(--gold); }
-  .mobile-nav a.mobile-cta {
-    color: var(--navy); background: var(--gold); margin-top: 1.5rem; border-radius: 2px;
-    width: auto; font-size: 1rem; font-family: 'DM Sans', sans-serif; font-weight: 500;
-    letter-spacing: 0.06em; text-transform: uppercase; padding: 1rem 2.5rem; border-bottom: none;
-  }
+  .mobile-nav a.mobile-cta { color: var(--navy); background: var(--gold); margin-top: 1.5rem; border-radius: 2px; width: auto; font-size: 1rem; font-family: 'DM Sans', sans-serif; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 1rem 2.5rem; border-bottom: none; }
   .mobile-nav a.mobile-cta:hover { background: var(--gold-light); }
   .mobile-phone { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: rgba(255,255,255,0.3); margin-top: 2rem; letter-spacing: 0.05em; }
 
   /* ─── PAGE HERO ─── */
-  .page-hero {
-    padding: 9rem 2.5rem 4rem;
-    background: linear-gradient(160deg, #0a1520 0%, #112235 100%);
-    border-bottom: 1px solid rgba(201,168,76,0.15);
-    position: relative;
-  }
-  .page-hero::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
-  }
-  .breadcrumb {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
+  .page-hero { padding: 9rem 2.5rem 4rem; background: linear-gradient(160deg, #0a1520 0%, #112235 100%); border-bottom: 1px solid rgba(201,168,76,0.15); position: relative; }
+  .page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); }
+  .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
   .breadcrumb a { color: var(--gold); text-decoration: none; }
-  .page-hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 700; line-height: 1.08;
-    margin-bottom: 1rem;
-  }
+  .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 700; line-height: 1.08; margin-bottom: 1rem; }
   .page-hero h1 em { font-style: italic; color: var(--gold); }
   .page-hero .hero-sub { font-size: 1rem; color: var(--muted-less); max-width: 560px; line-height: 1.7; margin-bottom: 1.8rem; }
-  .notice-box {
-    display: inline-block;
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    border-radius: 2px; padding: 1rem 1.4rem;
-    font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.65;
-    max-width: 700px;
-  }
+  .notice-box { display: inline-block; background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 2px; padding: 1rem 1.4rem; font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.65; max-width: 700px; }
   .notice-box strong { color: var(--gold); }
 
   /* ─── SECTION WRAPPER ─── */
-  .pricing-section {
-    max-width: 1100px; margin: 0 auto; padding: 5rem 2.5rem;
-  }
-  .sec-lbl {
-    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
-  }
-  .pricing-section h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700;
-    line-height: 1.12; margin-bottom: 0.8rem;
-  }
-  .pricing-section > p {
-    font-size: 0.95rem; color: var(--muted-less); margin-bottom: 2.5rem; line-height: 1.7;
-  }
-  .section-divider {
-    border: none; border-top: 1px solid rgba(201,168,76,0.12);
-    max-width: 1100px; margin: 0 auto;
-  }
+  .pricing-section { max-width: 1100px; margin: 0 auto; padding: 5rem 2.5rem; }
+  .sec-lbl { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+  .pricing-section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; line-height: 1.12; margin-bottom: 0.8rem; }
+  .pricing-section > p { font-size: 0.95rem; color: var(--muted-less); margin-bottom: 2.5rem; line-height: 1.7; }
+  .section-divider { border: none; border-top: 1px solid rgba(201,168,76,0.12); max-width: 1100px; margin: 0 auto; }
 
   /* ─── PRICING TABLE ─── */
-  .pricing-table {
-    width: 100%; border-collapse: collapse; margin-bottom: 1rem;
-  }
-  .pricing-table th {
-    text-align: left; font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--gold);
-    padding: 0.8rem 1rem; border-bottom: 1px solid rgba(201,168,76,0.2);
-  }
-  .pricing-table td {
-    padding: 1rem; font-size: 0.9rem; color: var(--muted-less);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
+  .pricing-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+  .pricing-table th { text-align: left; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); padding: 0.8rem 1rem; border-bottom: 1px solid rgba(201,168,76,0.2); }
+  .pricing-table td { padding: 1rem; font-size: 0.9rem; color: var(--muted-less); border-bottom: 1px solid rgba(255,255,255,0.05); }
   .pricing-table td:last-child { color: var(--white); font-weight: 500; white-space: nowrap; }
   .pricing-table tr:hover td { background: rgba(201,168,76,0.04); }
-  .pricing-note {
-    font-size: 0.78rem; color: var(--muted); font-style: italic; margin-top: 0.8rem;
-  }
+  .pricing-note { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-top: 0.8rem; }
 
   /* ─── LOAN SIGNING CARDS ─── */
-  .pricing-cards {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem; margin-bottom: 1.2rem;
-  }
-  .pricing-card {
-    background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 2px; padding: 2rem; position: relative;
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
+  .pricing-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 1.2rem; }
+  .pricing-card { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15); border-radius: 2px; padding: 2rem; position: relative; transition: transform 0.25s, box-shadow 0.25s; }
   .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
   .pricing-card.featured { border-color: var(--gold); }
-  .pricing-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;
-  }
+  .pricing-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; }
   .pricing-card > p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
-  .pricing-card .price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 1.2rem;
-  }
+  .pricing-card .price { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 1.2rem; }
   .pricing-card .price span { font-size: 0.85rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 300; }
   .pricing-card ul { list-style: none; }
-  .pricing-card ul li {
-    font-size: 0.85rem; color: var(--muted-less); padding: 0.4rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    display: flex; align-items: center; gap: 0.5rem;
-  }
+  .pricing-card ul li { font-size: 0.85rem; color: var(--muted-less); padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 0.5rem; }
   .pricing-card ul li::before { content: '✓'; color: var(--gold); font-size: 0.75rem; flex-shrink: 0; }
-  .badge {
-    display: inline-block; font-size: 0.68rem; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    background: var(--gold); color: var(--navy);
-    padding: 0.2rem 0.7rem; border-radius: 2px; margin-bottom: 0.8rem;
-  }
+  .badge { display: inline-block; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; background: var(--gold); color: var(--navy); padding: 0.2rem 0.7rem; border-radius: 2px; margin-bottom: 0.8rem; }
 
   /* ─── ESTATE GRID ─── */
-  .estate-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.2rem; margin-bottom: 1rem;
-  }
-  .estate-card {
-    background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 2px; padding: 1.8rem;
-    transition: border-color 0.2s, transform 0.2s;
-  }
+  .estate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 1rem; }
+  .estate-card { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.12); border-radius: 2px; padding: 1.8rem; transition: border-color 0.2s, transform 0.2s; }
   .estate-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-3px); }
   .estate-icon { font-size: 1.8rem; margin-bottom: 0.8rem; display: block; }
   .estate-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.4rem; }
@@ -202,54 +107,37 @@
   .estate-card .price span { font-size: 0.8rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 300; }
 
   /* ─── SURCHARGE GRID ─── */
-  .surcharge-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem;
-  }
-  .surcharge-card {
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    border-radius: 2px; padding: 1.8rem;
-  }
+  .surcharge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
+  .surcharge-card { background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 2px; padding: 1.8rem; }
   .surcharge-icon { font-size: 1.6rem; margin-bottom: 0.7rem; display: block; }
   .surcharge-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; }
   .surcharge-amount { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--gold); margin-bottom: 0.5rem; line-height: 1; }
   .surcharge-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
 
+  /* ─── TRAVEL ZONE TABLE ─── */
+  .travel-zone-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+  .travel-zone-table th { text-align: left; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); padding: 0.8rem 1rem; border-bottom: 1px solid rgba(201,168,76,0.2); }
+  .travel-zone-table td { padding: 1rem; font-size: 0.9rem; color: var(--muted-less); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .travel-zone-table td:last-child { color: var(--white); font-weight: 500; }
+  .travel-zone-table tr:hover td { background: rgba(201,168,76,0.04); }
+  .zone-badge { display: inline-block; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); padding: 0.15rem 0.6rem; border-radius: 2px; margin-right: 0.5rem; }
+
   /* ─── FAQ ─── */
   .faq-list { display: flex; flex-direction: column; gap: 0; }
-  .faq-item {
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
-  .faq-item summary {
-    padding: 1.2rem 0; font-size: 0.95rem; font-weight: 500;
-    cursor: pointer; list-style: none; display: flex;
-    justify-content: space-between; align-items: center;
-    color: var(--white); transition: color 0.2s;
-  }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .faq-item summary { padding: 1.2rem 0; font-size: 0.95rem; font-weight: 500; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--white); transition: color 0.2s; }
   .faq-item summary:hover { color: var(--gold); }
-  .faq-item summary::after { content: '+'; color: var(--gold); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.2s; }
+  .faq-item summary::after { content: '+'; color: var(--gold); font-size: 1.2rem; flex-shrink: 0; }
   .faq-item[open] summary::after { content: '−'; }
   .faq-item p { font-size: 0.88rem; color: var(--muted-less); line-height: 1.8; padding-bottom: 1.2rem; }
 
   /* ─── PAYMENT METHODS ─── */
-  .payment-methods {
-    display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem;
-  }
-  .payment-methods span {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.2);
-    padding: 0.6rem 1.1rem; border-radius: 2px;
-    font-size: 0.85rem; color: var(--muted-less);
-  }
+  .payment-methods { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem; }
+  .payment-methods span { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.2); padding: 0.6rem 1.1rem; border-radius: 2px; font-size: 0.85rem; color: var(--muted-less); }
 
   /* ─── PRICING CTA ─── */
-  .pricing-cta {
-    background: var(--gold); padding: 5rem 2.5rem; text-align: center;
-  }
-  .pricing-cta h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
-    color: var(--navy); margin-bottom: 0.7rem; line-height: 1.1;
-  }
+  .pricing-cta { background: var(--gold); padding: 5rem 2.5rem; text-align: center; }
+  .pricing-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--navy); margin-bottom: 0.7rem; line-height: 1.1; }
   .pricing-cta p { font-size: 1rem; color: rgba(13,27,42,0.65); margin-bottom: 2rem; }
   .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
   .btn-dark { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--navy); color: var(--white); padding: 1rem 2rem; border-radius: 2px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
@@ -270,18 +158,8 @@
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 
-  /* ─── RESPONSIVE ─── */
-  @media(max-width: 900px) {
-    .pricing-section { padding: 3.5rem 1.5rem; }
-    .pricing-cta { padding: 4rem 1.5rem; }
-  }
-  @media(max-width: 640px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .page-hero { padding: 7rem 1.5rem 3rem; }
-    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
-  }
+  @media(max-width: 900px) { .pricing-section { padding: 3.5rem 1.5rem; } .pricing-cta { padding: 4rem 1.5rem; } }
+  @media(max-width: 640px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .hamburger { display: flex; } .page-hero { padding: 7rem 1.5rem 3rem; } footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; } }
 </style>
 </head>
 <body>
@@ -343,7 +221,7 @@
       <tr><td>Notarial Act (per signature)</td><td>State-regulated · acknowledgments, jurats, oaths</td><td>$5</td></tr>
       <tr><td>Mobile Service Fee</td><td>Base fee for coming to your location</td><td>$25</td></tr>
       <tr><td>After-Hours Surcharge</td><td>Appointments before 8am or after 7pm</td><td>+$15</td></tr>
-      <tr><td>Travel Fee</td><td>Based on distance — confirmed at booking</td><td>TBD</td></tr>
+      <tr><td>Travel Fee</td><td>Zone-based · confirmed at booking (see below)</td><td>$25–$50</td></tr>
       <tr><td>Additional Signers</td><td>Same appointment, each additional signer</td><td>$5/ea</td></tr>
     </tbody>
   </table>
@@ -439,12 +317,13 @@
   <div class="sec-lbl">Additional Fees</div>
   <h2>Travel &amp; Surcharges</h2>
   <p>These fees are always disclosed upfront — confirmed before your appointment is booked.</p>
+
   <div class="surcharge-grid">
     <div class="surcharge-card">
       <span class="surcharge-icon">🚗</span>
       <h3>Travel Fee</h3>
-      <div class="surcharge-amount">TBD</div>
-      <p>We're still finalizing our travel fee structure. Call or text for a quick quote based on your location.</p>
+      <div class="surcharge-amount">$25–$50</div>
+      <p>Zone-based flat rate from Memphis. See the full zone breakdown below.</p>
     </div>
     <div class="surcharge-card">
       <span class="surcharge-icon">🌙</span>
@@ -464,6 +343,45 @@
       <div class="surcharge-amount">Included</div>
       <p>No extra charge for hospitals, hospice, or care facilities. Compassion doesn't cost extra.</p>
     </div>
+  </div>
+
+  <!-- TRAVEL ZONE TABLE -->
+  <div style="margin-top: 2.5rem;">
+    <div class="sec-lbl">Travel Zones</div>
+    <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; margin-bottom:0.6rem;">Zone-Based Travel Rates</h3>
+    <p style="font-size:0.9rem; color:var(--muted-less); margin-bottom:1.5rem; line-height:1.7;">All zones measured from Memphis city center. Your zone is confirmed when you book — no surprises.</p>
+    <table class="travel-zone-table">
+      <thead>
+        <tr><th>Zone</th><th>Distance from Memphis</th><th>Includes</th><th>Travel Fee</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="zone-badge">Local</span></td>
+          <td>Within 10 miles</td>
+          <td>Midtown, Downtown, East Memphis, Whitehaven</td>
+          <td>$25</td>
+        </tr>
+        <tr>
+          <td><span class="zone-badge">Standard</span></td>
+          <td>11 – 20 miles</td>
+          <td>Germantown, Bartlett, Cordova, Millington</td>
+          <td>$35</td>
+        </tr>
+        <tr>
+          <td><span class="zone-badge">Extended</span></td>
+          <td>21 – 35 miles</td>
+          <td>Collierville, Arlington, Lakeland, Munford</td>
+          <td>$50</td>
+        </tr>
+        <tr>
+          <td><span class="zone-badge">Regional</span></td>
+          <td>36+ miles</td>
+          <td>Jackson TN, Oxford MS, and surrounding areas</td>
+          <td>Call for quote</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="pricing-note">* Travel fee is in addition to the mobile service fee. Both are confirmed at booking before your appointment is finalized.</p>
   </div>
 </section>
 
@@ -493,6 +411,10 @@
     <details class="faq-item">
       <summary>Is there a cancellation fee?</summary>
       <p>We understand plans change. We ask for as much notice as possible if you need to reschedule. Cancellations with less than 1 hour notice on same-day bookings may incur a small trip fee. We'll always work with you.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How is my travel zone determined?</summary>
+      <p>Your zone is based on the distance from Memphis city center to your signing location. When you book, we confirm your zone and the exact travel fee before your appointment is finalized — so there are never any surprises on arrival.</p>
     </details>
   </div>
 </section>
