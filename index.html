@@ -331,9 +331,6 @@
   </div>
 </section>
 
-<div id="client-list">
-    <p>Loading clients...</p>
-</div>
 
 
 
@@ -417,33 +414,4 @@ testConnection();
 async function displayClients() {
     const { data, error } = await supabaseClient
         .from('clients')
-        .select('*');
-
-    if (error) {
-        document.getElementById('client-list').innerHTML =
-            'Error loading clients';
-        return;
-    }
-
-    let html = '<h3>My Clients</h3>';
-
-    data.forEach(client => {
-        html += `
-            <div style="padding: 15px; margin: 10px 0;
-                        background: black; border-radius: 8px;">
-                <strong>${client.name}</strong><br>
-                Email: ${client.email}<br>
-                Phone: ${client.phone}
-            </div>
-        `;
-    });
-
-    document.getElementById('client-list').innerHTML = html;
-}
-
-// Load clients when page opens
-displayClients();
-
-</script>
-</body>
-</html>
+        
